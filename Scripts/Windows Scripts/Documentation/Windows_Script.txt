@@ -1,0 +1,121 @@
+echo - qora ekranga ma'lumot chiqarish uchun ishlatiladi.
+echo Hello -> ekranga Hello chiqadi
+
+echo on|off ekranga yozish imkoniyatini yoqish hamda o'chirish (odatda echo off ishlatiladi)
+
+ver - Windowsning versiyasini qaytaradi
+
+cd - Qora ekrandagi katalogni almashtiradi. Agar boshqa diskka o'tmoqchi bo'lsa /d kalit so'zi ishlatiladi (cd /d D:/)
+
+cd .. - bitta katalog yuqoriga chiqish
+
+md - katalog papka yaratadi
+
+time - vaqtni qaytaradi. O'zgartirish ham mumkin
+
+date - sanani qaytaradi
+
+rd - katalogni o'chiradi
+
+exit - qora ekranni ishlashini to'xtatadi yani chiqib ketadi
+
+start - *.exe faylidagi dasturni ishga tushiradi
+
+pause - *.exe holidagi dasturni ishlashini to'xtatadi
+
+tasklist - ishlab turgan dasturlarni ko'rsatadi
+
+move - faylni yoki extensioni bir hil bo'lgan fayllarni bir katalogdan boshqasiga to'liq o'tkazadi
+
+ren - faylni nomini o'zgartirish
+
+find - fayllarni ichidan qiymat qaytaradi
+
+ >> "faylname" har qanday buyruq natijasini ko'rsatilgan faylga loglarini yozadi
+ 
+sort - fayllarni tartiblaydi
+
+taskkill - taskni o'chiradi  example : (taskkill /F /IM chrome.exe)
+
+copy - faylni nushasini oladi
+
+type - fayldagi textni ekranga chiqaradi
+
+dir - ko'rsatilgan yoki joriy papkadagi fayllar haqida ma'lumot beradi
+
+set - script davomida environmentlarga yoki o'zgaruvchilarga qiymat yuklaydi  example : set misol=qiymat ... %misol% - ishlatilishi
+
+@echo off
+
+set name=dunyo
+
+set check=%1  // %1 belgisi script ishga tushirilayotgandagi o'zgaruvchilarni qiymatini tartib bilan olishni belgilab beradi
+set /a check_2=%2 // /a belgi yuklanayotgan qiymat butun son bo'lishini ta'minlaydi. unday bo'lmasa hatolik beradi
+
+set /p parol=Parolni kiriting: // /p belgi o'zgaruvchiga qiymat ekrandan kiritilishini ta'minlaydi hamda biz bergan qiymat ekranda ko'rsatiladi
+
+SETLOCAL
+ENDLOCAL // ushbu block orasida e'lon qilingan o'zgaruvchilar faqatgina ushbu blockda ishlaydi
+
+set check=HelloKalinus
+set str=%str:~5,6% // substringga o'xshab ishlaydi matnni qirqadi
+
+set str=%check: =% // (: =) ushbu belgilar orasidagi har qanday belgilarni o'chiradi
+
+set str=%check:A=B% // A ni B ga almashtiradi
+
+if %str1% == string1
+
+if NOT %str% == string2
+
+if %str1% == string1 () else () // else if blokidan keyinoq yozilishi kerak
+
+: label_1
+
+goto label_1 // goto ning ishlash prinsipi
+
+EQU ikkita object teng bo'lsa true qaytaradi [4 EQU 4] = true
+
+NEQ ikkita object teng emasligini tekshiradi [4 NEQ 2] = true
+
+for /l %%i in (VoverLimit, Increment, UpperLimit) Do
+
+/l -> for loopni sonlar orqali o'sishini belgilaydi
+
+for /l %%i in (10, -2, 0) do (echo %%i)
+
+/f text filedan o'qihni belgilaydi
+
+set myArray = 1 2 3 4 5 
+
+set myArray[0]=1
+set myArray[1]=2 arrayni e'lon qilish
+
+for %%i in (%myArray%) do (echo %%i)
+for /l %%i in (0,1,5) do (echo !myArray[%%i]!)
+
+if defined myArray[%i%] arrayni elementi bor ekanligini tekshiradi
+
+Funksiyalar CALL kalit so'zi bilan boshlanadi EXIT /B kalit so'zi bilan tugaydi
+Funksiyaga murojat tugashi uchun ham EXIT /B sintaksisi ishlatiladi
+
+CALL :showParam 10 , 20 , 30 , 40
+EXIT /B %ERROLEVEL%
+
+: showParam
+  echo %~1
+  echo %~2
+  echo %~3
+  echo %~4
+ EXIT /B
+ 
+call funksiyaga murojat qilinayotganini belgilaydi
+
+del *.txt barcha text fayllarni o'chiradi
+
+start -> progressni start qilib beradi
+
+copy /c error chiqsa ham ishni davom ettiradi
+
+set mypath=%cd% joriy faylni yo'lini qaytaradi
+

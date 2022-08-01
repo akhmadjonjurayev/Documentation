@@ -1,0 +1,41 @@
+cat /ect/shells -> yaroqli shell loginlarini qaytaradi
+which bash -> operatsion sistema qayshi shelldan foydalanayotganini qaytaradi
+#! /bin/bash -> har bir scriptning birinchi qatorida bo'lishi shart aks holda script ishlamaydi
+./copy.sh -> scriptning linux shellda ishga tushirilishiga misol
+clear -> shellni tozalaydi
+cd -> boshqa katalogga o'tish
+ls -> joriy katalogdagi fayllarni qaytaradi
+touch file_name -> faylni ichidagi ma'lumotlarini qaytaradi
+ls -al -> barcha fayllarni ruhsati bilan qaytaradi
+chmod -w +x file_name -> yaratilgan bash scriptga shell orqali ishga tushishi uchun ruhsat beradi
+# -> komentariyani bildiradi
+echo -> qora ekranga ma'lumot chiqaradi
+name=Mark -> o'zgaruvchi qiymat berishning ko'rinishi
+read name_1 name_2 -> oqimdan o'zgaruvchiga qiymatni yujlab olinishi
+read -p "username" username -> bitta qatordan o'qish
+read -sp
+read -a names -> oqimdan kiritilgan barcha qiymatlarni massivga biriktiradi
+echo ${names[0]} -> massivdan ma'lumotlarni o'qish
+echo $1 $2 $3 -> oqimdan tartib bo'yicha o'qish yoki uni qiymatini qaytarish
+args=("$@") -> barcha argumentlarni massiv qilib olish
+number=$1
+if (($number >= 10))
+then echo check
+elif :
+else :
+fi  -> if shartidan keyin albatta then qo'yiladi, if bloki tugaganligini fi kalit so'zi bilan aniqlanadi
+File=/ect/docker
+if[! -f $File] : then :
+fi : -> faylni bor yo'qligiga tekshiradi
+-s File -> if shartini ichida yozilsa file bo'sh emasligiga tekshiradi
+-r File || -w File -> faylda o'qish yoki yozish ruhsati bor yo'qligiga tekshirmoqda
+cat >> $file_name -> kiritilgan matnni faylning oxiriga qo'shadi
+if [ $age -gt 18 ] && [ $age -lt 45 ]
+if [ $age -gt -a $age -lt 45 ] -> va operatorining ko'rinishi
+$((num1 + num2))
+$(expr $num1 + $num2) -> matematik operatorlarning qo'llanishi
+cp .* -r -f -v ~/Desktop/kalinus -> fayllarni nushalash buyrug'i -r ichma-ich nushalaydi
+sudo passwd username -> userni parolini o'zgartirish
+ip a -> ip addressini aniqlash
+rm -> faylni o'chiradi
+rm -r folderName -> katalogni to'liq o'chiradi -r ni kiritmasa katalog bo'sh bo'lmasa hatolik qayataradi
