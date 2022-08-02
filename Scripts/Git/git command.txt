@@ -1,0 +1,8 @@
+git init -> katalogga git qo'shadi
+git add . -> gitni ro'yhatiga barcha fayllarni qo'shadi
+git commit -m "Initial" -> gitdagi o'zgarishlarni saqlash
+git config --global user.email "shunchakiadres@gmail.com" -> gitga elektron manzil qo'shish
+git config --global user.name "Akhmadjon" -> foydalanuvchi nomini kiritish
+git branch -M master -> gitga branch qo'shish
+git remote add origin url -> gitga ombor uchun manzilni belgilash
+git remote -v -> gitni origin larini qaytaradi
