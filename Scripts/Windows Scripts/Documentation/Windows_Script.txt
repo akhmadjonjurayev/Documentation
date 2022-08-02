@@ -119,3 +119,5 @@ copy /c error chiqsa ham ishni davom ettiradi
 
 set mypath=%cd% joriy faylni yo'lini qaytaradi
 
+csp -r scp -r D:\Github\Kalinus_Documentation accerman@192.168.12.136:/home/accerman/Desktop/kalinus -> ssh orqali ma'lumotlarni boshqa manzilga ko'chirish
+
