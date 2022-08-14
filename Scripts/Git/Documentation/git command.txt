@@ -6,3 +6,7 @@ git config --global user.name "Akhmadjon" -> foydalanuvchi nomini kiritish
 git branch -M master -> gitga branch qo'shish
 git remote add origin url -> gitga ombor uchun manzilni belgilash
 git remote -v -> gitni origin larini qaytaradi
+
+git branch branch_name -> yangi branch yaratdi
+git checkout branch_name -> branchni o'zgartirish
+
