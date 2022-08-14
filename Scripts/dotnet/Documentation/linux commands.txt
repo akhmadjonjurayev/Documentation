@@ -1,0 +1,3 @@
+cp -R folder1 folder2 -> ichma-ich rekursiv ravishda nushalash
+cp * folder1 folder2  // yana bir usuli
+cp *.doc folder1 folder2 // extention bo'yicha nusxalash

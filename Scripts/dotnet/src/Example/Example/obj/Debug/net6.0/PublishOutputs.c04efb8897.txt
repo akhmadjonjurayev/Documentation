@@ -1,0 +1,12 @@
+/home/accerman/Desktop/Documents/AspNetCoreDemo
+/home/accerman/Desktop/Documents/Documents/web.config
+/home/accerman/Desktop/Documents/appsettings.Development.json
+/home/accerman/Desktop/Documents/appsettings.json
+/home/accerman/Desktop/Documents/Documents/appsettings.Development.json
+/home/accerman/Desktop/Documents/Documents/appsettings.json
+/home/accerman/Desktop/Documents/Documents/AspNetCoreDemo.deps.json
+/home/accerman/Desktop/Documents/Documents/AspNetCoreDemo.runtimeconfig.json
+/home/accerman/Desktop/Documents/AspNetCoreDemo.dll
+/home/accerman/Desktop/Documents/AspNetCoreDemo.deps.json
+/home/accerman/Desktop/Documents/AspNetCoreDemo.runtimeconfig.json
+/home/accerman/Desktop/Documents/AspNetCoreDemo.pdb

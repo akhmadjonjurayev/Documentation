@@ -1,0 +1,94 @@
+dotnet --list-sdks -> Linux operatsion sistemasidagi dotnetning versiyasini qayataradi
+sudo apt-get install -y dotnet-sdk-6.0 -> dotnetni versiyasini almashtiradi
+sudo apt-get remove dotnet-sdk-3.1 -> dotnet sdk ni o'chirib yuborish
+dotnet new <template_type> -n <project_name> -o <output_directory> -> dotnet burug'i orqali .net project yaratish
+dotnet new webapp -n AspNetCoreDemo -o firstwebapp
+dotnet new console -> console application qo'shish
+netstat -tlp -> portni eshitib turgan dasturlarni portlari bilan ro'yhatini qayataradi
+dotnet build -> dotnet projectni build qiladi (current pathga nisbatan qo'llaniladi)
+command -> bu buyruq
+arguments -> bu chaqirilgan buyruqga yuborilgan argumentlar. Masalan dotnet publish my_app.csproj ni bajarganda argument my_app.csproj qaysi loyihani publish qilish kerakligini bildiradi
+options -> chaqiriladigan buyruqqa variantdir (yani default qiymati bo'ladi)
+dotnet buyruqlari ikkiga bo'linadi project bilan ishlovchi buyruqlar hamda .dll gilan bajariluvchi buyruqlar.
+
+dotnet build [<PROJECT | SOLUTION> ...] [options]
+project yoki solution tanlanadi yoki default joriy papka bo'yicha qidirishadi
+
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package buyrug'i orqali dasturimizga nuget.org dan packagelar yuklab olinadi. Agar .csproj faylni belgilamasak o'zi avtomatik ravishda joriy papkadagi dasturga qo'shadi
+dotnet add ToDo.csproj package Microsoft.Azure.DocumentDB.Core -v 1.0.0 (versiyasini kiritmasak oxirgi versiyasini tanlab oladi)
+
+dotnet list [<PROJECT>|<SOLUTION>] package
+agar projectni kiritsak project bo'yicha bo'lmasa frameworkni kiritsak framework bo'yicha o'rnatilgan nuget.packagelarni ko'rsatadi
+dotnet list SentimentAnalysis.csproj package
+dotnet list package --framework net6.0
+
+dotnet remove [<PROJECT>] package <PACKAGE_NAME> -> projectdan packageni o'chirish
+project kiritlmasa nuget.orgni lokal papkasidan o'chiradi
+
+dotnet add app/app.csproj reference lib/lib.csproj -> aosiy projectga class libery qo'shish yoki boshqa projectlarni biriktirish
+
+dotnet list [<PROJECT>] reference -> projectga qo'shilgan projectlar ro'yhatini qaytaradi kiritilmasa avtomatik ravishda joriy papkadan qidiradi
+dotnet remove [<PROJECT>] reference [-f|--framework <FRAMEWORK>]
+     <PROJECT_REFERENCES> -> referencelarni o'chirish yoki projectga qo'shilgan projectlarni o'chirish
+
+dotnet build [<PROJECT>|<SOLUTION>] -> project yoki solution bo'yicha build qiladi agar kiritilmasa joriy papka bo'yicha harakatlanadi
+
+dotnet build-server shutdown [--msbuild] [--razor] [--vbcscompiler]
+
+dotnet build-server shutdown -h|--help
+
+dotnet build-server -h|--help
+ 
+dotnet bo'yicha ishlab turgan barcha dasturlarni o'chiradi
+
+dotnet clean -> dotnetni yoki joriy projectni tozalaydi (bin katalogi tozalanadi)
+
+dotnet dev-certs https -> agar dasturimizni https pratakoli bilan ishga tushursak hamda ushbu certificat biriktirmagan bo'lsak u holda dotnet
+avtomatik ravishda ssl sertifikat yaratdi faqat Development muhiti uchun, ushbu buyruq orqali ushbu sertifikatni ochiq kalitini operatsion tizimga biriktiradi
+dotnet dev-certs https --clean -> barcha biritkitilgan sertifikatlarni lokal mashinadan o'chiradi
+
+dotnet dev-certs https --clean --import ./certificate.pfx -p $CREDENTIAL_PLACEHOLDER$ -> projectlar uchun bitta sertifikatni biriktirish
+
+dotnet msbuild -> loyiha va barcha bog'liqliklarni yaratadi -> masalan .dll fayllarni
+
+dotnet new <TEMPLATE> [--dry-run] [--force] [-lang|--language {"C#"|"F#"|VB}]
+    [-n|--name <OUTPUT_NAME>] [--no-update-check] [-o|--output <OUTPUT_DIRECTORY>] [Template options]
+dotnet new --list -> dotnet yaratishi mumkin bo'lgan projectlarni turini ro'yhatini chiqarib beradi
+
+dotnet pack -> projectga nuget package yasaydi odatda projectdan nuget package yashash imkoniyani yoqish kerak
+<IsPackable>true</IsPackable> ni .csproj filega qo'shish kerak
+
+dotnet publish [<PROJECT>|<SOLUTION>] [-a|--arch <ARCHITECTURE>]
+    [-c|--configuration <CONFIGURATION>]
+    [-f|--framework <FRAMEWORK>] [--force] [--interactive]
+    [--manifest <PATH_TO_MANIFEST_FILE>] [--no-build] [--no-dependencies]
+    [--no-restore] [--nologo] [-o|--output <OUTPUT_DIRECTORY>]
+    [--os <OS>] [-r|--runtime <RUNTIME_IDENTIFIER>]
+    [--sc|--self-contained [true|false]] [--no-self-contained]
+    [-s|--source <SOURCE>] [-v|--verbosity <LEVEL>]
+    [--version-suffix <VERSION_SUFFIX>]
+    
+dotnet publish AspNetCoreDemo.csproj -o=../Documents -> mahsus belgilangan papkaga publish qilish
+dotnet run [-a|--arch <ARCHITECTURE>] [-c|--configuration <CONFIGURATION>]
+    [-f|--framework <FRAMEWORK>] [--force] [--interactive]
+    [--launch-profile <NAME>] [--no-build]
+    [--no-dependencies] [--no-launch-profile] [--no-restore]
+    [--os <OS>] [--project <PATH>] [-r|--runtime <RUNTIME_IDENTIFIER>]
+    [-v|--verbosity <LEVEL>] [[--] [application arguments]]
+dotnet run buyrug'i .csproj file turgan papkadan turib amalga oshiriladi. Agar .dll orqali ishga tushirmoqchi bo'lsak u holda dotnet .dll buyrug;idan foydalanamiz.
+dotnet run --property environment=Production
+
+dotnet sdk check -> dotnetni sdklari haqidagi hamda .net runtime haqidagi ma'lumotlarni chiqaradi.
+
+dotnet new sln --name MySolution --output FolderName -> sln fayl yaratish, odatda visual studio uchun kerak linux operatsion tizimida kerak bo'lmaydi
+dotnet sln add folder1/folder2/myapp -> folderga .sln fayl qo'shish
+dotnet sln add todo-app/todo-app.csproj -> .csproj filega sln qo'shish
+dotnet sln remove todo-app/todo-app.csproj -> slndan projectni chiqarib yuborish
+
+dotnet test ~/projects/test1/test1.csproj -> projectdagi test fayllarni ishga tushiradi
+
+dotnet watch run --project  ./HelloWorld.csproj -> loyihani ishga tushiradi hamda o'zgarishlarni kuzatib boradi Ctrl+R u=buyrug'idan so'ng qayta ishga tushadi
+
+export ASPNETCORE_ENVIRONMENT=Staging -> bash uchun
+set ASPNETCORE_ENVIRONMENT=Staging -> cmd uchun default environment ni biriktirilishi

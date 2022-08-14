@@ -1,0 +1,7 @@
+/home/accerman/Desktop/Accerman/src/Example/Example/bin/Debug/net6.0/publish/AspNetCoreDemo
+/home/accerman/Desktop/Accerman/src/Example/Example/bin/Debug/net6.0/publish/appsettings.Development.json
+/home/accerman/Desktop/Accerman/src/Example/Example/bin/Debug/net6.0/publish/appsettings.json
+/home/accerman/Desktop/Accerman/src/Example/Example/bin/Debug/net6.0/publish/AspNetCoreDemo.dll
+/home/accerman/Desktop/Accerman/src/Example/Example/bin/Debug/net6.0/publish/AspNetCoreDemo.deps.json
+/home/accerman/Desktop/Accerman/src/Example/Example/bin/Debug/net6.0/publish/AspNetCoreDemo.runtimeconfig.json
+/home/accerman/Desktop/Accerman/src/Example/Example/bin/Debug/net6.0/publish/AspNetCoreDemo.pdb

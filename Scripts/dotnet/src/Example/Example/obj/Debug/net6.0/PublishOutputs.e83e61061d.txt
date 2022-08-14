@@ -1,0 +1,7 @@
+/home/accerman/Desktop/Accerman/src/Example/Example/Documents/AspNetCoreDemo
+/home/accerman/Desktop/Accerman/src/Example/Example/Documents/appsettings.Development.json
+/home/accerman/Desktop/Accerman/src/Example/Example/Documents/appsettings.json
+/home/accerman/Desktop/Accerman/src/Example/Example/Documents/AspNetCoreDemo.dll
+/home/accerman/Desktop/Accerman/src/Example/Example/Documents/AspNetCoreDemo.deps.json
+/home/accerman/Desktop/Accerman/src/Example/Example/Documents/AspNetCoreDemo.runtimeconfig.json
+/home/accerman/Desktop/Accerman/src/Example/Example/Documents/AspNetCoreDemo.pdb
