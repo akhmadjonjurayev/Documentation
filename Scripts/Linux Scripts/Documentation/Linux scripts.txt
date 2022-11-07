@@ -39,3 +39,5 @@ sudo passwd username -> userni parolini o'zgartirish
 ip a -> ip addressini aniqlash
 rm -> faylni o'chiradi
 rm -r folderName -> katalogni to'liq o'chiradi -r ni kiritmasa katalog bo'sh bo'lmasa hatolik qayataradi
+mkdir folder_name -> katalog yaratadi
+ps -aux -> ishlab turgan task larni qaytaradi
