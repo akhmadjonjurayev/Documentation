@@ -8,3 +8,14 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+@if(IndexModel.Persons != null)
+{
+    @foreach(var person in IndexModel.Persons)
+    {
+        <ul>
+            <li>@person.FirstName</li>
+            <li>@person.LastName</li>
+            <li>@person.Birthday</li>
+        </ul>
+    }
+}
