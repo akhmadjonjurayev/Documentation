@@ -2,7 +2,7 @@ dotnet --list-sdks -> Linux operatsion sistemasidagi dotnetning versiyasini qaya
 sudo apt-get install -y dotnet-sdk-6.0 -> dotnetni versiyasini almashtiradi
 sudo apt-get remove dotnet-sdk-3.1 -> dotnet sdk ni o'chirib yuborish
 dotnet new <template_type> -n <project_name> -o <output_directory> -> dotnet burug'i orqali .net project yaratish
-dotnet new webapp -n AspNetCoreDemo -o firstwebapp
+dotnet new webapp|webapi -n AspNetCoreDemo -o firstwebapp
 dotnet new console -> console application qo'shish
 netstat -tlp -> portni eshitib turgan dasturlarni portlari bilan ro'yhatini qayataradi
 dotnet build -> dotnet projectni build qiladi (current pathga nisbatan qo'llaniladi)
@@ -17,6 +17,7 @@ project yoki solution tanlanadi yoki default joriy papka bo'yicha qidirishadi
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package buyrug'i orqali dasturimizga nuget.org dan packagelar yuklab olinadi. Agar .csproj faylni belgilamasak o'zi avtomatik ravishda joriy papkadagi dasturga qo'shadi
 dotnet add ToDo.csproj package Microsoft.Azure.DocumentDB.Core -v 1.0.0 (versiyasini kiritmasak oxirgi versiyasini tanlab oladi)
+dornet add package SomePackage -Source C:\PathToThePackageDir\
 
 dotnet list [<PROJECT>|<SOLUTION>] package
 agar projectni kiritsak project bo'yicha bo'lmasa frameworkni kiritsak framework bo'yicha o'rnatilgan nuget.packagelarni ko'rsatadi

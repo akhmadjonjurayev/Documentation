@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/accerman/Desktop/Accerman/src/Example/Example/AspNetCoreDemo.csproj": {}
+    "/home/accerman/Desktop/Github/Documentation/Scripts/dotnet/src/Example/Example/AspNetCoreDemo.csproj": {}
   },
   "projects": {
-    "/home/accerman/Desktop/Accerman/src/Example/Example/AspNetCoreDemo.csproj": {
+    "/home/accerman/Desktop/Github/Documentation/Scripts/dotnet/src/Example/Example/AspNetCoreDemo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/accerman/Desktop/Accerman/src/Example/Example/AspNetCoreDemo.csproj",
+        "projectUniqueName": "/home/accerman/Desktop/Github/Documentation/Scripts/dotnet/src/Example/Example/AspNetCoreDemo.csproj",
         "projectName": "AspNetCoreDemo",
-        "projectPath": "/home/accerman/Desktop/Accerman/src/Example/Example/AspNetCoreDemo.csproj",
+        "projectPath": "/home/accerman/Desktop/Github/Documentation/Scripts/dotnet/src/Example/Example/AspNetCoreDemo.csproj",
         "packagesPath": "/home/accerman/.nuget/packages/",
-        "outputPath": "/home/accerman/Desktop/Accerman/src/Example/Example/obj/",
+        "outputPath": "/home/accerman/Desktop/Github/Documentation/Scripts/dotnet/src/Example/Example/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/accerman/.nuget/NuGet/NuGet.Config"
@@ -37,6 +37,22 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameWorkCore": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.10, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
