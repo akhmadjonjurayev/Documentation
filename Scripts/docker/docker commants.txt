@@ -1,1 +1,24 @@
 sudo apt-get install -y docker.io -> dockerni ombordan yuklab olish
+docker container ls -> ishlayotgan containerlarni ro'yhatini qaytaradi
+docker container ls -a -> barcha containerlarni qaytaradi
+image -> dastur uchun kerak bo'lgan fayllar to'plami
+container -> dasturni ishlab turgan holati
+
+docker container ls -> ishlab turgan containerlarni ro'yhatini qaytaradi
+docker container ls -a -> barcha containerlarni ro'yhatini qaytaradi
+docker container start container_name -> 
+docker container stop|kill c_name -> ishlab turgan containerni to'xtatadi
+docker container rm c_name -> container ni o'chiradi
+docker container prune -> ishlamayotgan containerlarni barchasini o'chiradi
+Ctrl+P+Q -> shelldan containerni o'chirmasdan chiqib ketish
+docker container run --rm -> container ishlashdan to'xtasa avtomatik o'chib ketadi
+docker container run --name=... alpine -> containerga nom berish
+docker container -itd -> container background da ishlab turadi
+docker container attach c_name -> containerga ulanish faqat -itd bilan ishlagan bo'lsa
+docker container exec c_name command -> ishlab turgan containerga command beradi
+
+docker image ls -> imagelarni ro'yhatini qaytaradi
+docker image pull i_name:version -> global repositorydan imagelarni yuklab oladi
+docker image rm i_name:version -> imageni o'chiradi
+docker image -f rm image:version -> imagega qo'shilib uni ustiga qurilgan containerni ham o'chiradi
+docker image prune -> barcha ishlamayabgan imagelarni o'chiradi

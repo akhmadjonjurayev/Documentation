@@ -39,4 +39,15 @@ public class WeatherForecastController : ControllerBase
     {
         return Ok(await _person.Persons.ToListAsync());
     }
+
+    [HttpPost]
+    public async Task<IActionResult> CreatePerson([FromBody] Person person)
+    {
+        if (person == null || string.IsNullOrEmpty(person.FirstName) || string.IsNullOrEmpty(person.LastName))
+            return BadRequest("error-invalid-data");
+        await _person.Persons.AddAsync(person);
+        if (await _person.SaveChangesAsync() > 0)
+            return Ok("success-add-data");
+        return Ok("error-add-data");
+    }
 }
