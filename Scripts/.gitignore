@@ -1,3 +1,5 @@
 /docker/.vscode
 /docker/bin
 /docker/obj
+/docker/ForDocker/bin
+/docker/ForDocker/obj

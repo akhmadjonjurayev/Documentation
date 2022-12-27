@@ -10,3 +10,5 @@ git remote -v -> gitni origin larini qaytaradi
 git branch branch_name -> yangi branch yaratdi
 git checkout branch_name -> branchni o'zgartirish
 git merge origin/<branch name> -> git merge buyrug'idan so'ng kiritiladigan barnch qaysi branchni bilan o'ziminikini merge qilmoqchiligimizni anglatadi
+
+git remote set-url origin git@github:user_name/source.git -> ssh orqali push qilishda ishlatiladi
