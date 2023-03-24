@@ -1,0 +1,22 @@
+ssh-keygen -> raqamli sertifikat yaratadi
+ssh-keygen -b 4096 -> kalitni uzunligini ham kiritish mumkin
+ssh-copy-id username@remote_host -> serverga ochiq kalitni yuklash
+ssh username@remote_host -> ssh orqali serverga ulanish
+ssh username@remote_IP_host -> ip manzil orqali ham ulansa bo'ladi
+ssh username@remote_host command_to_run -> ssh orqali buyruqlarni berish
+ssh -p port_num username@remote_host -> boshqa portda ishga tushgan ssh serverga ulanish
+sudo service ssh restart -> ssh ni qayta ishga tushirish
+sudo nano /etc/ssh/sshd_config
+PasswordAuthentication no -> parollik autentifikatsiyani o'chirib qo'shish
+sudo nano /root/.ssh/authorized_keys -> kalitlarni ro'hatini ko'rish
+
+
+sudo apt-get install openssh-server
+sudo systemctl enable ssh
+sudo systemctl enable ssh --now
+sudo systemctl start ssh -> ssh serverni o'rnatish
+
+sudo apt-get install openssh-client -> ssh mijozni o'rnatish
+
+scp file user@server:/path/to/dest/ -> ssh orqali fayllarni o'tkazish
+scp demo.txt vivek@192.168.2.13:/tmp/
