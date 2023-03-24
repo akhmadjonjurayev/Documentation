@@ -17,6 +17,8 @@ docker container -itd -> container background da ishlab turadi
 docker container attach c_name -> containerga ulanish faqat -itd bilan ishlagan bo'lsa
 docker container exec c_name command -> ishlab turgan containerga command beradi
 
+docker create --hostname germes-staffmanagementservice --name germes-staffmanagementservice --net germes_network -p 5104:5104 -p 5105:5105 --env-file .env --volume settings:/app/settings/:ro germesnew.azurecr.io/germes-staffmanagementservice:1.0.106 --restart always
+
 docker image ls -> imagelarni ro'yhatini qaytaradi
 docker image pull i_name:version -> global repositorydan imagelarni yuklab oladi
 docker image rm i_name:version -> imageni o'chiradi
