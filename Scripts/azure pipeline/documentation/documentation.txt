@@ -1,0 +1,205 @@
+trigger:
+- master
+- releases/* -> pipeline da birinchi bo'lib aynan qaysi branchlar uchun CI ishlashi ko'rsatib beriladi
+
+# specific branch build
+trigger:
+  branches:
+    include:
+    - master
+    - releases/*
+    exclude:
+    - releases/old* -> agar exlude yozilsa buncha ushbu branchlar uchun CI ishlatilmaydi
+
+
+# specific tag
+trigger:
+  tags:
+    include:
+    - v2.*
+    exclude:
+    - v2.0  -> taglar orqali ham buni cheklash mumkin
+
+# A pipeline with no CI trigger
+trigger: none -> 
+
+
+resources:
+  containers:
+  - container: pycontainer
+    image: python:3.11
+
+steps:
+- task: SampleTask@1
+  target: host
+- task: AnotherTask@1
+  target: pycontainer -> bazi bir tasklarni bajarayotganda ma'lum bir muhit kerak bo'ladi
+
+
+task: AzureCLI@2
+displayName: Azure CLI
+inputs: # Specific to each task
+env:
+  ENV_VARIABLE_NAME: value
+  ENV_VARIABLE_NAME2: value
+  ... -> har bir taskda o'zining environmnetlari bo'ladi
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+# Node install
+- task: NodeTool@0
+  displayName: Node install
+  inputs:
+    versionSpec: '12.x' # The version we're installing
+# Write the installed version to the command line
+- script: which node -> node.js ni yuklab olishning taski
+
+
+#azure-pipeline.yml
+parameters:
+- name: experimentalTemplate
+  displayName: 'Use experimental build process?'
+  type: boolean
+  default: false
+
+steps:
+- ${{ if eq(parameters.experimentalTemplate, true) }}:
+  - template: experimental.yml
+- ${{ if not(eq(parameters.experimentalTemplate, true)) }}:
+  - template: stable.yml -> parametrlar yaratib uni templatelarda ishlatish
+
+
+
+# File: templates/npm-with-params.yml
+
+parameters:
+- name: name  # defaults for any parameters that aren't specified
+  default: ''
+- name: vmImage
+  default: ''
+
+jobs:
+- job: ${{ parameters.name }}
+  pool: 
+    vmImage: ${{ parameters.vmImage }}
+  steps:
+  - script: npm install
+  - script: npm test
+
+# File: azure-pipelines.yml
+
+jobs:
+- template: templates/npm-with-params.yml  # Template reference
+  parameters:
+    name: Linux
+    vmImage: 'ubuntu-latest'
+
+- template: templates/npm-with-params.yml  # Template reference
+  parameters:
+    name: macOS
+    vmImage: 'macOS-latest'
+
+- template: templates/npm-with-params.yml  # Template reference
+  parameters:
+    name: Windows
+    vmImage: 'windows-latest'
+
+    -> parametrlarni ishlatilishi
+
+# File: templates/package-release-with-params.yml
+
+parameters:
+- name: DIRECTORY 
+  type: string
+  default: "." # defaults for any parameters that specified with "." (current directory)
+
+variables:
+- name: RELEASE_COMMAND
+  value: grep version ${{ parameters.DIRECTORY }}/package.json | awk -F \" '{print $4}'
+
+# File: azure-pipelines.yml
+
+variables: # Global variables
+  - template: package-release-with-params.yml # Template reference
+    parameters:
+      DIRECTORY: "azure/checker"
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Release_Stage 
+  displayName: Release Version
+  variables: # Stage variables
+  - template: package-release-with-params.yml  # Template reference
+    parameters:
+      DIRECTORY: "azure/todo-list"
+  jobs: 
+  - job: A
+    steps: 
+    - bash: $(RELEASE_COMMAND) #output release command
+ -> variable larning ishlatilishi
+
+# Repo: Contoso/WindowsProduct
+# File: azure-pipelines.yml
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: Contoso/BuildTemplates
+      ref: refs/tags/v1.0 # optional ref to pin to
+
+jobs:
+- template: common.yml@templates  # Template reference
+  parameters:
+    vmImage: 'windows-latest' -> templateni boshqa repostiroydan ishlatish
+
+# File: steps/msbuild.yml
+
+parameters:
+- name: 'solution'
+  default: '**/*.sln'
+  type: string
+
+steps:
+- task: msbuild@1
+  inputs:
+    solution: ${{ parameters['solution'] }}  # index syntax
+- task: vstest@2
+  inputs:
+    solution: ${{ parameters.solution }}  # property dereference syntax
+
+# File: azure-pipelines.yml
+
+steps:
+- template: steps/msbuild.yml
+  parameters:
+    solution: my.sln -> parametrlarni ishlatilishiga misol
+
+# azure-pipelines.yml
+jobs:
+- template: job.yml
+  parameters:
+    jobs:
+    - job: A
+      steps:
+      - script: echo This job depends on SomeSpecialTool, even though it's not explicitly shown here.
+    - job: B
+      dependsOn:
+      - A
+      steps:
+      - script: echo This job depends on both Job A and on SomeSpecialTool. -> bir jobni ikkinchi jobga bog'liqligi
+
+
+stages:
+- stage: A
+  jobs:
+  - job: A1
+  - job: A2
+
+- stage: B
+  jobs:
+  - job: B1
+  - job: B2 
