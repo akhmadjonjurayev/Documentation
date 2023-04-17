@@ -24,3 +24,8 @@ docker image pull i_name:version -> global repositorydan imagelarni yuklab oladi
 docker image rm i_name:version -> imageni o'chiradi
 docker image -f rm image:version -> imagega qo'shilib uni ustiga qurilgan containerni ham o'chiradi
 docker image prune -> barcha ishlamayabgan imagelarni o'chiradi
+
+docker build -> image yashash uchun ishlatiladi
+docker build . -> image yasaydi
+docker build -f dockerfiles/Dockerfile.debug -> docker faylni ko'rsatib ishga tushirish
+docker build -t vieux/apache:2.0 . -> tag bilan ishga tushirish
