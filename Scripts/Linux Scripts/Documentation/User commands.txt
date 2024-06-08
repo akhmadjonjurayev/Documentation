@@ -1,0 +1,15 @@
+sudo useradd -m 'username'  -> user yaratish
+
+sudo useradd -m -d /opt/username  -> userni home directory bilan yaratish
+
+sudo useradd -g users -G ...., ...  ->  userni lokal guruhlar bilan yaratish
+
+sudo useradd -e 2019-01-22  -> foydalanuvchini muddat bilan yaratish
+
+sudo chage -l 'username' -> muddat bilan yaratilgan foydalanuvchini muddatini o'zgartirish
+
+sudo su 'username'  -> foydalanuvchini almashtirish
+
+sudo userdel -r 'username' -> foydalanuvchini o'zgartiradi
+
+cat /etc/passwd  -> foydalanuvchilarni ro'yhatini qaytaradi
