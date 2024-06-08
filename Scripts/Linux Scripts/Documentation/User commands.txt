@@ -12,4 +12,8 @@ sudo su 'username'  -> foydalanuvchini almashtirish
 
 sudo userdel -r 'username' -> foydalanuvchini o'zgartiradi
 
+passwd root  -> root foydalanuvchisini parolini o'zgartirish
+
+passwd 'username'  -> foydalanuvchini parolini o'zgartirish
+
 cat /etc/passwd  -> foydalanuvchilarni ro'yhatini qaytaradi

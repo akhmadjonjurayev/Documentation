@@ -1,0 +1,7 @@
+sudo groupadd 'group_name'  -> yangi guruh yaratish
+
+sudo groupadd -g 1010 'group_name'  -> guruhni mahsus ID orqali yaratish
+
+sudo groupmod -n 'new_group_name' 'old_group_name'  -> guruh nomini o'zgartirish
+
+sudo groupdel 'group_name' -> gruruhni o'chirish
