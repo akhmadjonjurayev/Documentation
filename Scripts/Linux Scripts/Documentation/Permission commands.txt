@@ -1,0 +1,70 @@
+1. ls -l  -> linux dagi fayl ruxsatini qaytaradi
+
+-rw-r--r-- 1 root root 46 ----
+drw-rw-r-- 1 root root 4096 ----
+
+ * birinchi qator '-' bilan boshlansa bu fayl 'd' bilan boshlansa bu katalog ekanligini bildiradi
+ * keyin faylni egasini, fayl egasi guruhini, fayl hajmini va o'zgartirilgan sanani bildiradi
+
+2.  * Owners fayl yoki katalog egasini huquqlarini bildiradi
+    * Groups ruhsatlar ma'lum bir foydalanuvchilar guruhiga berilishi mumkin, va bu faqat o'sha guruhdagilarga ta'sir qiladi
+    * All Users bu ruxsat hamma foydalanuvchilarga beriladi
+
+ ---  ---   ---
+ rwx  rwx   rwx
+ user group other
+
+   Letters 
+           'r' -> fayl kontentini o'qish
+           'w' -> faylga yozish yoki o'zgartirish
+           'x' -> ishga tushirish. Bu ruxsat faqat dasturlarni ishga tushirish uchun beriladi
+
+   Operators
+           '+' -> ruxsat qo'shish
+           '-' -> ruxsat olib tashlash
+           '=' -> ruxsatni belgilash
+
+    Reference | Class | Description
+    -------------------------------
+     'u'      | user  | bu ruhsat faylning egasini bildiradi
+     'g'      | group | fayl guruhiga berilgan ruxsatni bildiradi
+     'o'      | others| faylning egasi va guruhida bo'lmagan barcha foydalanuvchilar
+     'a'      | all   | barcha foydalanuvchilar
+
+Masalan "rw- r-x r--"
+  * rw- faylni egasida faylni oq'ishga o'zgartirishga ruxsat background
+  * r-x guruh a'zolarida o'qishga va ishga tushirishga ruxsat background
+  * r-- boshqa foydalanuvchilaarda faqat o'qishga ruxsat background
+
+Ruxsatlarni o'zgartirish
+  chmod orqali ruxsatlar o'zgartiriladi
+
+  chmod o+x xyz.txt -> boshqalarga ishga tushirish uchun ruxsat beryabdi
+  chmod ugo-rwx xyz.txt -> xyz.txt faylida barchadan barcha ruxsatni olib tashlash
+  chmod ug+rw,o-x abc.mp4 -> guruh va egasiga o'qish va o'zgartirish uchun ruxsat beradi qolganlardan ishga tushirishni olib qo'yasaydi
+
+     ____________________________
+     |Octal| Binary | File Mode |
+     |--------------------------|
+     | 0   | 000    |  ---      |
+     | 1   | 001    |  --x      |
+     | 2   | 010    |  -w-      |
+     | 3   | 011    |  -wx      |
+     | 4   | 100    |  r--      |
+     | 5   | 101    |  r-x      |
+     | 6   | 110    |  rw-      |
+     | 7   | 111    |  rwx      |
+     
+  chmod ugo+rwx file_name (a+rwx)
+  chmod 777 file_name
+
+  chmod u=r, g=wx, o=rx file_name
+  chmod 435 file_name
+
+  chmod ug+rwz, o=rw file_name
+  chmod 775 file_name
+
+  chmod 644 *.txt -> bir nechta fayllani ruxsatini o'zgartirish
+  chmod 777 folder_name -R -> katalog ichidagi fayllarni barchasini ruxsatini ichma-ich o'zgartiradi
+
+  chown newowner:newgroup file_name -> faylni egasi bilan guruhini o'zgartiradi

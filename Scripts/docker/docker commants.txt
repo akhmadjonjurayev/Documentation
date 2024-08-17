@@ -31,3 +31,7 @@ docker build -f dockerfiles/Dockerfile.debug -> docker faylni ko'rsatib ishga tu
 docker build -t vieux/apache:2.0 . -> tag bilan ishga tushirish
 
 docker push germesnew.azurecr.io/germes-documentservice:kalinus
+
+docker save -o file_name.tar image:version -> docker image ni tar faylida saqlash
+
+docker image load --input file_name.tar -> tar faylini docker image holatiga keltirish
