@@ -29,3 +29,5 @@ docker build -> image yashash uchun ishlatiladi
 docker build . -> image yasaydi
 docker build -f dockerfiles/Dockerfile.debug -> docker faylni ko'rsatib ishga tushirish
 docker build -t vieux/apache:2.0 . -> tag bilan ishga tushirish
+
+docker push germesnew.azurecr.io/germes-documentservice:kalinus
