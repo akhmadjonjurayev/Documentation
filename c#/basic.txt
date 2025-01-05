@@ -1,0 +1,23 @@
+1. C# object va class
+  C# da class obyektlarni yaratish rejasidir. Ushbu sinf obyektlarni tuzilishi, xususiyatlari va usullarini belgilaydi.
+  Boshqa tomondan object sinfning namunasidir. (instance) u sinf class dan yaratiladi va xotiradan joy egallaydi.
+
+2. Delegate
+C# da delegate lar o'zida methodlarni tarifini ushlab turadigan hamda mos methodda ushlab turadigan tur.
+
+3. Polymorphism
+Polymorphism (many forms) bir nechta formalar ma'nosini bildiradi. Bu turli sinflar obyektlarini umumiy supersinf obyektlari sifatida
+ko'rishga imkon beradi.
+  Polimorfizmning 2 ta turi mavjud:
+    I. compile-time (method overloading)
+    II. runtime (method overriding and interfaces)
+
+4. Structure C#
+  Structuralar value type hisoblanadi. Ular ham class ga o'xshab ketadi. Hotirada stack dan joy oladi va voris olib bo'lmaydi.
+  System.ValueType dan voris olgan.
+
+5. Linq C# -> so'rov operatorlar to'plami va turli turdagi ma'lumotlar manbalaridan ma'lumotlarni so'rov qilish, filtirlash va
+o'zgartirish uchun yagona so'rovlar sintaksisini ta'minlaydi.
+
+6. Lamba expression C# -> anonim funksiya bo'lib Linq so'rovlarini inline delegat lar orqali ifoda qiladi.
+

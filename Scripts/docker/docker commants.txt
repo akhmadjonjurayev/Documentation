@@ -35,3 +35,5 @@ docker push germesnew.azurecr.io/germes-documentservice:kalinus
 docker save -o file_name.tar image:version -> docker image ni tar faylida saqlash
 
 docker image load --input file_name.tar -> tar faylini docker image holatiga keltirish
+
+docker stats -> docker container larni hotiradan qancha joy olayotgani qaytaradi
