@@ -1,0 +1,28 @@
+  Design Pattern - bu dasturiy ta'minotni loyihalashda ko'p takrorlanadigan muommolarga yechim bo'lib xizmat qiladigan umumiy shablon
+ yoki ko'rsatmadur.
+
+ 1. Creational Patterns (Yaratish) 
+  Bu turdagi patternlar obyektlarni yaratish jarayonini boshqaradi va murakkab obyektlarni hosil qilishni soddalashtiradi.
+   * Singleton
+   * Factory Method
+   * Abstract Factory
+   * Builder
+   * Prototype
+ 2. Structural Patterns (Structura)
+  Bu patternlar obyektlar va sinflar o'rtasidagi bog'lanishni tashkil qiladi va tizimning strukturasini soddalashtiradi.
+   * Adapter
+   * Bridge
+   * Composite
+   * Decorator
+   * Facade
+   * Flyweight
+   * Proxy
+ 3. Behavioral Patterns (Xulq - atvor)
+  Bu patternlar obyektlar o'rtasidagi o'zaro bog'lanish va o'zaro ta'sirni tashkil qiladi. Ular dasturdagi obyektlarning qanday qilib
+   bir-birlari bilan mu'loqot qilsihni boshqaradi.
+   * Observer
+   * Chain of responsibility
+   * Strategy
+   * Mediator
+   * Command
+   * State 
