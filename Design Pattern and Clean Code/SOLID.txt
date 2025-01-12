@@ -1,0 +1,15 @@
+  S.O.L.I.D Principles
+
+ - Single responsibility Principle yagona javobgarlik tamoyili. Har bir class faqat jarayondagi bir qism uchun javob berishi kerak.
+
+ - Open Closed Principle - ochiq yopiqlik tamoyili. Classlar kengayishi kerak lekin o'zgartirib bo'lmasligi kerak. Masalan: Interfays,
+ abstraksiya, action.
+
+ - Lsikov Substitution Principle. LSP ga ko'ra olingan sinf asosiy sinf turi ta'rifini va xatti-harakatlarini buzmasligi kerak.
+ bazaviy sinf obyektlarini dasturni buzmasdan uning hosila sinflari obyektlari bilan almashtirilishi kerak. Buning ucuhn olingan sinflar
+ obyektlari sizning asosiy sinfingiz obyektlari kabi harakat qilishi kerak.
+
+ - Interface Segregation Principle. Class interfaysning ishlatmaydigan methodlarini implementatsiya qilmasligi kerak.
+
+ - Dependency Inversion Principle. DIP tamoyili katta classlar katta classlarga bog'liq bo'lmasligi kerak. Ular bir biri bilan absraksiya
+ orqali bog'lanishi kerak.

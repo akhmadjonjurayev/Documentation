@@ -1,0 +1,28 @@
+  EntityFrameWork DeleteBehavior
+
+ DeleteBehavior - asosan ma'lumotlar bazasidagi bog'liqlik (relationship) ni boshqarish uchun ishlatiladi.
+  * Cascade - child yozuvlarini o'chiradi
+  * Restrict - o'chirishga ruxsat bermaydi agar child yozuvlari bo'lanishi
+  * SetNull - Child yozuvlarini foregin key qiymatiga null o'rnatiladi
+  * NoAction - Ma'lumotlarni bazasi hech qanday harakat qilmaydi
+  * ClientSetNull - Client tarafida foregin keyga null qo'yadi lekin SQL tomonidan bu amalga oshirilmaydi.
+
+  EntityFrameWork da migratsiyani to'xtatish
+ 1. [NotMapped] atributidan foydalanish
+ 2. FluentApi da OnModelCreateingda : 
+    modelBuilder.Entity<Message>.ToTable("Message", l => l.ExcludeFromMigrations());
+
+  Migratisyani qo'llash
+ 1. CLI (common line interface)
+    dotnet ef migrations add MigrationName
+ 2. PMC (Package Manager Console)
+    update-database
+ 3. Kod orqali.
+    context.Database.Migrate();
+ 4. SQl script yaratib 
+    dotnet ef migrations script FromMigrationName ToMigrationName
+
+  EntityFrameWork Loading
+ 1. Eager Loading bu boshidanoq yuklab olish .Include() bilan yuklab olinadi.
+ 2. Explicit Loading bu bog'langan obyektlarni aniq talab bilan yuklash. Bu usulda .Entry() va Collection() yoki
+  Reference() methodlari ishlatiladi. context.Entry(student).Collection(s => s.Cources).Load()

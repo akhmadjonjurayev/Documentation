@@ -21,3 +21,22 @@ o'zgartirish uchun yagona so'rovlar sintaksisini ta'minlaydi.
 
 6. Lamba expression C# -> anonim funksiya bo'lib Linq so'rovlarini inline delegat lar orqali ifoda qiladi.
 
+7. Async await C# -> async await kalit so'zlari asinxron kod yozishda ishlatiladi va bu kod asosiy oqimsiz ishga tushadi.
+   async kalit so'zi method asinxron ekanligini bildiradi.
+   await kalit so'zi kutilgan vazifa tugaganiga qadar asinxronizatsiya usulining bajarilishini to'xtab turishi uchun ishlatiladi.
+   U asinxron ravishda topshiriq tugashini kutadi va natijasini asosiy ijro chizig'ini bloklamasdan qaytaradi.
+
+8. Task - asinxron operatsiyalar jarayonlarni qiymat qaytarmasdan bajaradi.
+
+9. Encapsulation -> Inkapsulyatsiya ma'lumotlar va ma'lumotlarni bitta birlik ostida yig'ish deb ta'riflanadi. Bu ma'lumotlar va ularni
+ boshqaradigan funksiyalarni bog'laydigan mexanizm. Boshqacha qilib aytganda inkapsulyatsiya himoya qalqon bo'lib ma'lumotlarga ushbu
+ qalqondan tashqaridagi kod orqali kirishni oldini oladi.
+
+10. Garbage Collection (GC) -> bu mehanizm .net Runtime tomonidan ishlaydigan qaysiki hotiraga joylash hamda hotirani tozalaydigan.
+ Garbage Collection Heap ni tozalaydi. GC 3 ta avlodga bo'linadi.
+  I. Generation 0: short-lived
+  II. Generation 1: 0 avlodda yashab bo'lgan obyektlar
+  III. long-lived obyektlar
+
+11. Docker - bu konteynerlar deb nomlangan paketlarda dasturiy taminotni yetkazib berish uchun OS darajasidagi virtualizatsiyadan
+ foydalaniladigan xizmat ko'rsatish mahsulotlari sifatida platformalar to'plami. 
