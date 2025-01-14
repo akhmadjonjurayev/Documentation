@@ -1,0 +1,16 @@
+  Clean Code - bu yuqori sifatli, tushunarli, oson qo'llab-quvvatlanadigan va kengaytiriladigan dasturiy kodni yozish tamoyillari va 
+ amaliyotlarini o'z ichiga oladi. Clean Code yozish orqali dasturiy taminotning uzoq muddatdagi muvaffaqiyatli va texnik qarzini
+ kamayishini ta'minlaydi.
+ 
+ Tamoyillar:
+ 1. Tushunarli kod: yaxshi nomlash, komentariyalar yomon kodni oqlamaydi.
+ 2. Kichik va maqsadga yo'naltirilgan funksiyalar. Single Responsibility Principle (SPR)
+ 3. DRY (Don't Repeat Yourself) takrorlanishni bartaraf etish
+ 4. KISS (Keep It Simple, Stupid) murakkabligni kamaytirish, oddiy kod yozish
+ 5. Kodni bir xil uslubda bo'lishi (Consistency) Kodni bir xil formatda bo'lishi: bir qism camelCase, bir qism snake_case bo'lmasligi kerak
+ 6. Error handling (Xatolarni boshqarish) Exception dan foydalanish
+ 7. Yagona darajadagi abstraksiya (Single level of Abstraction)
+ 8. Testlangan kod, Dependency Injection. Bu usul sinflar o'rtasidagi bog'liqlikni kamaytiradi va testlarni osonroq yozishga imkon beradi
+ 9. Minimal o'zgaruvchanlik. O'zgaruvchilarni mumkin qadar kam ishlatish va ularni doim const qilish. Immutability
+ 10. Yuqori darajadagi ko'ruvchanlik (Clarity). Har bir qismning maqsadi aniq va ravshan bo'lishi kerak. Dasturiy ta'minotdagi tushunarli
+  qismlar va ularning qanday ishlashi tushunarli bo'lishi kerak. 
