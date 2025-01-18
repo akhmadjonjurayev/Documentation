@@ -1,0 +1,49 @@
+   RabbitMQ - bu xabarlarni navbatga qo'yuvchi, xabar brokeri sifatida ishlatiladigan ochiq kodli dasturiy ta'minot. U Advanced
+ Message Queuing Protocol (AMQP) protokoli asosida ishlaydi va tizimlar o'rtasida asinxron xabar almashishni ta'minlaydi.
+
+  RabbitMQning asosiy kompanentalari :
+1. Producer (ishlab chiqaruvchi): Bu xabarlarni navbatga yuboradigan dasturiy model yoki tizim. Producer xabarni RabbitMQ serverga
+yuboradi.
+
+2. Queue (Navbat): Xabarlar bu yerda vaqtincha saqlanadi. Har bir xabar bir marta qabul qilinadi va yetkaziladi. Har bir navbat
+ma'lum bir vazifaga mo'ljallangan bo'ladi.
+
+3. Consumer (Iste'molchi): Bu xabarlarni navbatdan oladigan tizim yoki dastur. Consumer navbatdan xabar olib uni ishlaydi.
+
+4. Exchange (Almashtirish): Xabarni qaysi navbatga yuborishni hal qiluvchi mexanizm. Xabarlar "exchnage"ga yuboriladi va u kerakli
+ qoidalarga asosan navbatlarga tarqatadi.
+  * Direct Exchange xabarni aniq bir navbatga yuboradi.
+  * Topic Exchange mavzuga qarab xabarlarni tarqatadi.
+  * Fanout Exchange : Xabarni barcha navbatlarga yuboradi.
+  * Headers Exchange : Xabarni headerlarga qarab tarqatadi.
+
+5. Durable queues: Agar navbatlar va xabarlar server qayta ishga tushirilganda ham saqlanib qolishi uchun durable: true qilish kerak.
+
+6. Message persistence Xabarni yo'qolmasligi uchun IBasicProperties.Persistent flagini true qilib qo'yish kerak.
+  var properties = channel.CreateBasicProperties();
+  properties.Persistent = true;
+
+RabbitMQ tizimida ikkita asosiy turdagi navbat mavjud. Classic va Quorum queue.
+
+1. Classic Queue
+  * Oddiy ishlash
+  * Durability (barqarorlik) queuelar saqlab qolimishi uchun true bo'lishi kerak.
+  * Replication Classic queue odatda bitta tugunda ishlaydi, lekin Mirrored Queues orqali bir nechta replicatni ta'minlash mumkin.
+  * Pessimistic locking habarni bitta iste'molchi o'qiyotganda boshqasi kutadi.
+  * Foydalanish holatlar oddiy almashuvda, past yukli katta hajmdagi ma'lumotlar talab qilinmaganda.
+
+2. Quorum queue
+  Quorum queue - Bu RabbitMQ da 2.8 varsiyasidan joriy qilingan bo'lib yuqori yuklamali yuqoru mavjudlik talab qiladigan tizimlar
+uchun mo'ljallangan.
+Xususiyatlari :
+   * Leader-Follower - Navbatning bir nechta tugunlari mavjud.
+   * High Avialability - Agar bitta tugundan xabar o'chsa boshqasidan tiklanadi.
+   * Optimistic Locking - bir nechta iste'molchi bilan bir vaqtda ishlashi mumkin.
+   * Durable - doim barqaror hamda katta yuklamalar uchun mo'ljallangan.
+   * Kamchiliklari - ko'p resurs talab qiladi hamda Classic queue ga nisbatan kechikishi
+
+   var arguments = new Dictionary<string, object>
+   {
+      {"x-queue-type", "quorum"}
+   };
+   channel.QueueDeclare(...., arguments: arguments);
