@@ -1,0 +1,47 @@
+   Identity server
+ Identity Server - bu OpenId Connect va OAuth2.0 protokollarini qo'llab-quvvatlaydigan ochiq kodli autentifikatsiya va 
+avtorizatsiya platformasi.
+ 
+ Identity Serverni asosiy vazifalari quyidagilardan iborat :
+  * Autentifikatsiya - Foydalanuvchi tizimga kirishini boshqarish. Identity Server yordamida foydalanuvchi login jarayonini amalga
+ oshiradi.
+  * Avtorizatsiya - Foydalanuvchining resurslarga kirish huquqini taqsimlash.
+  * Token boshqaruvi - Identity Server OAuth2 tokenlarni yaratadi, boshqaradi va tasdiqlaydi. Shuningdek ma'lumotlarni himoyalash uchun
+ JWT yoki reference tokenlardan foydalanadi.
+
+ Resource - bu OAuth2 da himoyalangan ma'lumotlar yoki xizmatlar foydalanuvchi yoki ilovalar ularga kirishni talab qiladi. Resourcelar
+Api yoki xizmatlar ko'rinishida bo'lishi mumkin. Foydalanuvchi profilida saqlangan ma'lumotlar Resource hisoblanadi.
+
+ Scope - OAuth2 da ruxsatlarning to'plami bo'lib ilovaga qanday ma'lumotlarga yoki xizmatlarga kirishga ruxsat berilganini belgilaydi.
+Yani scope ilovaga nima berilganini chegaralaydi. Scope lar unique bo'ladi hamda resourcelarga biriktiriladi. Scope lar tokenni ichida
+saqlanadi.
+
+ Farqlar : 
+  * Resource - bu himoyalangan xizmatlar yoki ma'lumotlar bo'lib foydalanuvchi yoki ilova ularga kirishni talab qiladi. Resource lar 
+  Api ko'rinishida bo'ladi.
+  * Scope - bu ilovaning resourcelarga kirishga qanday ruxsat berilganini belgilovchi ruxsatlar to'plami. Scope ilovaga qanday
+  operatsiyalar mumkinligini aniqlaydi.
+  
+  Ishlatilishi:
+
+  services.AddAuthorization(option => 
+  {
+     option.AddPolicy("ReadAccess", policy => 
+       {
+          policy.RequireAuthentificateUser();
+          policy.RequireClaim("scope", "api.read");
+       })
+  });
+  Controllerdagi methoda
+  [Authorize(Policy = "ReadAccess")]
+
+ Grant types
+  * Authorization Code Grant - eng xavfsiz va tavsiya etiladigan grant type turi bo'lib foydalanuvchi login qilgandan so'ng client ilovaga
+  access token olish uchun "authoration code" dan foydalanadi.
+
+  * Implict Grant - javascript bevosita login parol orqali token oladi.
+  * Client Credentails Grant - ilovalar o'rtasida foydalanuvchisiz authentifikatsiya uchun ishlatiladi.
+  * Password Grant - login paol orqali access token oladi.
+  * Refresh token Grant - access token muddati tugaganda uni yangilash uchun ishlatiladi.
+  * Device Authorization Grant - foydalanuvchi imkoni chegaralangan qurilamalarda ishlatiladi. (televizor) ilova foydalanuvchiga
+  bir Url va kod beradi. Bu kodni boshqa qurilmaga kiritib authentificatsiya qilganidan so'ng access token oladi.
