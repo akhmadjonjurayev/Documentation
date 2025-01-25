@@ -1,0 +1,14 @@
+  SQL 
+ * INNER JOIN : ikkala jadvalda mos qiymatlarga ega yozuvlarni qaytaradi.
+ * LEFT JOIN : chap jadvaldagi barcha yozuvlarni hamda o'ngdagi jadvaldagi mos yozuvlarni qaytaradi.
+ * RIGHT JOIN : o'ng jadvaldagi barcha yozuvlarni va chap jadvaldagi mos qiymatlarni qaytaradi.
+ * FULL JOIN : chap yoki o'ng jadvaldagi mos keladigan barcha yozuvlarni qaytaradi.
+
+ OPERAATORS : 
+ IS NULL - null ga tekshirish
+ <> (NOT EQUAL) - teng emas operatori
+ LIKE - case-sensitive yani katta-kichkina harflarga e'tibor beradi
+ ILKE - case-insensitive hisoblanadi
+ DISTINCT - qatorlarni takrorlanishsiz qaytarish uchun ishlatiladi.
+  DISTINCT staff_id, all ... bir nechta maydonlar orqali DISTINCT qiladi
+ DISTINCT ON - operatori faqat bitta maydon bo'yicha DISTINCT qilib butun jdvalni qaytarishga imkon beradi
