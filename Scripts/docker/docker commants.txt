@@ -1,3 +1,6 @@
+Docker - bu konteynerlar deb nomlangan paketlarda dasturiy taminotni yetkazib berish uchun OS darajasidagi virtualizatsiyadan
+ foydalaniladigan xizmat ko'rsatish mahsulotlari sifatida platformalar to'plami. 
+
 sudo apt-get install -y docker.io -> dockerni ombordan yuklab olish
 docker container ls -> ishlayotgan containerlarni ro'yhatini qaytaradi
 docker container ls -a -> barcha containerlarni qaytaradi

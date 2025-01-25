@@ -1,0 +1,22 @@
+  Domen-Driven Design (DDD) arxitekturasi c# da loyihalashda domenni chuqur anglash va kodni domenning asosiy biznes qoidalari va 
+ jarayonlariga mos tarzda tashkil qilishni ta'minlaydi
+
+ src/
+ |-- MyProject.Domain/
+   |-- Entities/
+   |-- ValueObjects/
+   |-- Services/
+   |-- Repositories/
+ |-- MyProject.Application/
+   |-- Commands/
+   |-- CommandHandlers/
+   |-- DTOs/
+ |-- MyProject.Infrastructure/
+   |-- Repositories/
+   |-- Data/
+   |-- EventHandlers/
+ |-- MyProject.API
+   |-- Controllers/
+
+ DDD tamoyillari kodni qanday joylashtirishni emas balki kodning biznes qiymatini, domenni tushunishni va domen modelini to'g'ri
+foydalanishni ta'minlash uchun qanday mantiqni tashkil etilishi kerakligini ko'rsatib beradi 

@@ -39,4 +39,21 @@ o'zgartirish uchun yagona so'rovlar sintaksisini ta'minlaydi.
   III. long-lived obyektlar
 
 11. Docker - bu konteynerlar deb nomlangan paketlarda dasturiy taminotni yetkazib berish uchun OS darajasidagi virtualizatsiyadan
- foydalaniladigan xizmat ko'rsatish mahsulotlari sifatida platformalar to'plami. 
+ foydalaniladigan xizmat ko'rsatish mahsulotlari sifatida platformalar to'plami.
+
+12. C# da record turi immutable (o'zgarmas) ma'lumotlarni ifodalash uchun mo'ljallagan maxsus tur hisoblanadi. record obyektlar o'rtasida
+tenglik (equality) ni obyektlarning qiymati asosida tekshiradi. Bu esa Entity yoki Value Object sifatida ishlatishga juda mos keladi.
+
+13. ASP.NET bu Microsoft tomonidan ishlab chiqilgan va .Net platformasi asosiga asoslangan veb-ilovalar va xizmatlarni yaratish uchun
+mo'ljallangan asosiy dasturlash platformasidur. ASP.NET yordamida dinamik veb-sahifalar Restful API'lar, real-vaqtda ishlaydigan dasturlar
+va keng-ko'lamli dasturlar ishlab chiqiladi
+
+14. Action Filters : ASP.NET dagi yangi imkoniyatlar. Bu filterlar Action amalga oshishidan oldin ishga tushadi.
+  Turlari :
+    * Authorization filters - foydalanuvchini avtorizatsiya qilish uchun.
+    * Resource filters - keshlash filterlari.
+    * Action filterlari - actiondan oldin va keyin ishga tushiladi
+    * Exception filters - action da hatoliklar chiqsa qayta ishlatish uchun ishlatiladi
+    * Result filters - ular harakat usullari natijasi bajarilishidan oldin va keyin ishga tushadi.
+Action Filters : IActionFilter, IAsyncActionFilter dan voris olishi kerak, unda 2 ta method bor: 
+OnActionExecution(), OnActionExecuted()
