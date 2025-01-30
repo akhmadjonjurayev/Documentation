@@ -1,0 +1,42 @@
+  Expression
+ C# da Expression - asosan expression tree (ifoda daraxti) bilan ishlash uchun ishlatiladi. Expression tree - bu kod ifodalarni
+daraxt shaklida ko'rsatish va boshqarish imkonini beradi.
+ Expression sinfining asosiy xususiyatlari.
+
+  1. Kodni ifodalash. Expression tree yordamida siz kodni ob'yektni sifatida taqdim e'tishingiz mumkin. Matematika operatsiyalarni
+ yoki funksiyalarni daraxt shaklida saqlashingiz mumkin.
+
+  2. Dinamik kod yaratish
+
+  3. Tahlil qilish va modifikatsiya qilish
+
+  4. Linq so'rovlarni ishlatadi.
+
+  Expressionda daraxtning asosiy tarkibiy qismlari:
+   
+   * Parametrlar - bu ifodaga kiritiladigan o'zgaruvchilar.
+   var xParam = Expression.Parametr(typeof(int), "x");
+
+   * Body (tanasi) - bu ifoda daraxtining asosiy hisob-kitob qismini bildiradi.
+     Body tarkibida :
+      I. Matematik amallar: Expression.Add, Expression.Multiply
+      II. Mantiqiy amallar: Expression.AndAlso, Expression.OrElse, Expression.Equal
+      III. Funkisya yoki metod chaqiruvi: Expression.Call
+        var body = Expression.Multiply(xParam, Expression.Constant(2)); // x * 2
+
+    * Expression Lambda.
+
+  Parametrlar va Body birlashtirib Expression.Lambda orqali to'liq daraxt shaklida tasvirlanadi. Bu lambda ifoda daraxtini hosil qiladi.
+
+  var lambda = Expression.Lambda<Func<int, int>>(body, xParam);
+
+  Expression sizga kodni obyekt sifatida yaratish, tahlil qilish va modifikatsiya qilish.
+
+  var priceParam = Expression.Parametr(typeof(Product));
+  var priceCondition = Expression.Greaterthan(
+   Expression.Property(priceParam, "Price"),
+   Expression.Constant(100m));
+   // product.Price > 100
+
+    * Expression ni qo'shish:
+     Expression.AndAlso, Expression.OrElse orqali qo'llaniladi
