@@ -1,0 +1,19 @@
+  Abstract Factory
+ Abstract Factory - bu Creational dizayn patternlardan biri bo'lib yoki bir-biriga mos keladigan obyektlar
+oilasini yaratish uchun ishlatiladi.
+
+ 1. Asosiy G'oya - Agar sizda bir necha turli mahsulotlar oilasi bo'lsa va ularning turlari o'zgarganda
+kodda minimal o'zgarish hohlasangiz Abstract Factory dezyan namunasi foydali bo'ladi.
+
+ 2. Abstract Factory tuzilishi
+  2.1 Abstract Factory - obyektlarni yaratish interfaysini ta'minlaydi
+  2.2 Concrete Factory - ma'lum bir mahsulotlar oilasini yaratadi
+  2.3 Abstract Product - yaratilgan mahsulotlar uchun umumiy interfaysni belgilaydi
+  2.4 Concrete Product - ma'lum bir mahsulotning aniq bir implementatsiyasi
+
+ 3. Avzalliklari
+  * Moslasuvchanlik - yangi mahsulot qo'shish oson
+  * Kodni tartibga soladi
+  * OOP SOLID tamoyillariga mos keladigan
+
+ 4. Kompleklik - ko'proq interfays va class'lar talab qiladi.
