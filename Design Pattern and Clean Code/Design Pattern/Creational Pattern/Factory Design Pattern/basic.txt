@@ -1,0 +1,21 @@
+  Factory Design Pattern
+ Factory Design - bu Creational dizayn turlaridan bo'lib, obyektlarni yaratish jarayonini markazlashtirish va kodni moslashuvchan
+qilish uchun ishlatiladi.
+ 
+ 1. Asosiy G'oya - agar sizda obyektlarni yaratish jarayonini boshqarish kerak bo'lsa va turli xil if else va switch larni
+ishlatishni hohlamasangiz Factory Design Pattern yordam beradi.
+
+ 2. Factory Pattern tuzilishi.
+  I. Interface (yoki Abstarct class) - yaratiladigan obyektlar uchun umumiy shablon
+  II. Concrete class - Interfaceni impelement qiluvchi obyektlar
+  III. Factory class - Obyektlarning yaratish va ularni mijozga taqdim etish vazifasini bajaradi.
+  IV. Client (Foydalanuvchi kod) - Factory dan foydalanib obyektlarni oladi.
+
+ 3. Avzalliklari
+  * Kodning modullashtirilishi - Obyekt yaratish jarayoni mijoz kodidan ajratiladi.
+  * Oson kengaytirish - yangi turni qo'shish uchun faqat yangi class yaratish kifoya.
+  * Kodni soddalashtiradi - new operatoridan kam foydalaniladi, kod toza bo'ladi.
+
+ 4. Kamchiliklari
+  * Static Factory Class - Agar Factoryni static qilinsa, uni inheritance qilish yoki mock testing qilish qiyin bo'lishi
+   mumkin
