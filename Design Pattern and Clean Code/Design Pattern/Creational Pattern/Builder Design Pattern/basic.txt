@@ -1,0 +1,24 @@
+  Factory Design Pattern
+ Facade Design Pattern - Bu Creational Design Patternlardan biri bo'lib, u murakkab obyektlarni boshqichma-boshqich qurish
+uchun ishlatiladi. Ushbu pattern yordamida obyektni yaratish jarayonini boshqarish va moslashuvchan qilish mumkin.
+ 1. Asosiy G'oya
+  Agar obyekt ko'p maydonga ega bo'lsa va uni turli variantlarda yaratish talab qilinsa Builder Pattern yordam beradi. Bu
+obyektlarni yaratishda turli hil variantlarni qo'llab-quvvatlaydi hamda kodni soddalashtiradi.
+  Oddiy yondashuv: Konstructor orqali barcha maydonlarni to'ldirish
+  Builder pattern yondashuvi : Obyektni bosqichma-boshqich qurish hamda moslashtirish
+
+ 2. Builder Pattern tuzilishi :
+  I. Product (Mahsulot) - qurilayotgan obyekt
+  II. Builder (quruvchi interfays) - Obyektni yaratish boshqichlarini ta'minlaydi
+  III. Concrate Builder (Aniq quruvchi) - Obyektni aniq qanday yaratish kerakligini belgilaydi
+  IV. Director (Yo'riqnoma) - Obyektni qanday yaratish kerakligini belgilaydi.
+  v. Client (Foydalanuvchi kod) - Builderdan foydalanib obyektni yaratadi
+
+ 3. Avzalliklari:
+  * Kodni o'qilishi hamda boshqarilishi oson - new operatorlaridan kam foydalaniladi.
+  * Moslashuvchanlik - turli variantlarda obyektni yaratish imkonini beradi.
+  * Solid tamoyillariga mos keladi - modular kod bo'ladi.
+
+ 4. Kamchiliklari:
+  * Qo'shimcha kod yozish kerak - Har bi mahsulotga alohida builder yozish kerak
+  * Murakkablik ortadi - Oddiy obyektlar uchun builder ortiqcha bo'lishi mumkin.
