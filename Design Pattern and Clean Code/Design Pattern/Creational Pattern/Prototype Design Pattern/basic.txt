@@ -1,0 +1,16 @@
+   Prototype Design Pattern
+ I. Prototype Design Pattern - bu Creational Design Patternlardan biri bo'lib obyektlarni nusxalash orqali yangi obyekt yaratish
+jarajonini soddalashtiradi.
+ 
+ II. Tuzilishi.
+  1. Prototype (Interfays yoki Abstract class) - Obyektni klonlash Clone() methodini tariflaydi.
+  2. Concrete Prototype Aniq nusxada Obyektni o'zini nusxalashni amalga oshiradi.
+  3. Client (Foydalanuvchi kod) Clone() methodidan foydalanib yangi obyekthosil qiladi.
+
+ III. Shallow Copy vs Deep Copy
+  Shallow Copy (Yuqori sathda nusxalash)
+   * MemberwiseClone() methodidan foydalanadi
+   * Agar obyekt ichida boshqa obyektlar bo'lsa ularni referencesi saqlanadi. (yangi nusxa emas)
+  Deep Copy (Chuqur nusxalash)
+   * Obyektni barcha maydonlarini yangi obyekt sifatida nusxalaydi
+   * Agar obyekt ichida boshqa obyektlar bo'lsa ularni yangi nusxalar sifatida yaratadi.  
