@@ -1,0 +1,22 @@
+   Adapter Design Pattern
+ Adapter Pattern - bu Structual (Tuzilma) dizayn patternlaridan biri bo'lib, ikkita mos kelmaydigan interfays orasida 
+bog'lovchi vazifasini bajaradi.
+
+ I. Asosiy G'oya - ikkita mavjud tizm yoki obyekt bir-biri bilan bevosita ishlay olmasa Adapter Pattern ularni moslashuvchan
+qiladi.
+
+ II. Adapter Pattern Tuzilishi
+ 1. Target (Maqsad sinf) - Foydalanuvchi ishlatadigan interfays
+ 2. Adaptee (Mos kelmaydigan sinf) - Mavjud lekin o'zgarishi qiyin sinf
+ 3. Adapter (Moslashtiruvchi sinf) Target interfaysiga mos keladigan qilib Adaptee ni o'raydi
+ 4. Client (Foydalanuvchi kod) - Target interfaysidan foydalanadi.
+
+ III. Avzalliklari va Kamchiliklari
+  Avzalliklari:
+   * Mavjud kodni o'zgartirmasdan ishlatish - Adaptee sinfini o'zgartirish talab qilinmaydi.
+   * Moslashuvchanlik - Bir-biriga mos kelmaydigan interfayslarni ishlashga majbur qiladi.
+   * Kodni qayta ishlatish imkoniyati - Mavjud sinflarni yangi sinflarga integratsiya qilish osonlashadi.
+
+  Kamchiliklari:
+   * Qo'shimcha kod talab qiladi - Adapter sinfini yozish talab qiladi
+   * Murakkablik oshishi mumkin - katta tizimlarda ko'p adapterlar bo'lsa kodni tushunish qiyinlashadi.
