@@ -1,0 +1,24 @@
+   Bridge Design Pattern
+  Bridge Design Pattern - bu Structual (Tuzilma) disign pattern bo'lib, u abstraksiya (yani asosiy funksional qism) va
+ impelementatsiya (yani bajarilish mexanizmi) ni bir-biridan ajratadi.
+
+ I. Asosiy G'oya
+Agar bizda ikkita bog'lanishi mumkin bo'lgan qism bo'lsa, ularni bog'lab qo'ymaslik kerak.Shu sababli Bridge Design pattern ishlatiladi.
+Oddiy yondashuv: Abstraksiya va impelementatsiya qattiq bog'langan bo'ladi.
+Bridge Pattern bilan: Ular alohida bog'lanadi hamda rivojlantiriladi.
+
+ II. Bridge ni tuzilishi
+  1. Abstraction (Abstraksiya) - Asosiy interfays yoki abstrakt sinf
+  2. Implementor (Implementatsiya) - O'zgaruvchan qismi abstraksiya orqali bog'lanadi
+  3. Conreate Implementor (Aniq implementatsiya) - Haqiqiy funksiyanallikni bajaradi
+  4. Refined Abstraction (Takominlashgan abstraksiya) - Asosiy interfaysni kengaytiradi
+  5. Client (Foydalanuvchi kod) - Bridge dan foydalanib abstraksiya orqali implementatsiya chiqaradi
+
+ III. Avzalliklari:
+  * Abstraksiya va impelementatsiya mustaqil rivojlanadi - Qurilma va boshqaruvchi alohida rivojlanishi mumkin.
+  * Kod qayta foydalanishga moslashtiriladi - Bir xil interfayslardan foydalanib yangi qurilmalar qo'shish mumkin
+  * Murakkab tizmlarni modular qiladi - Katta tizmlar uchun mos keladi.
+
+ IV. Kamchiliklari:
+ * Qo'shimcha sinflar talab qiladi - Structurani tushinish biroz murakkab bo'lib qolishi mumkin
+ * Har doim ham kerak emas - Agar interfayslar oddiy bo'lsa, Adapter Pattern yoki meros (inheritance) yetarli bo'lishi mumkin.
