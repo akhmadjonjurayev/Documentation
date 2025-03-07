@@ -1,0 +1,26 @@
+   Composite Design Pattern
+  Composite Design - bu struktual (Tuzilma) dizyan pattern bo'lib, yagona obyektlarni va obyektlar to'plamini bir xil interfaysda
+ ishlash imkonini beradi.
+
+ I. Asosiy G'oya : Agar bizda obyektlar hamda o'zida boshqa obyektlarni saqlovchi murakkab obyektlar bo'lsa, Composite pattern
+ularni bitta interfays orqali boshqarish imkonini beradi.
+
+ II. Composite Pattern tuzilishi:
+  * Component - Umumiy interfays yoki abstrakt sinf
+  * Leaf - Oddiy obyekt
+  * Composite - Ichida boshqa obyektlarni saqlovchi boshqa obyekt
+  * Client - Obyektlarni yaratib ulardan foydalanadigan qism.
+
+ III. Avzalliklari:
+  1. Daraxt tuzilmalari bilan ishlashni osonlashtiradi
+  2. Oddiy va murakkab obyektlarni bir xil interfaysda boshqarish mumkin
+  3. Komplex tizimlarni modular qiladi
+
+ IV. Kamchiliklari:
+  1. Qo'shimcha sinflar talab qiladi.
+  2. Composite obyektlarni to'g'ri boshqarish qiyin bo'lishi mumkin.
+
+ V. Xulosa
+  * Composite pattern daraxt tuzilmalari uchun juda mos keladi.
+  * Oddiy va murakkab obyektlarda bitta interfays bilan ishlaydi, bu kodni moslashuvchan va kengaytiriluvchan qiladi.
+  * Fayl tizimi, orgstructura, menyu tizimlari va murakkab structuralar bilan ishlashda qo'llaniladi. 
