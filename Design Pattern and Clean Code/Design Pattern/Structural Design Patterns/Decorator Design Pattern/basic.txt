@@ -1,0 +1,27 @@
+   Decorator Design Pattern
+  Decorator Pattern - bu Structual (tuzilma) design pattern bo'lib, u singlarga o'zgartirmasdan yangi imkoniyatlar qo'shish
+ imkonini beradi. Bu pattern meros olish (inheritance) o'rniga kompozitsiya (composition) orqali yangi xususiyatlar qo'shishga
+ asoslangan.
+
+ I. Asosiy tuzilishi
+  - Component (IComponent) - umumiy interfeys yoki abstrakt class
+  - Concrate Component (BaseClass) - Asosiy sinf
+  - Decorator (BaseDecorator) - Yangi hususiyaltlarni qo'shuvchi sinflar
+  - Concrete Decorators (Extended Class) - Yangi xususiyatlar qo'shuvchi sinflar
+  - Clinet - Foydalanuvchi kod
+
+ II. Avzalliklari
+  * Sinfni o'zgartirmasdan yangi imkoniyatlar qo'shish mumkin
+  * Bir nechta decorator larni birga ishlatish mumkin
+  * Moslashuvchan va kengayuvchan kod yozish imkoniyatini beradi
+
+ III. Kamchiliklari
+  * Ko'p decorator ishlatilsa kod murakkablashib ketishi mumkin
+  * Har bir yangi decorator uchun yangi sinf yozsihga to'gri keladi
+
+ IV. Xulosa
+ * Decorator orqali dinamik tarzda obyektlarga qo'shimchalar qo'shish imkoniyatini beradi.
+ * Kompozitsiya orqali dinamik tarzda obyektlarga qo'shimchalar qo'shish imkonini beradi.
+ * Kofe misolida har bir dekorator yangi qo'shimchalar kiritdi va oxirida yanada boyroq mahsulot yaratiladi.
+
+Bu pattern grafik interfayslar (UI), loggerlar, tarmoqli pratokollar, qidiruv tizimlari kabi joylarda keng qo'llaniladi.
