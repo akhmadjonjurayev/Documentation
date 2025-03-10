@@ -1,0 +1,28 @@
+   Facade Design Pattern
+ Facade Pattern - Bu Structural (Tuzilma) dizayn pattern bo'lib, u murakkab tizimlar bilan ishlashni soddalashtirish uchun Yagona
+interfeys (Facade) ni yaratadi.
+  Bu Pattern:
+   * Katta tizimlarni bir joydan boshqarishga yordam beradi
+   * Kodni murakkabligini kamaytiradi
+   * Modullar orasidagi bog'liqlikni kamaytiradi (loose coupling)
+
+ I. Asosiy tuzilishi
+  * Subsystem Classes - Murakkab tizimning alohida qismilari
+  * Facade Class - Murakkab tizim bilan ishlashni soddalashtiruvchi sinf
+  * Client - Foydalanuvchi kod, faqat Facade bilan ishlaydi
+
+ II. Avzalliklari
+  1. Murakkab tizimlar bilan ishlashni osonlashtiradi
+  2. Kodni kamroq bog'liq qiladi (loose coupling)
+  3. Subsystem larni mustaqil qiladi
+  4. Kodni tushinish va o'zgartirish oson bo'ladi
+
+ III. Kamchiliklari
+  1. Ba'zan moslashuvchanlikni kamaytirishi mumkin
+  2. Haddan tashqari ko'p soddalashtirish tizimni kamroq nazorat qiladigan qilishi mumkin
+
+ IV. Qayerlarda ishlatiladi.
+  1. Operatsion tizimlarda
+  2. Bank tizimlarida
+  3. AI va Machine Learing sistemalarida
+  4. Web-servicelar
