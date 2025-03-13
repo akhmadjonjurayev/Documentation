@@ -12,3 +12,4 @@
  DISTINCT - qatorlarni takrorlanishsiz qaytarish uchun ishlatiladi.
   DISTINCT staff_id, all ... bir nechta maydonlar orqali DISTINCT qiladi
  DISTINCT ON - operatori faqat bitta maydon bo'yicha DISTINCT qilib butun jdvalni qaytarishga imkon beradi
+ Having - Group By operatoridan keyin filter qilish uchun ishlatiladi

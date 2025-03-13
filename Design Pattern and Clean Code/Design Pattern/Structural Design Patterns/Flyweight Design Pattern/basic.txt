@@ -1,0 +1,18 @@
+  Flyweight Design Pattern
+ Flyweight Pattern - Bu Structual (Tuzilma) pattern, u obyektlarni takrorlanmasdan maksimal darajada qayta ishlash orqali xotira
+va resurslarni tejash uchun ishlatiladi.
+
+  I. Bu pattern :
+  * Ko'p sonli obyektlarni yaratish muommosini hal qiladi
+  * Obyektlarni sonini kamaytirib, tezlik va samaradorlikni oshiradi
+  * Takrorlanuvchi ma'lumotlarni bitta joyda saqlaydi
+
+  II. Avzalliklari
+   1. Xotira va resurslarni sezilarni darajadi tejaydi
+   2. Ko'p sonli obyektlar yaratish muommosini hal qiladi
+   3. Ma'lumotlarni yaxshi tashkil qilish imkonini beradi
+
+  III. Kamchiliklari
+   1. Kodni tushunish bir oz qiyin bo'lishi mumkin
+   2. Bazan murakkab obyektlarni boshqarish qiyin bo'lishi mumkin
+   3. Flyweight obyektlarini nato'g'ri ishlatsak natog'ri ma'lumotlar saqlanib qolinishi mumkin
