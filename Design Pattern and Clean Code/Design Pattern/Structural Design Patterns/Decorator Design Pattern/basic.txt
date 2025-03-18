@@ -1,5 +1,5 @@
    Decorator Design Pattern
-  Decorator Pattern - bu Structual (tuzilma) design pattern bo'lib, u singlarga o'zgartirmasdan yangi imkoniyatlar qo'shish
+  Decorator Pattern - bu Structual (tuzilma) design pattern bo'lib, u sinflarga o'zgartirmasdan yangi imkoniyatlar qo'shish
  imkonini beradi. Bu pattern meros olish (inheritance) o'rniga kompozitsiya (composition) orqali yangi xususiyatlar qo'shishga
  asoslangan.
 

@@ -1,0 +1,18 @@
+   Proxy Design Pattern - bu Structual (tuzilma) pattern, u obyektga to'g'ridan-to'g'ri murojat qilish o'rniga, unga vositachi
+ (proxy) orqali murojat qilish imkonini beradi.
+ 
+ I. Bu pattern : 
+  * Haqiqiy obyektni chiqarmasdan boshqarish
+  * Obyektga kirishni cheklash yoki nazorat qilish
+  * Resurslarni tejash va kechiktirilgan yuklash (lazy loading)
+  * Security Proxies Api fayllariga kirishini nazarat qilishda
+  * Remote Proxy - masofaviy obyektlar bilan ishlaganda
+
+ II. Qachon ishlatiladi : 
+  1. Obyektni yaratish qimmat bo'lsa va uni kerak bo'lganda chiqarish kerak bo'lsa
+  2. Tizim xavfsizligini oshirish va ma'lumotlarga cheklangan kirish kerak bo'lsa
+  3. Kesh tizimlari va ma'lumotlarni nazorat qilish talab etilsa
+
+ III. Kamchiliklari :
+  * Kod murakkabligi ortishi mumkin
+  * Proxy nato'g'ri ishlatilsa, foydalanuvchi haqiqiy obyekt bilan ishlamay qo'yishi mumkin.
