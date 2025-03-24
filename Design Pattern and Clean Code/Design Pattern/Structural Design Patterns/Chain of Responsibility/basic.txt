@@ -1,0 +1,27 @@
+   Chain of Responsibility
+  Chain of Responsibility - bu Behavioral (Xulq-atvor) pattern, u bir nechta obyektlar ketma-ket murojaatni qayta ishlash
+mumkin bo'lgan tizim yaratish imkonini beradi.
+
+  I. Bu pattern:
+  * So'rovlarni bir nechta handler(ishlovchi) orqali o'tkazish
+  * Har bir handler so'rovni qayta ishlash yoki keyingisiga o'tkazadi
+  * Obyektlarni o'rtasidagi bog'liqlikni kamaytirish (loosely coopled design)
+
+  II. Misol uchun: kredit so'rovni tekshirish
+   1. Daromadi yetarlimi ?
+   2. Kredit tarixi yaxshimi ?
+   3. Kafolat (guarantor) kerakmi ?
+
+  III. Avzalliklari
+   * Kod soddalashtiriladi - Har bir tekshiruvchi alohida ishlaydi
+   * Dinamik ravishda zanjirni o'zgartirish mumkin
+   * Kodga yangilik qo'shish oson
+
+  IV. Kamchiliklari
+   * Ba'zan juda ko'p tekshiruvlar bo'lish mumkin
+   * Har bir tekshiruvchi faqat bitta vazifani bajaradi
+
+  V. Qayerda ishlatiladi
+   * Logger tizimlari - Har xil darajadagi loglarni qayta ishlash
+   * Xavfsizlik tizimlarida - Kirish huquqlarini tekshirish
+   * Tranzaksiya monitoringi - Fraud tekshirish va tranzaksiyalarni validatsiya qilish
