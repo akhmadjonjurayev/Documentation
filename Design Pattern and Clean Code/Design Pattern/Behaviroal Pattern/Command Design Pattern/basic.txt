@@ -1,0 +1,19 @@
+   Command Design Pattern
+ Command Pattern - bu Behavioral (Xulq-atvor) pattern, u buyruqlarni obyektsifatida ifodalash keyinchalik bajarish yoki
+bekor qilishni imkonini beradi.
+
+ I. Xossalari 
+  1. Buyruqlarni (commands) obyektlarga aylantiradi
+  2. Buyruqlarni ketma-ket saqlash hamda qayta bajarish imkonini beradi
+  3. Undo/Redo funksiyalarni qo'llab-quvvatlaydi
+  4. Murakkab tizimlarni modullashtirish va soddalashtirish
+
+ II. Kamchiliklari
+  1. Kod murakkablashishi - Har bir buyruq uchun alohida class yozish to'g'ri keladi
+  2. Ko'p obyektlar yaratishga olib kelishi mumkin
+
+ III. Qayerda ishlatiladi
+  1. GUI dasturlari - Tugmalarni buyruqlarga bog'lash (Windows, macOS)
+  2. Undo/Redo tizimlari - Matn muharrirlari va grafik dasturlar
+  3. Makro yozish tizimlari - Buyruqlar saqlash hamda avtomatlashtirish
+  4. O'yinlarda - Harakatlarni yozish hamda takror bajarish
