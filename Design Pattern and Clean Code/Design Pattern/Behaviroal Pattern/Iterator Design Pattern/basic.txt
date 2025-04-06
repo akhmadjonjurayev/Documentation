@@ -1,0 +1,17 @@
+  Iterator Design Pattern
+ Iterator Pattern - obyektlar to'plamida (collections) har bir elementni ichki tuzulmasini bilmasdan ketma-ket ko'rib chiqish imkoni 
+beradigan design pattern. Maqsad: List, Array, Dictionary yoki o'zimiz yaratgan collection ichida harakat qilish uchun maxsus iterator
+(aylovchi) yaratish
+ 1. Xususiyatlari:
+  * Obyektlar to'plami ichida oddiy foreach ishlatib bo'lmaydigan holatlarda
+  * Har xil tuzulmadagi collection larni bir xil tuzilmalar yoki interfayslar orqali birlashtirish kerak bo'lsa
+  * Custom collection yaratishda agar foreachni ishlatmoqchi bo'lsak
+
+ 2. Avzalliklari
+  * Encapsulation - ichki tuzilma (list, array) yashirilgan
+  * Reusabilty - Har hil collectionlar bilan bir xil interface orqali aylanish
+  * Tizimni kengaytirish oson
+
+ 3. Kamchiliklari
+  * Kichik collection uchun ortiqcha murakkablik bo'lishi mumkin
+  * Har bir turdagi saqlash strukturasiga alohida iterator kerak
