@@ -1,0 +1,21 @@
+  Mediator Design Pattern
+ Mediator Pattern - bu obyektlar orasidagi bevosita yo'q qilib, ularni o'zaro Mediator (vositachi) orqali bog'laydi. Bu pattern katta
+tizimlarda komponentalar o'rtasidagi bog'liqlikni kamaytiradi va loyihani modul tarzda yuritish imkonini beradi. Maqsad: Har bir komponent
+boshqa komponentni bilmasin. Ular faqat Mediator bilan muloqot qiladi.
+
+ 1. Imkoniyatlari:
+  * Ko'p obyektlar bir-biri bilan bog'lanishi kerak bo'lgan holatlarda
+  * Loyihadagi komponentlar o'zaro haddan tashqari bog'liq bo'lib qolgan bo'lsa.
+  Low coupling - Komponentlar bir-birini bilmaydi.
+  Modular tizim - Har bir sinfni alohida test qilish oson
+  Qayta foydalanish - Mediator orqali boshqaruvni o'zgartirish oson
+
+ 2. Kamchiliklari:
+  * Mediator o'zi murakkablashib ketishi mumkin (hamma mantiq o'sha yerda yig'ilsa)
+  * Juda katta tizimda katta mediator boshqarish qiyin bo'ladi
+
+ 3. Qayerlarda ishlatiladi:
+  * UI komponentalar - tugmalar va inputlar o'zaro aloqa bo'lsa.
+  * Chat tizimlari - Foydaluvchilar chatga yozadi. (SignalR)
+  * Air traffic control - Samalyotlar o'zaro bog'liq emas, minoraga murojaat qiladi.
+  * O'yin NPC lar - NPC lar bir-biriga emas, boshqaruv mediatoriga murojaat qiladi.
