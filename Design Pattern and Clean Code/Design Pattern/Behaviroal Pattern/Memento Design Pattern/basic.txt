@@ -1,0 +1,20 @@
+  Memento Design Pattern
+ Memento Pattern - bu obyektni holatini saqlab qo'yish va keyin uni tiklash imkonini beradigan design pattern. Asosiy maqsad "Undo" funksiyasini
+amalga oshirish yoki obyektni oldingi holatini tiklash.
+ 1. Structurasi:
+  I. Orginator - Holatni saqlovchi bo'lgan obyekt.
+  II. Memento - Saqlangan holat.
+  III. Caretaker - Holatlarni saqlaydi, tiklaydi.
+
+ 2. Qachon ishlatiladi: 
+  * Undo/Redo funksiyasi - Matn muharriri, grafik tahrirlovchi
+  * Saqlangan sozlamalarni tiklash - Dostur konfugirutsiyasi
+  * O'yinlarda save/load qilish - Save point yoki checkpoint
+
+ 3. Avzalliklari:
+  * Obyektning holatini tashqi dunyoga oshkor qilmay saqlab qo'yish mumkin
+  * Undo/Redo mexanizmni soddalashadi
+
+ 4. Kamchiliklari:
+  * Har bir xolat saqlanishi kerak bo'lgani uchun ko'p xotira saqlanishi mumkin
+  * Kmopleks obyektlar holatini saqlash qiyinlashadi
