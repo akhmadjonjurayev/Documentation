@@ -57,3 +57,8 @@ va keng-ko'lamli dasturlar ishlab chiqiladi
     * Result filters - ular harakat usullari natijasi bajarilishidan oldin va keyin ishga tushadi.
 Action Filters : IActionFilter, IAsyncActionFilter dan voris olishi kerak, unda 2 ta method bor: 
 OnActionExecution(), OnActionExecuted()
+
+15. Static constructor - Har doim bir marta ishlaydi. Class dan faqat birinchi marta foydalanilganda hatto static azolarini chaqirilganda
+ishga tushadi. Obyekt yaratilmasa ham ishga tushadi. Static constructor hatto multi-threaded da ham bir marta ishga tushishi kafolatlangan.
+Qachon ishlatiladi :
+ * Log yozish, Generic type larni tekshirishda.

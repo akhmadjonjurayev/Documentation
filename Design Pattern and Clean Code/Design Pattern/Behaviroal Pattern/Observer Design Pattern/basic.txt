@@ -1,0 +1,13 @@
+  Observer Design Pattern
+ Observer Pattern - bu tizimda biron bir obyektni holati o'zgargan bo'lsa, bu o'zgarish haqida boshqa obyektlarni avtomatik ravishda xabardor
+qiladigan design pattern hisoblanadi.
+
+ 1. Tamoyillar;
+  * Subject - holat o'zgaradigan asosiy obyekt
+  * Observer - Subject ni kuzatib turuvchi obyektlar
+
+ 2. Qanday ishlaydi: Subject o'zgaradigan bo'lsa, u Observer ga avtomatik xabar yuboradi (notif qiladi). Observerlar esa o'zlarini yangilaydi.
+(update qiladi).Bunday holatda Subject o'zgarsa observerlar avtomatik javob beradi. Subject hech qaysi Observer ni bevosita bilmaydi (loosely coupled).
+Yangilik observer qo'shish/ayrish tizimni buzmaydi.
+
+ 3. Asosiy prisp: "pup-sub" (publisher-subscriber) modeli asosida ishlaydi.
