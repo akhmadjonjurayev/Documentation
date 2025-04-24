@@ -1,0 +1,8 @@
+  State Design Pattern
+ State Pattern - Agar obyektning harakatlari (methodlari) uning ichki holatiga bog'liq bo'lsa. Ko'p switch yoki if/else ishlatilsa, State
+Design Patternniga ehtiyoj seziladi.
+ Pattern bu muommoni qanday hal qiladi: 
+  * Har bir holat alohida sinfga aylantiriladi
+  * Obyekt o'z ichida CurrentState ni saqlaydi
+  * Harakatlar (methodlar) CurrentState orqali bajariladi
+  * Holat o'zgarsa - harakatlar ham o'zgaradi

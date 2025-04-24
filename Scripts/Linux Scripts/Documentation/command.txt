@@ -1,0 +1,2 @@
+df -h /  -> linux fayl sistemasida diskda qancha joy qolgani haqida ma'lumot qaytaradi
+du -sh file_name  -> shu papkaning egallagan hajmini qaytaradi
