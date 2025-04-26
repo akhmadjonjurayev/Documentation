@@ -1,0 +1,7 @@
+   Strategy Design Pattern
+  1. Asosiy G'oya: algoritm yoki funksiya bor. Lekin u lekin u bir nechta variantga ega, har xil strategiyalar bilan bajarilishi mumkin.
+
+  2. Strategy pattern quyidagicha ishlaydi:
+  * Har bir algoritm uchun alohida class yoziladi
+  * Ularning har bir alohida interfaysni implement qiladi
+  * Asosiy obyekt esa strategiyani tashqi tomondan oladi (constuctor yoki setter orqali)
