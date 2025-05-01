@@ -1,0 +1,20 @@
+   Template Method Design Patern
+ Template Method Patern - bu pattern shablon asosidaalgoritmning structurasini belgilab beradi, lekin ayrim qismlarning implementatsiyasini
+subclasslarga qoldiradi. Bu o'xshash jarayonlarda kichik farq qiladigan holat uchun pattern hisoblanadi. Ko'p holatlarda jarayon o'xshash
+bo'ladi. Lekin har bir boshqichda kichik farq qilishi mumkin yoki ayrim qadamlar doimiy ayrimlari esa kichik farqlanadigan bo'lishi mumkin
+
+ 1. Patern ishlashi:
+  * Skeleton (skelet) ni abstract class yoki base class ichida qattiq belgilab olamiz
+  * Jarayonni ayrin qismlarini virtual yoki abstract method qilib qoldirasiz - ya'ni subclasslar o'ziga xos qadamlarni to'ldiradi
+  * Barcha asosiy oqimni parent class boshqaradi, Tartib o'zgarmaydi. Bazi qadamlar esa mos ravishda o'zgartiriladi
+
+ 2. Tuzilishi
+  * Odatda abstract yoki virtual methodlar bo'ladi
+  * Asosiy jarayonni sealed (protected) qilib belgilanadi
+
+ 3. Qachon ishlatamiz
+  * Jarayon umumiy lekin bazi qadamlar farqli bo'lsa, Masalan turli data source lar bilan ishlash
+  * Kodni qayta ishlash va tartibni saqlash kerak bo'lsa, Skeleton doim bir xil ichki tavsilotlar o'zgaradi
+  * Katta tizimlarda jarayonni boshqaruvini markazlashtirish kerak bo'lsa, Har bir qadamni subclasslarga topshirib, nazorat qilishi
+
+ Agar bazi qadamlar majburiy bo'lsa ularni abstract qilamiz. Agar bazi qadamlar optional (ixtiyoriy) bo'lsa ularni virtual qilib default versiyasini beramiz 
