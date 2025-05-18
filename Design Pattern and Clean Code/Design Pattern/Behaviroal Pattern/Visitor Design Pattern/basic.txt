@@ -1,0 +1,18 @@
+   Visitor Design Pattern
+  Visitor Pattern - bu obyekt tuzilmalarini o'zgartirmasdan unga yangi funksiyalar qo'shish imkonini beradi.
+
+ 1. Uning tarkibiy qismlari:
+  I. IVisitor - Har bir obyekt uchun methodlar bo'ladi
+  II. IElement - Har hil qabul qiluvchi obyekt (Document, Image)
+  III. ConcrateElement - Har bir element o'zida Accept() methodiga ega
+  IV. ConcreteVisitor - Har bir yangi funksiya uchun yangi Visitor class yaratiladi
+
+ 2. Xulosa : 
+  * Obyekt tuzilmalariga tegmasdan yangi yangi funksiyalar qo'shish mumkin - Har bir funskiya alohida visitor class
+  * Katta tizimlarda kodni tartibli saqlaydi - Har bir Visitor o'zvazifasini bajaradi
+  * Obyektlarni bir xil interfays orqali qabul qiladi - Polimorfizm kuchli ishlatiladi
+
+ 3. Qachon ishlatish kerak :
+  * Obyektlar to'plamiga ko'p turdagi operatsiyalar qo'shish kerak bo'lsa
+  * Obyekt class larini o'zgartirmaslik kerak bo'lsa (kutubxonadan olingan classlar)
+  * Har bir obyektga tashqi funksiya (compress, export, print ...) berish zarur bo'lsa 
