@@ -12,10 +12,31 @@ ma'lum bir vazifaga mo'ljallangan bo'ladi.
 
 4. Exchange (Almashtirish): Xabarni qaysi navbatga yuborishni hal qiluvchi mexanizm. Xabarlar "exchnage"ga yuboriladi va u kerakli
  qoidalarga asosan navbatlarga tarqatadi.
-  * Direct Exchange xabarni aniq bir navbatga yuboradi.
-  * Topic Exchange mavzuga qarab xabarlarni tarqatadi.
-  * Fanout Exchange : Xabarni barcha navbatlarga yuboradi.
-  * Headers Exchange : Xabarni headerlarga qarab tarqatadi.
+  
+  * Direct Exchange - aniq routingKey bo'yicha bitta yoki bir nechta queue ga yuboriladi. (Agar routingKey string.Empty bo'lsa hamma queue ga yuboriladi)
+  
+  * Topic Exchange mavzuga qarab xabarlarni tarqatadi. RoutingKey dan qatiy nazar barcha queue larga yuboradi.
+  
+  * Fanout Exchange : Xabarni barcha navbatlarga yuboradi. RoutingKey ga mos keladigan pattern asosida queue tanlanadi
+    '*' - bitta so'z
+    '#' - nol yoki bir nechta so'z
+
+    _channel.QueueBind("que_1", "topic_1", "user.*");
+    _channel.QueueBind("que_2", "topic_2", "user.#");
+
+    _channel.BasicPublish(..., "user.login", ...);
+    _channel.BasicPublish(..., "user.profile.update", ...);
+
+    que_1 faqat "user.login" oladiga. que_2 esa ikkala xabarni oladi
+
+  * Headers Exchange : Xabarni headerlarga qarab tarqatadi. Xabarlar headers qiymatiga qarab kerakli queue ga yuboriladi. RoutingKey kerak emas
+
+   var headers = new Dictionary<string, object> {{"type", "pdf"}, {"x-match", "all"}};
+   _channel.QueueBind(..., headers);
+
+   var props = _channel.CreateBasicProperties();
+   props.Headers = new Dictionary<string, object> {{"type", "pdf"}};
+   _channel.BasicPublish(..., props, ...);
 
 5. Durable queues: Agar navbatlar va xabarlar server qayta ishga tushirilganda ham saqlanib qolishi uchun durable: true qilish kerak.
 

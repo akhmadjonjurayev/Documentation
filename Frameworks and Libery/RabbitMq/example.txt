@@ -1,0 +1,138 @@
+public class RabbitMQConnection(IOptions<RabbitMQOptions> _options)
+{
+    private IConnection _connection;
+
+    public bool IsConnected => _connection != null && _connection.IsOpen;
+
+    public IConnection TryConnect()
+    {
+        if (IsConnected && _connection != null)
+        {
+            return _connection;
+        }
+
+        var factory = new ConnectionFactory
+        {
+            HostName = _options.Value.Host,
+            UserName = _options.Value.UserName,
+            Password = _options.Value.Password,
+            Port = _options.Value.Port
+        };
+        try
+        {
+            _connection = factory.CreateConnectionAsync().GetAwaiter().GetResult();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Could not connect to RabbitMQ", ex);
+        }
+
+        return _connection;
+    }
+}
+
+public class RabbitMQService(RabbitMQConnection _connection)
+{
+    private IChannel _channel;
+
+    public async ValueTask SendMessageAsync<T>(T data, string exchangeName)
+    {
+        _channel = await GetOrCreateChannel();
+
+        var bodyMessage = new ReadOnlyMemory<byte>(Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(data)));
+
+        await _channel.BasicPublishAsync(
+            exchangeName,
+            "snowden",
+            bodyMessage
+        );
+
+        return;
+    }
+
+    public async ValueTask DeclareQueueAsync(string queueName)
+    {
+        var channel = await GetOrCreateChannel();
+
+        await channel.QueueDeclareAsync(
+                queue: queueName,
+                durable: true,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null
+            );
+
+        return;
+    }
+
+    public async ValueTask DeclareExchangeAsync(string exchangeName)
+    {
+        var channel = await GetOrCreateChannel();
+
+        await channel.ExchangeDeclareAsync(
+            exchange: exchangeName,
+            type: ExchangeType.Direct,
+            durable: true,
+            autoDelete: false,
+            arguments: null
+        );
+
+        return;
+    }
+
+    private async ValueTask<IChannel> GetOrCreateChannel()
+    {
+        if (_channel != null && _channel.IsOpen)
+        {
+            return _channel;
+        }
+
+        _channel = await _connection.TryConnect().CreateChannelAsync();
+        if (_channel == null || !_channel.IsOpen)
+        {
+            throw new Exception("Could not create a channel to RabbitMQ");
+        }
+        return _channel;
+    }
+}
+
+public class RabbitMqConsumer : BackgroundService
+{
+    private readonly RabbitMQConnection _connection;
+    private IChannel _channel;
+
+    public RabbitMqConsumer(RabbitMQConnection connection)
+    {
+        this._connection = connection;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        _channel = await _connection.TryConnect().CreateChannelAsync();
+
+        await _channel.QueueDeclareAsync(Queues.OverdueChanges,
+            durable: false,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null);
+
+        await _channel.QueueBindAsync(Queues.OverdueChanges, Exchanges.ContractConfirmed, string.Empty);
+
+        var consumer = new AsyncEventingBasicConsumer(_channel);
+        consumer.ReceivedAsync += async (model, ea) =>
+        {
+            var body = ea.Body.ToArray();
+            var message = System.Text.Encoding.UTF8.GetString(body);
+
+            // Process the message (for example, log it or save it to a database)
+            Console.WriteLine($"Received message: {message}");
+
+            // Acknowledge the message
+            await _channel.BasicAckAsync(ea.DeliveryTag, false);
+        };
+
+        await _channel.BasicConsumeAsync(Queues.OverdueChanges, false, consumer);
+
+        return;
+    }
+}
