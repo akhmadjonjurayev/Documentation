@@ -38,3 +38,120 @@ public int[] BubbleSort(int[] array)
 
     return array;
 }
+
+2. Selection sort - har bir pozitsiya uchun eng kichik (en katta) elementni topib, o'sha pazitsiyaga qo'yadigan oddiy algoritm.
+
+Kamchiliklari: solishtirishlar soni ko'p, sekin ishlaydi.
+
+3. Insertion Sort - har bir elementni o'zidan oldingi tartiblangan qismiga kerakli joyga qo'yadi. Xuddi kartalarni qo'lda tartilash kabi
+Kichik massivlarda tez ishlaydi. Katta massivlarda sekin ishlaydi.
+
+4. Merge Sort - bu bo'lib yeng (Divide and Conquer) strategiyasiga asoslangan kuchli tartiblash algoritmi.
+Asosiy g'oya - Massivni ikkiga bo'lamiz. Har bir qismni rekursiv tarzda tartiblaymiz. So'ngra tartiblangan qismlarni birlashtiramiz
+
+static void MergeSort(int[] arr, int left, int right)
+    {
+        if (left < right)
+        {
+            int middle = (left + right) / 2;
+
+            // Bo'lish
+            MergeSort(arr, left, middle);
+            MergeSort(arr, middle + 1, right);
+
+            // Birlash
+            Merge(arr, left, middle, right);
+        }
+    }
+
+    static void Merge(int[] arr, int left, int middle, int right)
+    {
+        int n1 = middle - left + 1;
+        int n2 = right - middle;
+
+        int[] leftArray = new int[n1];
+        int[] rightArray = new int[n2];
+
+        for (int i = 0; i < n1; i++)
+            leftArray[i] = arr[left + i];
+        for (int j = 0; j < n2; j++)
+            rightArray[j] = arr[middle + 1 + j];
+
+        int a = 0, b = 0;
+        int k = left;
+
+        while (a < n1 && b < n2)
+        {
+            if (leftArray[a] <= rightArray[b])
+            {
+                arr[k] = leftArray[a];
+                a++;
+            }
+            else
+            {
+                arr[k] = rightArray[b];
+                b++;
+            }
+            k++;
+        }
+
+        // Qolganlarini qo‘shib chiqamiz
+        while (a < n1)
+        {
+            arr[k] = leftArray[a];
+            a++;
+            k++;
+        }
+
+        while (b < n2)
+        {
+            arr[k] = rightArray[b];
+            b++;
+            k++;
+        }
+    }
+
+Kamchiliklari: Merge qismida tartiblashda ko'p massivlar e'lon qiladi, shuning uchun xotiradan katta joy oladi.
+Avzalliklari: Har doim samarali va barqaror.
+
+5. Quick Sort - bu Divide and Conquer uslubiga asoslangan tez yurar tartiblash algoritmi. Bu algoritm amalda tez ishlaydi hamda rekursiv tarzda ishlaydi.
+
+static void QuickSort(int[] arr, int low, int high)
+    {
+        if (low < high)
+        {
+            // Pivot o‘rnini aniqlaymiz
+            int pivotIndex = Partition(arr, low, high);
+
+            // Chap va o‘ng qismlarni rekursiv tartiblaymiz
+            QuickSort(arr, low, pivotIndex - 1);
+            QuickSort(arr, pivotIndex + 1, high);
+        }
+    }
+
+    static int Partition(int[] arr, int low, int high)
+    {
+        int pivot = arr[high]; // Pivot sifatida oxirgi element tanlanadi
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+            if (arr[j] < pivot)
+            {
+                i++;
+                // arr[i] va arr[j] ni joyini almashtiramiz
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        // Pivotni o‘z o‘rniga qo‘yamiz
+        int temp2 = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp2;
+
+        return i + 1; // Pivotning yangi joyi
+    }
+Algoritm Merge Sortga o'xshab ketadi. Farqi Pivot (tayanch) element tanlab olinadi. Bu misolda pivot tayanch element oxirgi olingan
+lekin quick sortda pivotni tog'ri tanlash muhim ahamyatga ega.
