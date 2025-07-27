@@ -1,0 +1,26 @@
+1. Stack - LIFO (Last In First Out) tamoyili asosida oshlaydigan ma'lumotlar tuzilmasi. Ya'ni oxirgi qo'shilgan element birinchi bo'lib
+chiqariladi.
+ C# tilida Stack<T> System.Collections.Generic namespace ichida joylashgan. Stack quyidagi operatsiyalarni qo'llab quvvatlaydi.
+  * Push(T Item) - Element qo'shish
+  * Pop() - Oxirgi qo'shilgan elementni olib tashlaydi va o'sha elementni qaytaradi
+  * Peek() - Eng yuqoridagi (oxirgi qo'shilgan) elementni ko'rish, lekin uni olib tashlamaydi
+  * Count - Stack ichidagi elementlar soni
+  * Contains(T item) - Berilgan elementni mavjudligini tekshirish
+  * Clear() - Barcha elementlarni o'chirish
+
+ Stack ni qo'llanishi.
+  * Funksiya chaqiruvchi (Call Stack) ekursiv funksiyalarni saqlashda
+  * Undo / Redo tizimi - Matn muharrirlarida (Ms Word, Notepad) harakatlarni bekor qilish uchun
+  * Ma'lumotlarni teskari tartibda chiqarish uchun
+
+2. Queue - Bu First-In-First-Out (FIFO) prinsipida ishlaydigan ma'lumotlar tuzilmasi. Yani birinchi qo'shilgan birinchi olinadi.
+
+ Asosiy methodlari:
+  * Enqueue(T item) - Navbatga element qo'solishtiradi
+  * Dequeue() - Navbatdagi birinchi elementni olib tashlaydi hamda uni qaytaradi
+  * Peek() - Birinchi elementni ko'rsatadi lekin uni olib tashlamaydi
+  * Count - Navbatdagi elementlar soni
+  * Clear() - Barcha elementlarni o'chiqariladi
+
+ Queue ni qo'llanishi:
+  * Printer navbati - Foydalanuvchilar tomonidan yuborilgan fayllar FIFO tartibida chop etish

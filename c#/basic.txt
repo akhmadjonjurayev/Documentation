@@ -21,7 +21,8 @@ o'zgartirish uchun yagona so'rovlar sintaksisini ta'minlaydi.
 
 6. Lamba expression C# -> anonim funksiya bo'lib Linq so'rovlarini inline delegat lar orqali ifoda qiladi.
 
-7. Async await C# -> async await kalit so'zlari asinxron kod yozishda ishlatiladi va bu kod asosiy oqimsiz ishga tushadi.
+7. Asinxron dasturlash - bu kod yozish uslubi, unda asosiy oqimni bloklamasdan boshqa vazifalarni kutish imkoniyati bo'ladi.
+ Async await C# -> async await kalit so'zlari asinxron kod yozishda ishlatiladi va bu kod asosiy oqimsiz ishga tushadi.
    async kalit so'zi method asinxron ekanligini bildiradi.
    await kalit so'zi kutilgan vazifa tugaganiga qadar asinxronizatsiya usulining bajarilishini to'xtab turishi uchun ishlatiladi.
    U asinxron ravishda topshiriq tugashini kutadi va natijasini asosiy ijro chizig'ini bloklamasdan qaytaradi.
@@ -62,3 +63,14 @@ OnActionExecution(), OnActionExecuted()
 ishga tushadi. Obyekt yaratilmasa ham ishga tushadi. Static constructor hatto multi-threaded da ham bir marta ishga tushishi kafolatlangan.
 Qachon ishlatiladi :
  * Log yozish, Generic type larni tekshirishda.
+
+16. Stream e'lon qilinganda Dispose() methodi block tugaganidan so'ng ishga tushiriladi. Agar return File() yoki return qilib streamni
+qaytarsak u holda ASP.NET ni o'zi so'rov tugaganidan so'ng dispose qilib yuboradi.
+
+17. Boxing Unboxing - c# dasturlash tilida bu value va reference type o'rtasidagi konvertatsiya (aylantirish) jarayonlari hisoblanadi.
+ * Boxing value type -> reference type
+   int number = 123;
+   object boxed boxed = number;
+   Bu yerda number qiymati boxed obyektga qadoqlanmoqda va hotiraning heap qismida saqlanyabdi.
+ * Unboxing object -> value type
+  Agar siz ArrayList, Hashtable yoki object type dagi collection lardan foydalanyabgan bo'lsangiz, value type lar avtomatik boxing qilinadi

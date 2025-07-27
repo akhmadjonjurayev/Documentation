@@ -15,9 +15,9 @@ ma'lum bir vazifaga mo'ljallangan bo'ladi.
   
   * Direct Exchange - aniq routingKey bo'yicha bitta yoki bir nechta queue ga yuboriladi. (Agar routingKey string.Empty bo'lsa hamma queue ga yuboriladi)
   
-  * Topic Exchange mavzuga qarab xabarlarni tarqatadi. RoutingKey dan qatiy nazar barcha queue larga yuboradi.
+  * Fanout Exchange mavzuga qarab xabarlarni tarqatadi. RoutingKey dan qatiy nazar barcha queue larga yuboradi.
   
-  * Fanout Exchange : Xabarni barcha navbatlarga yuboradi. RoutingKey ga mos keladigan pattern asosida queue tanlanadi
+  * Topic Exchange : Xabarni barcha navbatlarga yuboradi. RoutingKey ga mos keladigan pattern asosida queue tanlanadi
     '*' - bitta so'z
     '#' - nol yoki bir nechta so'z
 
