@@ -24,3 +24,34 @@ chiqariladi.
 
  Queue ni qo'llanishi:
   * Printer navbati - Foydalanuvchilar tomonidan yuborilgan fayllar FIFO tartibida chop etish
+
+3. LinkedList - bu System.Collection.Generic namespace ichida joylashgan doubly linked list (ikki tomonga bog'langan ro'yhat) ma'lumotlar tuzilmasidir.
+U klassik List<T> dan farqli o'laroq elementlarni ketma-ket emas, bog'langan tugunlar orqali saqlaydi.
+
+LinkedList - har bir elementni boshqa elementga havola qilinadigan tugunlardan iborat ro'yxat. Har bir tugun(LinkedListNode<T>) quyidagilarni saqlaydi:
+ * Value - tugundagi qiymat
+ * Next - keyingi tugunga havola
+ * Previous - oldingi tugunga havola
+
+  Method/Property |           Tavsifi
+ AddFirst(value)           Boshi (Head) ga qo'solishtiradi
+ AddLast(value)            Oxiri (Tail) ga qo'solishtiradi
+ AddBefore(node, value)    Ko'rsatilgan node dan oldinga qo'shiladi
+ AddAfter(node, value)     Ko'rsatilgan node dan keyin qo'shiladi
+ Remove(value)             Belgilangan qiymatli birinchi node ni o'chiqariladi
+ RemoveFirst()             Birinchi tugunni o'chiqariladi
+ RemoveLast()              Oxirgi tugunni o'chiqariladi
+ Find(value)               Birinchi mos tugunni qaytaradi
+ First                     Birinchi node (LinkedListNode<T>) ni qaytaradi
+ Last                      Oxirgi node ni qaytaradi
+ Count                     Tugundagi nodelar soni
+ Clear()                   Tugunni tozalaydi
+
+Ishlatilishi:
+ * Elementlarni ro'yhat boshiga yoki oxiriga tez-tez qo'shib/o'chirish kerak bo'lsa.
+ * Ketma-ket bo'lmagan joyga List<T> da sekin bo'lishi mumkin (chunki List<T> o'zi elementlarini o'chiradi)
+
+Kamchiliklari:
+ * Har bir elementni qo'shish uchun qo'shimcha hotira ketadi. (Next va Previous havolalar)
+ * Indeks orqali murojat qilish imkoni yo'q
+ * List<T> bilan solishtirganda bazan sekin ishlaydi
