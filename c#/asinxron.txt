@@ -1,0 +1,29 @@
+  Asinxron dasturlash - bu dasturiy ta'minotni ishlab chiqishdagi muhim yondashuv hisoblanadi. Uning asosiy maqsadi - uzoq
+vaqt talab qiladigan operatsiyalar asosiy dastur oqimini (main thread) bloklab qo'ymasligini ta'minlashdur.
+ 
+ Dastur uzoq vaqt talab qiladigan operatsiyani boshlaydi va uni bajarilishini kutmasdan, boshqa vazifalarni bajarishda davom etadi.
+Operatsiya tugagach, dasturga xabar berilad va natija qayta ishlanadi.
+
+ Asinxron Dasturlashning tamoyillari:
+  .Net da asinxron dasturlash async va await kalit so'zi yordamida soddalashtirilgan. Bu yondashuv Task-Based Asynchronous Pattern (TAP)
+deb nomlanadi.
+ 1. async
+   * Bu metodni asinxron deb belgilaydi. Bu shuni anglatadiki bu metodni ichida aqait kalit so'z ishlatish mumkin.
+   * Faqatgina async kalit so'zi qo'shish metodni asinxron qilmaydi, bli asinxron jarayonlarni o'z ichiga olish imkoniyatini beradi.
+   * Asinxron methodlar odatda Task yoki Task<TResult> qaytaradi. Void qaytaradigan asinxron methodlar ham bekor
+
+ 2. await
+   * async method ichida ishlatiladi
+   * Uzoq vaqt talab qiladigan asinxron operatsiyaning tugashini kutishni bildiradi
+   * Asinxron operatisya tugagach, dastur shu joyidan davom etadi
+   * await asinxron operatisiyadan natijani olishga yordam beradi (Task<TResult>) va operatsiyani muvoffaqiyatini tekshiradi
+
+ 3. Task va Task<Result>
+   * Task sinfi qiymat qaytarmaydigan asinxron operatsiyani ifodalaydi
+   * Task<TResult> sinfi esa Tresult tipidagi qiymat qaytaradigan asinxron operatsiyani ifodalaydi
+
+ Asinxron dasturlashning avzalliklari:
+   * Javobgarlikni oshirish, foydalanuvchi interfaysini muzlab qlishini oldini olinadi
+   * Resurslardan samarali foydalanish
+   * Kengaytiriluvchanlik (Scalability)
+   * Parallelizm. Bir nechta asinxron operatsiyalarni bir vaqtda bajarish imkonini beradi. Task.WhenAll(), Task.WhenAny()

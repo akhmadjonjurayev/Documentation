@@ -1,0 +1,56 @@
+  Graph - bu tugunlar (node yoki vertices) va ularni bog'lovchi qirralar (edges) to'plami.
+
+  A --- B
+  |     |
+  C --- D
+
+ * Bu yerda A, B, C, D - tugunlar (vertices)
+ * Ular orasidagi chiziqlar - qirralar (edges)
+
+Graf turlari:
+ 1. Yo'naltirilmagan (Undirected) - Har ikki tomonga yurishi mimkin (A - B)
+ 2. Yo'naltirilgan (Directed) - Faqat bir tomonga harakat bor (A -> B)
+ 3. Vaznli (Weighted) - Qirralarda og'irlik (masofa, narx ...) bor
+ 4. Tsiklli/ Acyclic - Tsikllar bo'lishi yoki bo'lmasligi mumkin
+ 5. DAG (Directed Acyclic Graph) - Yo'nalgan, lekin tsiklsiz - masalan, tasklar ketma-ketligi uchun ishlatiladi
+ 6. Birlashgan (Connected) - Har bir tugun boshqa tugunlarga yetadi
+ 
+Graph larni ifodalash
+ * Adjacency List
+  Dictionary<string, List<string>> graph = new Dictionary<string, List<string>>();
+  graph["A"] = new List<string> { "B", "C" };
+  graph["B"] = new List<string> { "A", "D" };
+  graph["C"] = new List<string> { "A", "D" };
+  graph["D"] = new List<string> { "B", "C" };
+
+ * Class based
+ public class Node 
+ {
+    public string Name;
+    public List<Node> Neighbors = new List<Node>();
+
+    public Node(string name)
+    {
+        Name = name;
+    }
+ }
+
+ * Adjacency Matrix 
+ int[,] adjacency = new int[numberOfVertices, numberOfVertices];
+
+Graph larni ishlatilishi:
+ * Ijtimoiy tarmoqlar - Foydalanuvchilar o'zaro bog'langan (friends, followers)
+ * Marshrutlash - Yandex Maps, transport yo'lumotlarni
+ * Kompilyator - Dependency graph
+ * Task scheduler - DAG orqali vazifalarni ketma-ketlikda bajarish
+ * Tarmoq xavfsizligi - Kompyuterlar orasidagi tarmoq xavfsizligi
+
+Edge og'irlik (Weighted Graph)
+ Dictionary<string, List<(string neighbor, int weight)>> weightedGraph =
+    new Dictionary<string, List<(string, int)>>()
+{
+    { "A", new List<(string, int)> { ("B", 5), ("C", 3) } },
+    { "B", new List<(string, int)> { ("A", 5), ("D", 2) } },
+    { "C", new List<(string, int)> { ("A", 3), ("D", 8) } },
+    { "D", new List<(string, int)> { ("B", 2), ("C", 8) } },
+};
