@@ -27,3 +27,53 @@ deb nomlanadi.
    * Resurslardan samarali foydalanish
    * Kengaytiriluvchanlik (Scalability)
    * Parallelizm. Bir nechta asinxron operatsiyalarni bir vaqtda bajarish imkonini beradi. Task.WhenAll(), Task.WhenAny()
+   
+Asinxron dasturlash - bu kompyuterda biror vazifa bajarilayotganida boshqa vazifalar uni kutmasdan turib bajarilishini davom
+e'ttirishidur.
+Paralelizm - maqsad bir vaqtning o'zida bir nechta hisob kitob qilish.
+ * Qachon foydali - og'ir matematik hisob kitoblar, katta massivlar bilan ishlashda
+ * Ko'proq CPU bound (CPU to'liq ishlatiladi)
+
+ Parallel.For(0, 10, i => {
+   Console.WriteLine($"ish {i}, thread: {Thread.CurrentThread.ManagedThreadId}");
+ });
+
+ * Asinxron != Parallel
+Asinxron kod bir vaqtda ko'p ish bajarilayotgandek ko'rinadi, lekin amalda CPU ketma-ket bo'sh vaqtlarni samarali ishlatiladi
+ * Parallel kod haqiqatdan ham bir vaqtning o'zida bir nechta ishni bajaradi, CPU yadrolarini bo'lib ishlatadi.
+
+ASP.NET Core Kestrel serveri ThreadPool dan foydalangan holda Http so'rovni bajarish uchun oqim ajratadi
+Asinxron jarayonlarda nima bo'ladi.
+ * Agar siz kodni sinxron yozsangiz (.Result, .Wait(), yoki oddiy bloklovchi I/O), bu oqim kutib qoladi.
+ * Agar siz kodni asinxron yozsangiz (await bilan), kutish vaqtida oqim bo'shatiladi va ThreadPool boshqa foydalanuvchi so'rovlarini
+bajarishi mumkin.
+
+Muhim nuqta:
+ * Asinxron method bir oqimda boshlanib, boshqa oqimda davom e'tishi mumkin. .Net da async/await oqimlarni bog'lab bo'lmaydi,
+balki ish natijasi tayyor bo'lganida boshqa bo'sh oqimdan foydalanadi.
+ * Bir nechta oqimda o'zgaruvchilar chalkashib qolmaydi - chunki har bir HTTP so'rov o'zining call stacki va o'zgaruvchilar majmuosi
+bilan ishlaydi. .Netda bu reqeust scope ichida saqlanadi va boshqa so'rovlar bilan aralashmaydi.
+
+Thread-safe collection bu - u bir vaqtning o'zida bir nechta oqim (thread) tomonidan foydalanilganda ham xavfsi ishlaydi
+ Oddiy (List, Dictionary, Queue) kolleksiyalar thread-safe emas, ya'ni agar bir nechta oqim parallel ravishda o'qisa yoki 
+yozsa - chalkashib keishi mumkin.
+Thread-safe collection lar:
+ * ConcurrentDictionary<Tkey, Tvalue>
+ * ConcurentBag<T>
+ * ConcurentQueue<T>
+ * ConcurentStack<T>
+ * BlockingCollecton<T>
+ Ular ichida lock, Interlocked yoki atomatik operatsiyalar ishlatilib, parallel o'qish/yozishda xatolarga yo'l qo'ymaydi
+
+Concurrency - bu bir vaqtning o'zida bir nechta vazifani (task) boshqarish qobilyati. Lekin bu har doim ham parallel bajarilishini
+anglatmaydi.
+ var task_1 = await DownloadFile("file1.txt");
+ var task_2 = await DownloadFile("file2.txt");
+ await Task.WhenAll(task_1, task_2);
+Concurency bilan bog'liq muommolar, agar nato'g'ri ishlatilsa.
+ * Race condition - bir nechta thread bir xil o'zgaruvchini yozadi -> chalkashlik
+ * Deadlock - 2 ta vazifa bir-birini kutib qoladi
+ * Starvation - bazi vazifalar navbat kutib qoladi, ishlamaydi
+
+IO operatsiyalar - IO (Input/Output) operatsiyalar - bu dastur va tashqi resourselar o'rtasidagi ma'lumot almashuvi. Yani dastur
+CPU ichida emas, balki tashqi qurilmalar bilan aloqaga chiqadi.

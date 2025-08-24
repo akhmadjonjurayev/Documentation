@@ -1,0 +1,28 @@
+  Token turlari:
+
+1. JWT (Json Web Token) - Bu format. JWT bu token turi emas balki uni formati. Bu faqat qanday ko'rinishda ma'lumot saqlashni belgilaydi.
+Uch qismdan iborat:
+ header.payload.signature
+ * Header - token algoritmi (alg), turi (typ)
+ * Payload - claimlar (sub, name, exp, va hk)
+ * imzo - (o'zgarmaganligini tekshirish uchun)
+ Xulosa: JWT - bu transport qadoqlash formati. Access Token ham, ID Token ham JWT bo'lishi yoki bo'lmasligi mumkin.
+
+2. Access Token - Bu ruxsat belgisi.
+ * OAuth2 da ishlaydi
+ * Maqsad API yoki resource serverga kirish uchun foydalaniladi
+ * Access token ichida foydalanuvchi yoki tizimga tegishli ruxsatlar (scope, role) bo'lishi mumkin
+ * Formati:
+   * JWT bo'lishi mumkin (self-contained)
+   * Yoki oddiy random string bo'lishi mumkin (opaque token)
+ Resource server access tokenni tekshiradi (imzo yoki introspection orqali)
+
+3. ID Token - Kimlik belgisi
+ * OpenID Connect da ishlatiladi
+ * Maqsad foydalanuvchi kimligini ilovaga isbotlash
+ * har doim JWT formatida bo'ladi
+ * Ichida foydalanuvchining identifikatsiya claimlari bo'ladi
+   * sub - unique Id user 
+   * name, email, picture
+   * iss, aud, iat, exp kabi metadata
+ * Client ilova ID tokenni foydalanuvchini kimligini tasdiqlash uchun ishlatiladi, lekin API chaqirish uchun ishlatilmaydi

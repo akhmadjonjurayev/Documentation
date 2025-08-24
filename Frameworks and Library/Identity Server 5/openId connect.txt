@@ -1,0 +1,35 @@
+OAuth 2.0 protokoli - bu autentifikatsiya emas, balki avtorizatsiya uchun mo'ljallangan ochiq standart hisoblanadi.
+Uning asosiy maqsadi foydalanuvchiga uchinchi tomon ilovalariga o'zining login va parol ma'lumotlarini bermasdan turib, boshqa 
+xizmatlarga (Google, Facebook yoki boshqa Api) resurslarga cheklangan kirish huquqini berish imkoniyati taqdim etishdir.
+
+Asosiy komponentalar:
+ 1. Resurs egasi (Resource owner): Bu o'z resurlariga egalik qiluvchi shaxs, yani foydalanuvchi.
+ 2. Mijoz (Client): Bu foydalanuvchi nomidan resurslarga kirishni so'raydiga ilova.
+ 3. Ruxsat berish serveri (Authorization Server): Foydalanuvchini kimligini tasdiqlaydigan va ruxsat berilgandan keyin tokenlar beradigan server.
+ 4. Resurs serveri (Resource Server): Bu himoya qilinadigan resurslarni (Google Drive dagi fayllar) saqlovchi va ularni API orqali taqdim etuvchi server.
+
+Asosiy tokenlar
+ * Acceess token - resurs serveriga kirish uchun ishlatiladi
+ * Refresh token - acces token muddati tugaganda yangilash uchun ishlatiladi
+ * (OpenID Connect qo'shilganda) ID tokenham bo'ladi, lekin u OAuth2 da yo'q 
+ * Cookie (IdP session): orqali ham yangi token olish mumkin
+
+
+OpenID Connect - bu OAuth2 protakoli ustiga qurilgan authentification protakoli. Foydalanuvchini kimligini tekshiradi va id_token orqali
+foydalanuvchi ma'lumotlarini claims tarzida beradi.
+OpenID Connect - Authentifikatsiya protakoli. U foydalanuvchini kimligini tekshiradi. U foydalanuvchini haqiqatdan ham u ekanligini tekshiradi.
+Uning maqsadi foydalanuvchilar haqidagi ma'lumotlarni o'z ichiga olgan ID Token berish.
+
+OIDC OAuth2 2.0 ning Avtorizatsiya mexanizmdan foydalanib autentifikatsiyani amalga oshiradi.Ular birga ishlaydi.
+
+OpenID Connect ning asosiy komponentalari:
+ 1. ID Token . Bu OIDC ning asosiy elementi. U JWT formatida bo'ladi va foydalanuvchi haqida ma'lumotlarni claims ko'rinishida saqlaydi.
+  * iss (Issuer) - Tokenni kim berganligi
+  * sub (Subject) - Foydalanuvchining unikal identifikatori
+  * aud (Audience) - Token qaysi mijoz (client) uchun mo'ljallanganligi
+  * exp (Expiration Time) - Tokenning amal qilish muddati
+ 2. Authorization Endpoint: Foydalanuvchini browzerini yo'naltiruvchi joy. Bu yerda foydalanuvchi o'z login parolini kiritadi.
+ 3. Token Endpoint: Mijoz authentifikatsiya kod(authorization code)ni tokenlarga almashtirish uchun so'rov beradigan endpoint. Bu yerda Mijoz ID Token hamda Acceess Tokenni oladi
+ 4. UserInfo Endpoint: Bu API nuqatsi bo'lib unga Access token yuboib ID tokendan ko'proq ma'lumot olishimiz mumkin.
+
+SSO (Single Sign-On) imkoniyati: Foydalanuvchi bir marta tizimga kirib boshqa providerlarga kirishi mumkin.
