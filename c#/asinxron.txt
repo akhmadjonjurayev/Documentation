@@ -8,9 +8,9 @@ Operatsiya tugagach, dasturga xabar berilad va natija qayta ishlanadi.
   .Net da asinxron dasturlash async va await kalit so'zi yordamida soddalashtirilgan. Bu yondashuv Task-Based Asynchronous Pattern (TAP)
 deb nomlanadi.
  1. async
-   * Bu metodni asinxron deb belgilaydi. Bu shuni anglatadiki bu metodni ichida aqait kalit so'z ishlatish mumkin.
+   * Bu metodni asinxron deb belgilaydi. Bu shuni anglatadiki bu metodni ichida await kalit so'z ishlatish mumkin.
    * Faqatgina async kalit so'zi qo'shish metodni asinxron qilmaydi, bli asinxron jarayonlarni o'z ichiga olish imkoniyatini beradi.
-   * Asinxron methodlar odatda Task yoki Task<TResult> qaytaradi. Void qaytaradigan asinxron methodlar ham bekor
+   * Asinxron methodlar odatda Task yoki Task<TResult> qaytaradi. Void qaytaradigan asinxron methodlar ham bor
 
  2. await
    * async method ichida ishlatiladi
@@ -20,7 +20,7 @@ deb nomlanadi.
 
  3. Task va Task<Result>
    * Task sinfi qiymat qaytarmaydigan asinxron operatsiyani ifodalaydi
-   * Task<TResult> sinfi esa Tresult tipidagi qiymat qaytaradigan asinxron operatsiyani ifodalaydi
+   * Task<TResult> sinfi esa TResult tipidagi qiymat qaytaradigan asinxron operatsiyani ifodalaydi
 
  Asinxron dasturlashning avzalliklari:
    * Javobgarlikni oshirish, foydalanuvchi interfaysini muzlab qlishini oldini olinadi

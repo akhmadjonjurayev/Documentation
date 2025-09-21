@@ -1,0 +1,47 @@
+Garbage Collection (GC) -> bu mehanizm .net Runtime tomonidan ishlaydigan qaysiki hotiraga joylash hamda hotirani tozalaydigan.
+ 1. Value type stack da saqlanadi. So'rov methoddan chiqib ketganidan so'ng avtomatik tozaladi.
+ 2. Heap:
+  * Har qanday object (odatda 85 KB dan kichik bo'lsa) Generation 0 ga tushadi.
+  * GC da 3 ta asosiy generation bor:
+    * Gen 0 - yangi objectlar (tez-tez tozalanadi)
+    * Gen 1 - Gen 0 dan omon qolgan objectlar (oraliq zona)
+    * Gen 2 - uzoq umr ko'ruvchi objectlar (kamdan-kam tozalanadi)
+ 3. Bundan tashqari:
+  * LOH (Large Object Heap) - 85 KB+ objectlar, darrov Gen 2 ga tushadi
+  * POH (Pinned Object Heap, .NET 5+) - maxsus pinlangan objectlar uchun
+
+Objectlar yaratilganda Gen 0 ga tushadi. Agar GC ishga tushga object ishlatilmayabgan bo'lsa object tozalab yuboriladi. Agar ishlatilayotgan bo'lsa
+Gen 1 ga o'tkaziladi. Keyingi safar GC ishlaganda ham tirik qolgan objectlar Gen 2 ga o'tkaziladi. Gen 2 faqat katta bosim bo'lganda
+yoki GC.Collect() kodda chaqirilganda ishlaydi LOH ham faqat Gen 2 GC paytida tozalanadi.
+
+Generation ga ajratish nima uchun kerak ?
+  Odatda objectlar ko'pi qisqa umr ko'radi. Shu sababli .Net da Gen 0 tez-tez tozalanadi (kichik pauzalar bilan). Uzoq umrli objectlar Gen 2
+ga chiqib ketadi, chunki ularni har safar tekshirish katta resurs talab qiladi.
+
+So'rov tugaganidan keyin ham objectlar tirik qolishi mumkin agar:
+  * static field bo'lsa
+  * singleton service orqali ishlatilsa
+  * background thread/task ichida reference lar saqlanib qolsa
+
+Nega LOH objectlar alohida:
+  * Kata objectlar ko'chirish (compaction) qimmat: katta bloklarni ko'chirib yurish CPU va pauzalarni oshiradi
+  * Shu sabable LOH odatda "ko'chirib zichlanmaydi". Natijada vaqt o'tishi bilan fragmentatsiya (bo'sh joylar bo'lib-bo'lib qolishi)
+paydo bo'lishi mumkin.
+
+LOH muommolarini:
+  * Xotira o'sishi (RSS/Private Bytes ortishi) va tez-tez Gen2 GC
+  * "OutOfMemoryException" bo'lsa, umumiy bo'sh xotira ko'p - lekin ketma-ket katta blok yo'q (fragmentatsiya).
+  * Profillyatorlarda LOH segmentlari kattalashib boradi.
+
+Katta massivlarni qayta ishlashda (pooling)
+
+var pool = ArrayPool<byte>.Shared;
+byte[] buffer = pool.Rent(100_000);
+try
+{
+   // foydalanish
+}
+finally
+{
+   pool.Return(buffer, clearArray: true);
+}
