@@ -1,0 +1,24 @@
+  Kubernet (ko'pincha K8s) - bu containerlarni boshqarish tizimi. Dasturiy ta'minot ko'pincha docker container ichida ishlatiladi.
+Container larni qo'lda boshqarish qiyin bo'lib ketganda kubernet yordamga keladi.
+
+ * Containerlarni avtomatik ishga tushiradi.
+ * Serverlar (node lar) orasida taqsimlaydi.
+ * Agar bitta container o'chib ketsa, yangisini ishga tushiradi (self-healing)
+ * Yangi versiya chiqsa, eski containerlarni to'xtatib, yangisini bosqichma-bosqich ishga tushiradi (rolling update)
+ * Yuklamani (trafikni) bir nechta containerlarga taqsimlaydi (load balancing)
+
+Asosiy tushunchalar:
+ 1. Cluster - Kubernetesning butun tizimi (ichida ko'plab serverlar bo'ladi).
+ 2. Node - bitta server (VM yoki physical server) bo'lib, unda containerlar ishlaydi.
+ 3. Pod - Kubernetesdagi eng kichik birlik. Ichida bitta yoki bir nechta container bo'ladi.
+ 4. Deployment - Podlarni qanday yaratish va boshqarish qoidalari.
+ 5. Service - Podlarni tarmoq orqali ko'rish uchun "IP va port" taqdim etadi.
+ 6. Ingress - tashqi foydalanuvchilarga HTTP/HTTPS orqali ilovaga kirish imkonini beradi.
+ 7. ConfigMap va Secret - konfiguratsiya va parollarni saqlash uchun.
+
+Foydalari:
+  * Avtomatlashtirilgan container boshqaruvi
+  * Masshtablash (scaling) oson
+  * Ishonchlilik (self-healing)
+  * Trafikni balanslash
+  * Cloud (AWS, Azure, GCP) yoki lokal serverda ishlatish mumkin

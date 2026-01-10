@@ -41,7 +41,7 @@ saqlanadi.
 
   * Implict Grant - javascript bevosita login parol orqali token oladi.
   * Client Credentails Grant - ilovalar o'rtasida foydalanuvchisiz authentifikatsiya uchun ishlatiladi.
-  * Password Grant - login paol orqali access token oladi.
+  * Password Grant - login parol orqali access token oladi.
   * Refresh token Grant - access token muddati tugaganda uni yangilash uchun ishlatiladi.
-  * Device Authorization Grant - foydalanuvchi imkoni chegaralangan qurilamalarda ishlatiladi. (televizor) ilova foydalanuvchiga
+  * Device Authorization Grant - foydalanuvchi imkoni chegaralangan qurilmalarda ishlatiladi. (televizor) ilova foydalanuvchiga
   bir Url va kod beradi. Bu kodni boshqa qurilmaga kiritib authentificatsiya qilganidan so'ng access token oladi.

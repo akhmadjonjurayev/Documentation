@@ -1,0 +1,38 @@
+  YAML manifestlarida asosiy sintaksis:
+  * apiVersion - qaysi API ga tegishli
+  * kind - obyekt turi
+  * metadata - nomi, namespace, labels
+  * spec - konfiguratsiya (obyekt turiga qarab o'zgaradi)
+  * status - obyektlarni holati (faqat o'qish uchun)
+
+1. apiVersion. Nima uchun apiVersion bor - sababi kubernetda har bir resurs alohida API group sifatida ajratib qo'yilgan.
+  * Oddiy narsalar (Pod, Service, ConfigMap) -> core/v1
+  * Yirik boshqaruv obyektlari (Deployment, StatefulSet) -> apps/v1
+      Agar bu service doimiy ishlashi kerak bo'lsa 
+  * Batch ishchilar (Job, CronJob) -> batch/v1
+      Faqat bir marta bajarilishi kerak bo'lsa -> Job
+      Vaqti vaqti bilan bajarilishi kerak bo'lsa -> CronJob
+  * Tarmoq obyektlari (Ingress, NetworkPolicy) -> networking.k08.io/v1
+  * Xavfsizlik (RBAC) -> rbac.authorization.io/v1
+  * Auto scaling -> autoscaling/v2
+
+2. kind - bu manifestda yaratilayotgan obyekt turi (masalan Pod, Deployment, Service)
+  Workload boshqaruv obyektlari:
+   1. Deployment
+     * apiVersion: apps/v1
+     * Ma'nosi: Podlarni deklarativ tarzda boshqaradi - rolling update, replica management
+     * Asosiy maydonlar: replicas, selector, template (metadata, spec/containers)
+     * Qachon: ko'pchilik stateless servicelar uchun (micoservice, Web API), Doimiy ishlaydigan Web API lar uchun
+   2. Pod
+     * apiVersion: v1
+     * Ma'nosi: containerlar guruhi eng kichik birlik
+     * Asosiy maydonlar: spec.containers
+     * Qachon: Test/sinov yoki juda oddiy vaziyatlarda odatda bitta container bo'lsa, Pod o'chsa qayta tiklash uchun qo'lda command berish kerak
+   3. ReplicaSet
+     * apiVersion: apps/v1
+     * Ma'nosi: Pod nusxalarini ushlab turadi (Deployment ichida avtomatik yaratiladi)
+     * Qachon: Odatda to'g'ridan-to'g'ri ishlatilmaydi Deployment orqali keladi
+   4. StatefulSet
+     * apiVersion: apps/v1
+     * Ma'nosi: State-ful ilovalar uchun - har bir pod uchun doimiy identifikator va tartib (doimiy network id va doimoiy hotira)
+     * Qachon: DB (Postgres), Kafka, zookeeper -> har bir instansiyaning o'z identifikatori va store gi kerak bo'lsa

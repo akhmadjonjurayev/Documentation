@@ -74,3 +74,11 @@ qaytarsak u holda ASP.NET ni o'zi so'rov tugaganidan so'ng dispose qilib yuborad
    Bu yerda number qiymati boxed obyektga qadoqlanmoqda va hotiraning heap qismida saqlanyabdi.
  * Unboxing object -> value type
   Agar siz ArrayList, Hashtable yoki object type dagi collection lardan foydalanyabgan bo'lsangiz, value type lar avtomatik boxing qilinadi
+
+18. var client = new HttpClient(); qilib ishlatish katta moummo hisoblanadi. Bunda socketlar vaqtida yopilmay qolishi mumkin (TIME_WAIT),
+tizimda portlar tugab ketishi ehtimoli bor. 
+static HttpClient client = new HttpClient(); -> Bunda uzoq ishlatilsa DNS o'zgarishlarini ko'rmaydi, ya'ni yangi IP ga o'ta olmaydi.
+  IHttpClientFactory:
+   * HttpClient objectlarini boshqaradi, socket pool, DNS yangilanishi, connection lifetime
+   * Typed Clients va Named Clients orqali konfiguatsiya qilish imkonini beradi.
+   * Retry, logging, circuit breaker kabi delegating handler larni qo'shishga imkon beradi

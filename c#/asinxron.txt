@@ -77,3 +77,8 @@ Concurency bilan bog'liq muommolar, agar nato'g'ri ishlatilsa.
 
 IO operatsiyalar - IO (Input/Output) operatsiyalar - bu dastur va tashqi resourselar o'rtasidagi ma'lumot almashuvi. Yani dastur
 CPU ichida emas, balki tashqi qurilmalar bilan aloqaga chiqadi.
+
+Thread.Sleep() -> Synchronus (blokirovka qiladi). Joriy thread ni to'liq to'xtatib qo'yadi. Thread.Sleep(5000) qilsak, 5 sekund davomida
+o'sha thread hech narsa qilmaydi. Bu CPU resursini bekorga band qilib turadi.
+Task.Delay() -> Asynchronous (bloklamaydi). Joriy threadni band qilmaydi, balki "taymer qo'yib" boshqa ishlarni bajarishga ruxsat beradi.
+Task.Delay(5000) qilsak, hozirgi thread 5 sekund "kutib turmaydi", balki sh vaqt ichida boshqa requestlarni bajarishi mumkin.
