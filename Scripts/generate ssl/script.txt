@@ -1,0 +1,46 @@
+OpenSsl orqali ssl generatsiya qilish web ilojavalari uchun.
+
+1. Root CA kalitini (Private Key) yaratish
+openssl genrsa -out kalinusRootCA.key 4096
+
+2. Root CA sertifikatini yaratish
+openssl req -x509 -new -nodes -key kalinusRootCA.key -sha256 -days 3650 -out kalinusRootCA.crt -subj "/CN=kalinusRootCA"
+bu buyruq .crt formatida sertifikat yaratadi
+
+3. Domen sertifikati uchun sozlama faylini yaratish (SAN bilan)
+Brauzerlar zamonaviy talablarga ko'ra, sertifikatda domen nomlari aniq ko'rsatilishini talab qiladi.
+kalinus.cnf nomli fayl yaratamiz:
+
+[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+[req_distinguished_name]
+C = UZ
+ST = Tashkent
+L = Tashkent
+O = Kalinus
+OU = Development
+CN = *.kalinus.uz  # <-- Asosiy domen yoki wildcard
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = *.kalinus.uz
+DNS.2 = kalinus.uz
+DNS.3 = identity.kalinus.uz
+DNS.4 = localhost
+
+4. Domen uchun kalit va sertifikat yaratish
+Endi yuqoridagi konfiguratsiyadan foydalanib, domen uchun kalit (domain.key) va sertifikat so'rovini (domain.csr) yaratamiz.
+
+# Domen kalitini yaratish (domain.key)
+openssl genrsa -out domain.key 2048
+
+# Sertifikat so'rovini (CSR) yaratish (domain.csr)
+openssl req -new -key domain.key -out domain.csr -config kalinus.cnf
+
+5. .crt va .key dan .pfx fayl yaratish
+
+openssl pkcs12 -export -out kalinus.pfx -inkey domain.key -in domain.crt -certfile kalinusRootCA.crt
