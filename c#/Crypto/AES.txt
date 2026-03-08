@@ -1,0 +1,27 @@
+AES (Advanced Encryption Standart) - bilan ishlash. AES simmetrik algoritm hisoblanadi, ya'ni ma'lumotni shifrlash
+va uni qayta o'qish uchun bitta maxfiy kalitdan foydalaniladi.
+
+1. AES ning asosiy tushunchalari.
+ * Key (Kalit): Ma'lumotlarni quluflovchi kod. AES 128, 192 yoki 256 bitli kalitlarni qo'llab-quvvatlaydi. Kalit qancha
+uzun bo'lsa xavfsizlik shuncha yuqori bo'ladi.
+
+ * IV (Initialization Vector): Bu tasodifiy hosil qilingan blok bo'lib, bir xil matn har safar turlicha shifrlanishini ta'minlaydi.
+IV maxfiy emas, lekin u har doim shifrlash uchun noyob bo'lishi kerak.
+
+ * Mode (Rejim): Bu bir nechta bloklardan iborat xabarni qanday shifrlash usuli. AES bir vaqtning o'zida faqat 16 baytni 
+shifrlay oladi, rejim esa bu bloklarni bir-biriga zanjir kabi ulaydi.
+   I. ECB (Elektronic Code book) - Har bir blok mustaqil shifrlanadi. IV ishlatilmaydi. Xavfsizlik past. Bir xil matn bloklarni 
+bir xil shifrlaydi.
+   II. CBC (Cipher Block Chaning) - Har bir blok shifrlanishdan oldin oldingi shifr-blok bilan XOR qilinadi. IV shart.
+Xavfsizligi yuqori standart tanlov.
+   III. CTR (Counter Mode) - Bloklarni hisoblagich (counter) yordamida oqimli shifrga aylantiradi. Xafsizligi yuqori. Parallel
+ishlashga juda qulay.
+   IV. GCM (Galois/ Counter Mode) - Shifrlash bilan birga ma'lumot butunligini (Integrity) ham tekshiradi. Xavfsizligi eng yuqori
+hozirgi kunda eng tavsiya etilgan rejim.
+
+ * Padding (To'ldirish turi) - AES har doim 16 baytli blok kutadi. Agar xabar 16 bayt bo'lmasa uni to'ldirish kerak.
+   I. PKCS7 (Tavsiya etiladi): Bo'sh joylarni qolgan baytlar soni bilan to'ldiradi. Agar 3 bayt yetishmasa 0x03, 0x03, 0x03 qo'shiladi.
+Agar xabar blokga aynan mos kelsa, butun boshli yangi 16 baytli padding bloki qo'shiladi.
+   II. ZeroPadding: Bo'sh joylarni nollar (0x00) bilan to'ldiradi. Moummo Agar asl matnni nol bilan tugagan bo'lsa, deshifrlashda ularni
+farqlab bo'lmaydi.
+   III. NoPadding: Hech qanday to'ldirish qo'shilmaydi. Ma'lumot hajmi aynan 16 ning karralisi (16, 32, 48) bo'lishi shart, aks holda xatolik beradi.
