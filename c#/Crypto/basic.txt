@@ -1,0 +1,32 @@
+1. Hex (16 - lik sanoq tizimi)
+ Hex belgilar: 0-9 va A-F
+ Hex - uzun binary ning ixcham ko'rinishi
+ Binary: 01001111
+ Hex: 4F
+ C# da 
+ byte b = 79;
+ string hex = b.ToString("X2"); // 4F
+ byte[] bytes = {1, 2, 255};
+ string hex = Convert.ToHexString(bytes); // 0102FF
+
+2. Base64 - Binary data ni text ko'rinishida saqlash uchun. Binary datani tog'ridan to'g'ri textga qo'yib bo'lmaydi.
+Binary data ichida:
+  * 0x00 (NULL)
+  * control characters
+  * newline bo'ladi -> transport buziladi. X
+
+Nima uchun base64 = 26 ta katta kichik harflar va 10 ta raqam va +,/ belgi = Jami 64 ta
+Matematik sabab 2 ^ 6 = 64
+Har bir Base64 belgisi 6 bit axborot saqlaydi. Nega 6 bit kompyuter olib yuradi.
+1 byte = 8 bit Base64 1 belgi = 6 bit
+3 byte = 24 bit
+24 bit / 6 = 4 ta Base64 belgi. Shu sababli Base64 har doim 3 byte -> 4 belgi qiladi. Doim axborotni 6 blockli belgilarga bo'ladi
+
+3. ASCII va UTC-8
+ ASCII                           UCT-8
+ * 0-127 gacha                  * Har qanday til
+ * faqat ingilizcha             * o'zbekcha ruscha emodji
+
+ string s = "Salom 😁";
+ byte utc8 = Encoding.UTC8.GetBytes(s);
+ byte ascii = Encoding.ASCII.GetBytes(s); // emodji yo'qoladi

@@ -1,0 +1,55 @@
+  Asymmetric shifrlash
+Qoidalar:
+  * Public key -> encrypt
+  * Private key -> decrypt
+  * Private key -> sign
+  * Public key -> verify
+
+RSA - matematik asosda.
+ 1. p, q  2 ta tub son olinadi.
+ 2. n = p * q
+    f(n) = (p - 1)(q - 1)
+ 3. Public expontent tanlanadi. e
+ 4. Private exponent f(n) (Eyler funsiyasi siyasida) o'zaro tub son tanlanadi.
+  d = e ^ -1 mod f(n)
+  Public key -> (e, n)
+  Private key -> (d, n)
+  Encryption c = m ^ e mod(n)
+  Decryption m = c ^ d mod(n)
+
+RSA dagi xatolar:
+  x Raw Rsa Engine ishlatish (padding yo'q)
+  x 1024 bit ishlatish
+  x Private key ni clientga yuborish
+  x Katta data ni bevosita RSA bilan shifrlash
+
+Assimetrik kriptografiya:
+ * Kalit almashish
+ * Gigital signature
+ * Idenitity verification uchun ishlatiladi
+
+RSA da tub sonlarni topishda Miller-Rabin testidan foydalaniladi. gcd(m, n) != 1 bo'lsa RSA buziladi.
+Raw RSA nima
+ c = m ^ e mod(n)
+ m = c ^ d mod(n)
+Hech qanday padding yo'q. Bu juda xavfli.
+
+ * Deterministic, bir xil message -> bir xil cipher
+ * Chosen - plaintext attack uchun
+ * Small - exponent attack uchun
+
+RSA har doim padding bilan ishlatiladi. Eng keng ishlatiladiganlari:
+Maqsad                           Algoritm |
+------------------------------------------|
+Encryption                       RSA-OAEP
+Signature                        RSA-PSS
+
+AsymmetricKeyParameter da nima bo'ladi. Bouncy Castle da RSA key classlari
+ * RsaKeyParameters (public)
+ * RsaPrivateCrtKeyParameters (private)
+ CRT parametrlari:
+Normal decrypt: m = c ^ d mod(n)
+CRT bilan:
+  m1 = c ^ dP mod(p)
+  m2 = c ^ dQ mod(q)
+Chinese Remainder Theorem bilan birlashtiriladi.

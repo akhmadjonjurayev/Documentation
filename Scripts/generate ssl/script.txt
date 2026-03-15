@@ -41,6 +41,9 @@ openssl genrsa -out domain.key 2048
 # Sertifikat so'rovini (CSR) yaratish (domain.csr)
 openssl req -new -key domain.key -out domain.csr -config kalinus.cnf
 
+# Sertifikat uchun domain.crt yaratish
+openssl x509 -req -in domain.csr -CA kalinusRootCA.crt -CAkey kalinusRootCA.key -CAcreateserial -out domain.crt -days 825 -sha256 -extfile kalinus.cnf -extensions v3_req
+
 5. .crt va .key dan .pfx fayl yaratish
 
 openssl pkcs12 -export -out kalinus.pfx -inkey domain.key -in domain.crt -certfile kalinusRootCA.crt
