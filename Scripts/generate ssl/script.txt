@@ -23,7 +23,7 @@ O = Kalinus
 OU = Development
 CN = *.kalinus.uz  # <-- Asosiy domen yoki wildcard
 [v3_req]
-keyUsage = keyEncipherment, dataEncipherment
+keyUsage = critical, digitalSignature, keyEncipherment, dataEncipherment
 extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 [alt_names]
