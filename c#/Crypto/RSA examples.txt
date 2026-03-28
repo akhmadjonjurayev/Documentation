@@ -1,0 +1,115 @@
+var keyPair = GenerateRsaKeyPair();
+
+var publicKey = (RsaKeyParameters)keyPair.Public;
+
+Console.WriteLine("Modulus (n): " + publicKey.Modulus);
+Console.WriteLine("Public Exponent (e): " + publicKey.Exponent);
+
+var privateKey = (RsaPrivateCrtKeyParameters)keyPair.Private;
+
+Console.WriteLine("p: " + privateKey.P);
+Console.WriteLine("q: " + privateKey.Q);
+Console.WriteLine("d: " + privateKey.Exponent);
+Console.WriteLine("dP: " + privateKey.DP);
+Console.WriteLine("dQ: " + privateKey.DQ);
+Console.WriteLine("qInv: " + privateKey.QInv);
+
+string message = "Secret Message, This is test from Visual Studio";
+byte[] plainBytes = Encoding.UTF8.GetBytes(message);
+
+// Encrypt
+byte[] cipher = RsaEncrypt(plainBytes, keyPair.Public);
+
+// Decrypt
+byte[] decrypted = RsaDecrypt(cipher, keyPair.Private);
+
+string result = Encoding.UTF8.GetString(decrypted);
+
+Console.WriteLine(result);
+
+
+Console.ReadKey();
+
+static AsymmetricCipherKeyPair GenerateRsaKeyPair()
+{
+    var keyGen = new RsaKeyPairGenerator();
+    keyGen.Init(new KeyGenerationParameters(
+        new SecureRandom(),
+        2048)); // 2048 bit
+
+    return keyGen.GenerateKeyPair();
+}
+
+static byte[] RsaEncrypt(byte[] data, AsymmetricKeyParameter publicKey)
+{
+    var engine = new Pkcs1Encoding(new RsaEngine());
+    engine.Init(true, publicKey);
+
+    return engine.ProcessBlock(data, 0, data.Length);
+}
+
+static byte[] RsaDecrypt(byte[] cipher, AsymmetricKeyParameter privateKey)
+{
+    var engine = new Pkcs1Encoding(new RsaEngine());
+    engine.Init(false, privateKey);
+
+    return engine.ProcessBlock(cipher, 0, cipher.Length);
+}
+
+static byte[] SignData(byte[] data, AsymmetricKeyParameter privateKey)
+{
+    var signer = new RsaDigestSigner(new Sha256Digest());
+    signer.Init(true, privateKey);
+
+    signer.BlockUpdate(data, 0, data.Length);
+    return signer.GenerateSignature();
+}
+
+static bool VerifySignature(
+    byte[] data,
+    byte[] signature,
+    AsymmetricKeyParameter publicKey)
+{
+    var signer = new RsaDigestSigner(new Sha256Digest());
+    signer.Init(false, publicKey);
+
+    signer.BlockUpdate(data, 0, data.Length);
+    return signer.VerifySignature(signature);
+}
+// Sign va Imzoni tekshirish
+
+
+
+
+AsymmetricCipherKeyPair keyPair = GenerateRsaKeyPair();
+using (var writer = new StreamWriter(Path.Combine(Directory.GetCurrentDirectory() ,"private_key.pem")))
+{
+    var pemWriter = new PemWriter(writer);
+    pemWriter.WriteObject(keyPair.Private);
+    pemWriter.Writer.Flush();
+}
+
+using (var writer = new StreamWriter(Path.Combine(Directory.GetCurrentDirectory() ,"public_key.pem")))
+{
+    var pemWriter = new PemWriter(writer);
+    pemWriter.WriteObject(keyPair.Public);
+    pemWriter.Writer.Flush();
+}
+
+AsymmetricKeyParameter privateKey;
+
+using (var reader = new StreamReader("private_key.pem"))
+{
+    var pemReader = new PemReader(reader);
+    var keyPair_ = (AsymmetricCipherKeyPair)pemReader.ReadObject();
+    privateKey = keyPair.Private;
+}
+
+AsymmetricKeyParameter publicKey;
+
+using (var reader = new StreamReader("public_key.pem"))
+{
+    var pemReader = new PemReader(reader);
+    publicKey = (AsymmetricKeyParameter)pemReader.ReadObject();
+}
+// Sertifikatni pem formatida yaratish hamda o'qib olish
