@@ -1,0 +1,42 @@
+ECDHE = Elliptic Curve Diffie-Hellman Epheremal 3 ta tushunchadan iborat.
+ Elliptic Curve - matematik asos
+ Diffie-Hellman - key exchange algoritm
+ Epheremal - vaqtinchlik key (har safar yangi)
+Asosiy g'oya - public ma'lumotlar bilan shared secret hosil qilish
+ECDHE nimasi bilan farq qiladi.
+  * Oddiy DH: mod p arithmetic
+  * ECDHE : Elliptic Curve math
+    Elliptic Curve formulasi:
+      y^2 = x^3 + a*x + b
+      Bu curve ustida: point addition, point multiplication ishlatiladi.
+      Elliptic Curve Discrete Log Problem (ECDLP)
+ECDHE - faqat key exchange uchun ishlatiladi. ECDHE != RSA
+
+Shared secret hisoblash:
+Client tomonda ->
+
+var clientAgreement = new ECDHBasicAgreement();
+clientAgreement.Init(clientKeyPair.Private);
+
+var clientSecret = clientAgreement.CalculateAgreement(
+    serverKeyPair.Public);
+
+Server tomonda ->
+
+var serverAgreement = new ECDHBasicAgreement();
+serverAgreement.Init(serverKeyPair.Private);
+
+var serverSecret = serverAgreement.CalculateAgreement(
+    clientKeyPair.Public);
+
+Bu hali AES key emas
+
+byte[] sharedBytes = clientSecret.ToByteArray();
+
+// SHA256 orqali key olish
+using var sha = System.Security.Cryptography.SHA256.Create();
+byte[] aesKey = sha.ComputeHash(sharedBytes);
+
+A = g^a mod p
+B = g^b mod p
+S = g^(ab) mod p
