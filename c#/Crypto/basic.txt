@@ -30,3 +30,17 @@ Har bir Base64 belgisi 6 bit axborot saqlaydi. Nega 6 bit kompyuter olib yuradi.
  string s = "Salom 😁";
  byte utc8 = Encoding.UTC8.GetBytes(s);
  byte ascii = Encoding.ASCII.GetBytes(s); // emodji yo'qoladi
+
+4. PKI (Public Key Infrastructure) - bu ishonch tizimi. Certificate orqali tekshiramiz. CA (Certificate Authory) orqali tasdiqlaymiz.
+Asosiy komponentalar:
+ I. Certificate. Bu Public key + Identity (kimligi) + Signature
+ II. CA (Certificate Authory). Masalan : Let's Encrypt, DigiCert
+ III. Root CA - Browzer (operatsion sistema) ichida oldindan o'rnatilgan bo'ladi: trusted root certificates.
+ IV. Chain of Trust.
+   Root CA -> Intermadiate CA -> Server Certificate.
+  Sertificate ichida nimalar bor:
+   * Subject  -> kim (example.com)
+   * Issuer   -> kim berdi (CA)
+   * Public Key -> RSA/ECC key
+   * Validity -> amal qilish muddati
+   * Signature -> CA imzosi 

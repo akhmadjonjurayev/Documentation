@@ -25,3 +25,9 @@ Agar xabar blokga aynan mos kelsa, butun boshli yangi 16 baytli padding bloki qo
    II. ZeroPadding: Bo'sh joylarni nollar (0x00) bilan to'ldiradi. Moummo Agar asl matnni nol bilan tugagan bo'lsa, deshifrlashda ularni
 farqlab bo'lmaydi.
    III. NoPadding: Hech qanday to'ldirish qo'shilmaydi. Ma'lumot hajmi aynan 16 ning karralisi (16, 32, 48) bo'lishi shart, aks holda xatolik beradi.
+
+
+HMAC - Hash based Message Authentification Code. 
+Formulasi HMAC(key, message);
+JWT uchun HMACSHA256(secret, header.playload)
+natija signature. Bu message ni o'zgarmaganini tekshiradi.

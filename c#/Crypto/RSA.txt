@@ -53,3 +53,24 @@ CRT bilan:
   m1 = c ^ dP mod(p)
   m2 = c ^ dQ mod(q)
 Chinese Remainder Theorem bilan birlashtiriladi.
+
+
+Digital Signature - bu ma'lumotni kim yuborganini va u o'zgarmaganini isbotlaydigan kriptografik imzo. U 2 ta narsani ta'minlaydi:
+Authentification kim yuborganini, Integrity ma'lumot o'zgarmaganini bilamiz.
+Digital Signature ishlashi:
+ 1. Sender message ni hash qiladi
+    message = "Salom"
+    hash = SHA256(message)
+ 2. Hash private key bilan shifrlanadi
+    signature = Encrypt(hash, privateKey)
+    RSA bo'lsa
+    signature = hash^d mod(n)
+ 3. Message + signature yuboriladi
+ 4. Receiver tekshiradi
+    * message ni hash qiladi
+    hash1 = SHA256(message)
+    * signature ni public key bilan ochamiz
+    hash2 = signature^e mod(n)
+    * solishtiriladi 
+    hash1 == hash2
+    Agar o'zgarmagan bo'lsa message o'zgarmagan, haqiqiy yuboruvchi 
