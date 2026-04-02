@@ -1,0 +1,14 @@
+1. docker exec -it germes-db-postgres bash // containerga ulanish
+
+2. pg_dump -U germes -d GermesMessengerService -n messenger_service -Fc -f /tmp/messenger.dump // Ko'rsatilgan db dagi schemadan .dump ko'rinishida backup olish
+
+3. docker cp germes-db-postgres:/tmp/messenger.dump /srv/BAIK/Messenger // container ichidan linux ga faylni copy qilish
+
+4. docker cp C:\Users\Ahmadjon\Desktop\Baik\messenger.dump germes-db-postgres:/temp/messenger.dump // fayl sistemadan dockerga backup ni qo'yish
+
+5. docker exec -it germes-db-postgres pg_restore -U germes -d GermesMessengerService -n messenger_service --no-owner --role=germes -Fc /srv/messenger.dump
+// db ga user bilan yanfi dbga restore qilish
+
+
+  * Oldindan kerak: Database, Schema, User(role)
+  * Restore o'zi yaratadi: Jadvallar, Ma'lumotlar, Index lar, constraint lar
