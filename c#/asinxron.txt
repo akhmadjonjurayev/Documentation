@@ -82,3 +82,26 @@ Thread.Sleep() -> Synchronus (blokirovka qiladi). Joriy thread ni to'liq to'xtat
 o'sha thread hech narsa qilmaydi. Bu CPU resursini bekorga band qilib turadi.
 Task.Delay() -> Asynchronous (bloklamaydi). Joriy threadni band qilmaydi, balki "taymer qo'yib" boshqa ishlarni bajarishga ruxsat beradi.
 Task.Delay(5000) qilsak, hozirgi thread 5 sekund "kutib turmaydi", balki sh vaqt ichida boshqa requestlarni bajarishi mumkin.
+
+SynchronizationContext - kodning qaysi threadda davom etishini boshqaruvchi mexanizm. await tugagandan keyin "endi qayerga qayt" degan savolga javob beradi.
+Har xil muhitda SynchronizationContext turlicha:
+  * ASP.NET (classic, .NET Framework) - RequestContext bor, faqat bitta thread requestni boshqaradi, await dan keyin ham shu threadga qaytishi kerak
+  * WinForms / WPF - UI thread bor, UI elementlari faqat UI thread o'zgartira oladi, await dan keyin ham UI threadga qaytaradi
+  * Console App / ASP.NET Core - SynchronizationContext = NULL, Ixtiyoriy threaddan davom etishi mumkin, shuning uchun console da deadlock bo'lmaydi
+ASP.NET classic da SynchronizationContext bor - u request bilan bog'liq ma'lumotlarni saqlaydi. ASP.NET Core da esa Scope da saqlanadi.
+
+.Result qachon ishlatiladi.
+  * natija tayyor bo'lganda
+    var task = Task.FromResult(42); // already completed
+    var val = task.Result;          // bloklamaydi, natija tayyor!
+  * async bo'lmagan context da 
+    static void Main() // eski C# — async Main yo'q edi
+    {
+       var result = GetDataAsync().Result; // Console appda xavfsiz
+    }
+  * Task tugaganiga ishonch hosil qilingan
+    var task = GetDataAsync();
+    task.Wait(); // yoki
+    await task;  // oldin await qilindi
+    var result = task.Result; // endi bloklamaydi
+  * virtual methodlarda async qilib bo'lmaydi. Constructorda async qilib bo'lmagan paytda, property getter async bo'lmagan paytlarda ishlatiladi
