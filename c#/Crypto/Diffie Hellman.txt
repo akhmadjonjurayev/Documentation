@@ -40,3 +40,57 @@ byte[] aesKey = sha.ComputeHash(sharedBytes);
 A = g^a mod p
 B = g^b mod p
 S = g^(ab) mod p
+
+Deffi-Hellman kichik sonlarda
+Umumiy ochiq parametrlar hamma biladi.
+p = 23 (tub son modules)
+g = 5  (generator - primitive root mod p)
+1-qadam Alica va Bob o'zini private key ni tanlaydi
+Alice a = 4, bob b = 3
+2-qadam ochiq kalitlar hisoblanadi
+A = g^a mod p , A = 5^4 mod 23 = 4
+B = g^b mod p , B = 5^3 mod 23 = 10
+3-qadam A va B bir biriga yuborilib S hisoblanadi
+S = B^a mod p = A^b mod p = 18
+
+yopiq kalitni topish uchun 5^a = 4 mod 23 ni yechish kerak bu esa Determistik Logarifm muommosi
+ECDHE - bu DH ning elliptik egri chiziq ustida bajarilgan versiyasi. Sonlar o'rniga nuqtalar, Ko'paytirish o'rniga nuqta qo'shish ishlatiladi
+ammo asosiy g'oya bir xil.
+
+ECDSA - raqamli imzo. Imzolash va imzoni tekshirishdan iborat.
+
+Hamma biladi Curve, G, N , P-256 qilinda dunyo standarti bo'yicha G va N parametrlar bir xil
+Alice private: d_A (tasodifiy scalyar) -> har xil
+Bob private :  d_B (tasodifiy scalyar) -> har xil
+
+GenerateEcdhKeyPair("P-256") -> da nimalar hosil bo'ladi
+curveParams.G = 04 6B17D1F2... (P-256 standardi har doim bir xil)
+d_A = [random 256 bit] -> har safar yangi
+Q_A = d_A * G -> shuning uchun ochiq kalit har xil
+
+y^2 = x^3 + a * x + b -> Bu elliptik chiziq tenglamasi bu formula ECC(Elliptic Curve Cryptografy) ning matematik asosi. ECDSA va ECDHE
+ikkalasi ham shu formula asosida qurilgan. Bu tenglama grafik chizadi - juft nuqtalar to'plami. P-256 uchun a = -3, p = (2²⁵⁶ − 2²²⁴ + 2¹⁹² + 2⁹⁶ − 1)
+
+Kriptografiya qayerda ishlaydi. GenerateEcdhKeyPair("P-256") chaqirganda:
+X9ECParameters curveParams = ECNamedCurveTable.GetByName("P-256");
+var domainParams = new ECDomainParameters(
+    curveParams.Curve,   // ← shu yerda y² = x³ + ax + b saqlanadi
+    curveParams.G,       // ← shu egri chiziq ustidagi Generator nuqta
+    curveParams.N,
+    curveParams.H
+);
+curveParams.Curve ichida aynan shu tenglama yashirilgan
+Asosiy operatsiya nuqtani qo'shish.
+Classic DH: g^a mod p -> sonni a marta ko'paytirish
+ECDH: a * G -> nuqtani a marta qo'shish
+
+Nuqta qo'shishni geometrik ma'nosi:
+P va Q nuqtalarni qo'shish:
+1. P va Q orqali to'gri chiziq o'tkaziladi
+2. Bu to'gri chiziq egri chiziqni 3- nuqtada kesadi
+3. O'sha nuqtaning X o'qi bo'yicha aksi  -> P + Q
+
+Egri chiziq ustida nuqtalar aniqlanadi va nuqta qo'shish operasiyasi tariflanadi.
+ECDSA: imzo: f (d, hash, nonce)
+ECDHE: shared = d_Alice * Q_Bob = d_Bob * Q_Alice
+

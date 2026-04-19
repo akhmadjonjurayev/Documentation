@@ -43,4 +43,13 @@ Asosiy komponentalar:
    * Issuer   -> kim berdi (CA)
    * Public Key -> RSA/ECC key
    * Validity -> amal qilish muddati
-   * Signature -> CA imzosi 
+   * Signature -> CA imzosi
+
+5. Nato'gri kalit bilan decrypt qilsa nima bo'ladi.
+  5.1 Simmetrik shifrlash. Oddiy authentification yo'q shifrlashda xatolik bermaydi. Random text chiqaradi. Shifrlash algoritmi transformatsiya
+qiladi. Natog'ri kalit -> natog'ri transformatsiya -> lekin bari bir input bor.
+  Authenticated encryption (masalan: AES-GCM). Bu zamonaviy usul. Agar kalit nato'g'ri bo'lsa decryption fail beradi, exception chiqadi
+yoki verify bo'lmaydi. Bu yerda nafaqat decrypt balki integrity check ham bor tag orqali.
+  Faqat AES-CBC -> ishlatilsa silent corruption bo'lishi mumkin. AES-GCM ishlatilsa -> har doim xavfsiz (fail-fast)
+  5.2 Assimetrik shifrlash (RSA, ECC). Natija xatolik chiqadi ayniqsa padding ishlatilsa (PKCS#1, OAEP). Bazi hollarda random data chiqishi mumkin
+lekin u kam uchraydi.
