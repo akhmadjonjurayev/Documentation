@@ -94,3 +94,62 @@ Egri chiziq ustida nuqtalar aniqlanadi va nuqta qo'shish operasiyasi tariflanadi
 ECDSA: imzo: f (d, hash, nonce)
 ECDHE: shared = d_Alice * Q_Bob = d_Bob * Q_Alice
 
+ECDHE — Private Key dan Public Key yasalishi
+Private Key — oddiy tasodifiy son, 256-bit
+Public Key — egri chiziqda nuqta. Q = d * G (G boshlang'ich nuqta, static)
+Bu ikki koordinata birlashtirilib bir qator bayt sifatida yuboriladi:
+Compressed (33 bayt):
+  02 || x           ← y juft bo'lsa 02, toq bo'lsa 03
+  02 A72E8231...
+
+Uncompressed (65 bayt):
+  04 || x || y      ← 04 = "bu uncompressed" belgisi
+  04 A72E8231... 7C5FA9D2...
+
+Kodimizda GetPublicKeyBytes(pub) xuddi shu 04 || x || y ni qaytaradi.
+Shared Secret hisoblashda d_A × d_B × G  ← bir xil! bitta nuqta chiqadi Lekin faqat x koordinatasi olinadi → shared secret:
+S = (Sx, Sy)
+Shared Secret = Sx   ← faqat x ishlatiladi
+
+
+ECDSA — Imzolash.
+Imzo yaratish.
+Kiradi:  private key d,  xabar hash h,  random nonce k
+k × G hisoblana → nuqta (x, y) chiqadi
+O'sha nuqtaning faqat x koordinatasi olinadi:
+r = (k × G).x   mod n      ← nuqtadan r chiqdi
+s hisoblanadi (matematik formula):
+s = k⁻¹ × (h + r × d)  mod n
+Imzo = (r, s) juftligi
+Uzunligi: r = 32 bayt, s = 32 bayt → jami 64 bayt
+DER formatda birlashtirilib → 70-72 bayt bo'ladi
+
+Imzo tekshirish
+Kiradi: public key Q,  xabar hash h,  imzo (r, s)
+Ikki nuqta hisoblanadi:
+u1 = h × s⁻¹  mod n
+u2 = r × s⁻¹  mod n
+
+Nuqta = u1×G + u2×Q
+
+O'sha nuqtaning x koordinatasi r ga teng bo'lishi kerak:
+Nuqta.x == r  →  ✓ Imzo to'g'ri
+Nuqta.x != r  →  ✗ Imzo xato
+
+Umumiy xulosa:
+┌─────────────────────────────────────────────────────┐
+│  Private Key:  d          (random son, 32 bayt)     │
+│  Public  Key:  d × G      (egri chiziqda nuqta)     │
+│                → x, y koordinatalar                 │
+│                → 04 || x || y formatda yuboriladi   │
+└─────────────────────────────────────────────────────┘
+
+ECDHE:
+  Shared Secret = (d_A × Q_B).x    ← nuqtaning x si
+
+ECDSA imzo:
+  r = (k × G).x                    ← nuqtaning x si
+  s = k⁻¹(hash + r×d) mod n
+  Imzo = (r, s) → DER formatda birlashtirilib yuboriladi
+
+
