@@ -53,3 +53,29 @@ yoki verify bo'lmaydi. Bu yerda nafaqat decrypt balki integrity check ham bor ta
   Faqat AES-CBC -> ishlatilsa silent corruption bo'lishi mumkin. AES-GCM ishlatilsa -> har doim xavfsiz (fail-fast)
   5.2 Assimetrik shifrlash (RSA, ECC). Natija xatolik chiqadi ayniqsa padding ishlatilsa (PKCS#1, OAEP). Bazi hollarda random data chiqishi mumkin
 lekin u kam uchraydi.
+
+6. PCKS - Public Key Cryptography Standards ning qisqartmasi. Bu cryptografik protokollar sandartlar, ma'lum formatlar
+uchun spetsifikatsiya hisoblanadi. Jami #15 ta standart mavjud. Masalan:
+PKCS#10 - sertifikat so'rovlari (CRS) uchun, PKCS#12 - sertifikat va kalitlarni import/export qilish uchun, PKCS#7 - imzolangan, shifrlangan habarlar uchun
+PKCS#12 - yoki .p12 ham deb ataladi.  Bu xususiy kalitlar. X.509 sertifikatlari, sertifikatni bekor qilish ro'yxati (CRL) Oraliq va CA sertifikatlari, Xusuisy kalit
+(parol bilan himoyalangan) bo'lishi mumkin
+
+6.1 Aliases - bu PKCS#12 faylning ichidagi har bir SafeBag ga berilgan do'stona nom. PKCS#12 da bir nechta sertificat va kalit bo'lishi mumkin.
+mystore.p12
+├── [alias: "web-server"]     → private key + sertifikat (example.com uchun)
+├── [alias: "signing-key"]    → private key + sertifikat (code signing uchun)
+└── [alias: "CA-root"]        → faqat CA sertifikati (kalit yo'q)
+foreach (string alias in store.Aliases)
+{
+    // har bir alias uchun alohida ishlash
+    if (store.IsKeyEntry(alias))
+        // bu entry da private key bor
+    else
+        // bu faqat sertifikat (CA, intermediate va h.k.)
+}
+
+PFX fayl
+│
+├── Sertifikat     → ochiq (DER/Base64), parol kerak emas
+├── Private Key    → AES-256-CBC bilan shifrlangan, PAROL kerak
+└── MAC (imzo)     → HMAC-SHA256, parol noto'g'ri bo'lsa XATO
