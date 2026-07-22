@@ -79,3 +79,40 @@ PFX fayl
 ├── Sertifikat     → ochiq (DER/Base64), parol kerak emas
 ├── Private Key    → AES-256-CBC bilan shifrlangan, PAROL kerak
 └── MAC (imzo)     → HMAC-SHA256, parol noto'g'ri bo'lsa XATO
+
+7. Hexadecimal - bu 16-lik sanoq tizimining to'liq rasmiy ilmiy nomi.
+ * 0x20 = (2 * 16) + (0 * 16) = 32
+ * 0x100 = (1 * 16^2) + (0 * 16^1) + (0 * 16^0) = 256
+ * 0xFF = (15 * 16^1) + (15 * 16^0) = 255
+
+8. Amallar binary ustida
+ I. AND 
+    1 & 1 = 1
+
+    1 & 0 = 0
+
+    0 & 1 = 0
+
+    0 & 0 = 0
+  II. OR
+    1 | 1 = 1
+
+    1 | 0 = 1
+
+    0 | 1 = 1
+
+    0 | 0 = 0
+  III. XOR
+    1 ^ 1 = 0
+
+    1 ^ 0 = 1
+
+    0 ^ 1 = 1
+
+    0 ^ 0 = 0
+  IV. NOT
+    00001111
+
+    ↓
+
+    11110000
