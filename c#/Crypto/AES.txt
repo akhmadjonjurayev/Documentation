@@ -223,4 +223,6 @@ CipherText
 Authentication Tag
 
 AES-GCM natijasida uchta narsa hosil bo'ldi. Nonce, CipherText, Tag. Server decrypt da avval tagni haqiqiylikka tekshiradi. Agar mos kelsa jarayonni davom ettiradi.
+Agar ma'lumotni yaxlitligiga tekshirilmasa unda hacker shifrni buzib qo'yishi mumkin. Natijada server ma'lumotni nato'g'ri decrypt qilishi mumkin.
+
 
