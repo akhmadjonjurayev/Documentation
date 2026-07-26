@@ -31,3 +31,196 @@ HMAC - Hash based Message Authentification Code.
 Formulasi HMAC(key, message);
 JWT uchun HMACSHA256(secret, header.playload)
 natija signature. Bu message ni o'zgarmaganini tekshiradi.
+
+
+AES (Advanced Encryption Standard) — to'liq va sodda tushuntirish
+1. Umumiy tasavvur
+AES — bu simmetrik blokli shifr. Ya'ni:
+
+Simmetrik — shifrlash va deshifrlash uchun bitta kalit ishlatiladi.
+Blokli — ma'lumot 16 baytlik (128 bit) bo'laklarga bo'linadi va har bir blok alohida shifrlanadi.
+Blok o'lchami har doim 16 bayt (o'zgarmaydi). Kalit esa 3 xil bo'lishi mumkin:
+
+Kalit	Kalit uzunligi	Raundlar soni (Nr)	Raund kalitlari soni
+AES-128	16 bayt	10	11
+AES-192	24 bayt	12	13
+AES-256	32 bayt	14	15
+Asosiy g'oya: 16 bayt ma'lumotni kalit bilan aralashtirib, 10–14 marta "chaynash" — har safar baytlarni almashtirish, siljitish va aralashtirish orqali. Natijada chiqish tasodifiy shovqindek ko'rinadi.
+
+2. 16 bayt qanday joylashadi — "State" matritsasi
+AES 16 baytni chiziq sifatida emas, 4×4 matritsa sifatida ko'radi. Bu matritsa State deb ataladi.
+
+Baytlar ustun bo'ylab (column-major) to'ldiriladi:
+
+Kirish:  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 b11 b12 b13 b14 b15
+State:
+        ┌                      ┐
+        │ b0   b4   b8   b12   │   ← 0-qator
+        │ b1   b5   b9   b13   │   ← 1-qator
+        │ b2   b6   b10  b14   │   ← 2-qator
+        │ b3   b7   b11  b15   │   ← 3-qator
+        └                      ┘
+Misol: "HELLO AES WORLD!" matni baytlari:
+
+48 45 4C 4C 4F 20 41 45 53 20 57 4F 52 4C 44 21
+State:
+
+48  4F  53  52
+45  20  20  4C
+4C  41  57  44
+4C  45  4F  21
+Butun shifrlash jarayoni — shu 4×4 matritsani qayta-qayta o'zgartirishdan iborat.
+
+3. Shifrlashning umumiy sxemasi
+State = Ochiq matn (16 bayt)
+  AddRoundKey(K0)                    ← boshlang'ich oqartirish
+  1..(Nr-1) raund uchun takrorlanadi:
+      SubBytes                       ← baytlarni almashtirish
+      ShiftRows                      ← qatorlarni siljitish
+      MixColumns                     ← ustunlarni aralashtirish
+      AddRoundKey(Ki)                ← kalit bilan XOR
+  Oxirgi raund (Nr):
+      SubBytes
+      ShiftRows
+      AddRoundKey(K_Nr)              ← MixColumns YO'Q!
+Natija = Shifrlangan matn (16 bayt)
+Nega oxirgi raundda MixColumns yo'q? Chunki u xavfsizlikka hech narsa qo'shmaydi (oxirida u faqat teskari aylantirilishi mumkin bo'lgan chiziqli amal), lekin deshifrlash algoritmini simmetrik va sodda qiladi.
+
+4. To'rtta asosiy amal — batafsil
+4.1. SubBytes — baytlarni almashtirish (chalkashtirish / confusion)
+Har bir bayt S-box deb ataladigan 256 elementli jadval orqali boshqa baytga almashtiriladi.
+
+0x53  →  S-box[0x53]  →  0xED
+S-box qanday tuzilgan (2 qadam):
+
+Galua maydonida teskari qiymat topiladi — GF(2⁸) maydonida, x⁸+x⁴+x³+x+1 (0x11B) modul ko'phadi bilan. (0 bayti o'ziga o'zi qoladi.)
+Affin almashtirish — natijaviy bitlar aylanma siljitish va 0x63 bilan XOR qilinadi.
+Nima uchun kerak? Bu yagona chiziqsiz (nonlinear) amal. Usiz AES oddiy chiziqli tenglamalar tizimiga aylanardi va bir necha soniyada yechilardi. S-box "kirish → chiqish" bog'liqligini matematik jihatdan chalkashtirib yuboradi.
+
+Amalda hech kim GF(2⁸) hisoblamaydi — 256 baytlik tayyor jadval xotirada turadi.
+
+4.2. ShiftRows — qatorlarni siljitish (tarqatish / diffusion)
+Har bir qator chapga siljiydi: 0-qator — 0 pozitsiya, 1-qator — 1, 2-qator — 2, 3-qator — 3.
+
+Oldin:              Keyin:
+a0 a4 a8  a12       a0  a4  a8  a12     (siljimadi)
+a1 a5 a9  a13   →   a5  a9  a13 a1      (1 ga chapga)
+a2 a6 a10 a14       a10 a14 a2  a6      (2 ga chapga)
+a3 a7 a11 a15       a15 a3  a7  a11     (3 ga chapga)
+Nima uchun kerak? Baytlarni ustunlar orasida tarqatadi. Aks holda har bir ustun butun shifrlash davomida o'zidan chiqmasdi — AES aslida 4 ta mustaqil 4-baytli shifrga bo'linib ketardi.
+
+4.3. MixColumns — ustunlarni aralashtirish (tarqatish / diffusion)
+Har bir ustun (4 bayt) GF(2⁸)da doimiy matritsaga ko'paytiriladi:
+
+┌ b0 ┐   ┌ 02 03 01 01 ┐   ┌ a0 ┐
+│ b1 │ = │ 01 02 03 01 │ · │ a1 │
+│ b2 │   │ 01 01 02 03 │   │ a2 │
+└ b3 ┘   └ 03 01 01 02 ┘   └ a3 ┘
+Bu yerda "ko'paytirish" oddiy ko'paytirish emas — GF(2⁸) maydonidagi ko'paytma:
+
+01 × a = a (o'zgarmaydi)
+02 × a = a ni 1 bit chapga siljit; agar chiqib ketgan bit 1 bo'lsa — natijani 0x1B bilan XOR qil
+03 × a = (02 × a) XOR a
+Qo'shish o'rniga — XOR
+Nima uchun kerak? Ustun ichidagi baytlarni aralashtiradi. ShiftRows + MixColumns birgalikda to'liq tarqalish (full diffusion) beradi: kirishdagi 1 bit o'zgarsa, 2 raunddan keyin barcha 128 bit o'zgaradi. Buni ko'chki effekti (avalanche effect) deyiladi.
+
+4.4. AddRoundKey — kalit bilan XOR
+State 16 baytlik raund kaliti bilan bayt-baytga XOR qilinadi. Eng sodda amal — lekin aynan shu yerda kalit maxfiyligi ishga tushadi. Qolgan uchta amal ochiq va hammaga ma'lum; kalitsiz ular hech narsa bermaydi.
+
+5. Kalitni kengaytirish (Key Expansion)
+Bitta kalitdan Nr+1 ta raund kaliti hosil qilinadi (AES-128 uchun 11 ta × 16 bayt = 176 bayt).
+
+Jarayon (AES-128 misolida, kalit 4 ta 4-baytli "so'z" — W0..W3):
+
+Har bir keyingi Wi (i = 4..43):
+    temp = W[i-1]
+    agar i % 4 == 0:
+        temp = RotWord(temp)      ← [a,b,c,d] → [b,c,d,a]
+        temp = SubWord(temp)      ← har bir baytga S-box
+        temp = temp XOR Rcon[i/4] ← raund doimiysi (01,02,04,08,10,20,...)
+    W[i] = W[i-4] XOR temp
+Rcon nima uchun kerak? U har bir raundga har xil qiymat qo'shadi va simmetriyani buzadi. Usiz bir xil baytlardan iborat kalitlar bir xil raund kalitlarini bergan bo'lardi (slide-hujum imkoniyati).
+
+AES-256 uchun qadam 8 ta so'z, va qo'shimcha ravishda har 4-so'zda ham SubWord qo'llanadi. Aynan AES-256 kalit jadvalining AES-128 ga qaraganda zaifroq bo'lishi keyinroq related-key hujumlarga sabab bo'lgan (6-bo'limga qarang).
+
+6. Deshifrlash
+Barcha amallarning teskarisi, teskari tartibda:
+
+Shifrlash	Deshifrlash
+SubBytes	InvSubBytes (teskari S-box jadvali)
+ShiftRows	InvShiftRows (o'ngga siljitish)
+MixColumns	InvMixColumns (teskari matritsa: 0E, 0B, 0D, 09)
+AddRoundKey	AddRoundKey (XOR o'ziga o'zi teskari)
+Raund kalitlari teskari tartibda ishlatiladi: K_Nr → K_0.
+
+⚠️ Muhim amaliy nuqta: deshifrlash shifrlashdan sekinroq (InvMixColumns koeffitsientlari murakkabroq). Shuning uchun zamonaviy tizimlar deshifrlashni umuman talab qilmaydigan CTR/GCM rejimlarini afzal ko'radi — u yerda faqat shifrlash funksiyasi ishlatiladi.
+
+7. Blok rejimlari (Modes of Operation)
+AES o'zi faqat 16 baytni shifrlaydi. 1 GB fayl bilan nima qilish kerak? Shu yerda rejimlar kirib keladi.
+
+7.1. ECB (Electronic Codebook) — ❌ ISHLATMANG
+Blok1 → AES → Shifr1
+Blok2 → AES → Shifr2      (har biri mustaqil)
+Muammo: bir xil ochiq blok → har doim bir xil shifr blok. Ma'lumot strukturasi ko'rinib qoladi.
+
+Mashhur misol — "ECB Penguin": rasm ECB bilan shifrlansa, undagi pingvin siluети hali ham aniq ko'rinib turadi. Ma'lumot shifrlangan, lekin naqsh oshkor.
+
+7.2. CBC (Cipher Block Chaining)
+Shifr_i = AES(Blok_i XOR Shifr_{i-1}),   Shifr_0 o'rniga IV
+IV (Initialization Vector) — 16 baytlik tasodifiy qiymat, maxfiy emas, lekin oldindan bashorat qilinmaydigan bo'lishi shart.
+Bir xil bloklar endi turlicha shifrlanadi. ✅
+Kamchilik: ketma-ket (parallel emas), padding kerak, padding oracle hujumiga moyil.
+7.3. CFB / OFB — oqim rejimlari
+AES yordamida psevdotasodifiy oqim hosil qilib, uni ochiq matn bilan XOR qiladi. Padding kerak emas. Bugungi kunda kam ishlatiladi.
+
+7.4. CTR (Counter) — ✅ zamonaviy
+Keystream_i = AES(Nonce || Hisoblagich_i)
+Shifr_i = Blok_i XOR Keystream_i
+Padding kerak emas (istalgan uzunlik).
+To'liq parallellashadi — juda tez.
+Deshifrlash = shifrlash bilan bir xil amal.
+Halokatli shart: bir xil kalit bilan Nonce hech qachon takrorlanmasligi kerak.
+7.5. GCM (Galois/Counter Mode) — ✅ ENG KO'P TAVSIYA ETILADI
+CTR + autentifikatsiya. Bu AEAD (Authenticated Encryption with Associated Data) rejimi:
+
+Shifrlash: CTR rejimi bilan
+Autentifikatsiya: GHASH (GF(2^128) da ko'paytma) → 16 baytlik Tag
+Beradigan narsalar:
+
+Maxfiylik — hech kim o'qiy olmaydi
+Yaxlitlik — hech kim o'zgartira olmaydi (Tag mos kelmasa — rad etiladi)
+AAD — shifrlanmaydigan, lekin himoyalanadigan qo'shimcha ma'lumot (masalan, sarlavhalar)
+TLS 1.3 da faqat AEAD rejimlar qolgan: AES-GCM, AES-CCM, ChaCha20-Poly1305.
+
+7.6. Boshqa muhim rejimlar
+Rejim	Vazifasi
+XTS	Disk shifrlash (BitLocker, FileVault, LUKS) — sektor bo'yicha, uzunlik o'zgarmaydi
+CCM	CTR + CBC-MAC. IoT, WPA2/WPA3 Wi-Fi da
+SIV / GCM-SIV	Nonce takrorlansa ham halokat bo'lmaydi ("nonce misuse resistant")
+KW (Key Wrap)	Kalitlarni kalit bilan o'rash
+7.7. Padding (to'ldirish)
+ECB/CBC uchun ma'lumot 16 ga karrali bo'lishi shart. PKCS#7:
+
+13 bayt ma'lumot → 3 bayt qo'shiladi: ... 03 03 03
+16 bayt ma'lumot → to'liq blok qo'shiladi: 10 10 ... 10 (16 ta)
+Oxirgi baytning qiymati — nechta bayt qo'shilganini bildiradi. Har doim to'ldirish qo'shiladi, hatto uzunlik to'g'ri kelsa ham (aks holda ochish noaniq bo'lardi).
+
+AES-GCM HMAC ishlatmaydi. AES-GCM ni ichida GHASH deb ataladigan maxsus autentifikatsiya algoritmi ishlatiladi.
+
+PlainText
+      │
+      ▼
+     AES
+      │
+      ▼
+CipherText
+      │
+      ├─────────────┐
+      ▼             │
+    GHASH ◄─────────┘
+      │
+      ▼
+Authentication Tag
+
+AES-GCM natijasida uchta narsa hosil bo'ldi. Nonce, CipherText, Tag. Server decrypt da avval tagni haqiqiylikka tekshiradi. Agar mos kelsa jarayonni davom ettiradi.
+
