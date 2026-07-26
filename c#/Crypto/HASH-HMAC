@@ -1,0 +1,64 @@
+  HASH - Bu funksiya bu matnni bitta noyob raqam (fingerprint) yasaydi. Natijada 256 bit (32 byte) chiqadi. Bu Avalanche Effect deyiladi.
+SHA-2 - bu algoritmlar oilasi. SHA-224, SHA-256, SHA-384, SHA-512
+SHA-256 qanday ishlaydi - Matnni 512 bit lik bloklarga bo'linadi. Ko'p martalab XOR, Rotate, Shift, Add, Mix almallarni bajarib 256 bit lik natija chiqadi.
+
+var digest = new Sha256Digest();
+byte[] data = Encoding.UTF8.GetBytes("Salom");
+digest.BlockUpdate(data, 0, data.Length);
+byte[] result = new byte[digest.GetDigestSize()];
+digest.DoFinal(result, 0);
+string hash = Convert.ToHexString(result);
+
+HMAC - bu HASH funksiyani secretkey bilan o'ralgan varianti. HASH funksiya bir xil text bilan doim bir xil natija bergani uchun unga secret qo'shilgan varianti.
+Hash(secret + message + secret) // sodda varianti
+
+string secret = "my-secret-key";
+string message = "Hello";
+
+var hmac = new HMac(new Sha256Digest());
+byte[] key = Encoding.UTF8.GetBytes(secret);
+hmac.Init(new KeyParameter(key));
+byte[] msg = Encoding.UTF8.GetBytes(message);
+hmac.BlockUpdate(msg, 0, msg.Length);
+byte[] result = new byte[hmac.GetMacSize()];
+hmac.DoFinal(result, 0);
+Console.WriteLine(Convert.ToHexString(result));
+
+| SHA-256                         | HMAC-SHA256                                           |
+| ------------------------------- | ----------------------------------------------------- |
+| Secret kerak emas               | Secret kerak                                          |
+| Hamma hisoblay oladi            | Faqat secret egasi hisoblay oladi                     |
+| Integrity (butunlik) tekshirish | Integrity + Authenticity (kim yuborganini tasdiqlash) |
+| Fayllar, checksum               | API, JWT, webhook, payment                            |
+
+Qayerda ishlatiladi:
+
+SHA256
+ * Fayl tekshirish
+ * Git commit hash
+ * Docker image hash
+ * Password hashing uchun asos sifatida (lekin amalda parollar uchun SHA-256ning o'zi emas, Argon2, bcrypt yoki scrypt ishlatiladi)
+ * Blockchain
+
+HMAC
+ * JWT (HS256)
+ * API Signature
+ * Payment Gateway
+ * Telegram Webhook
+ * Stripe
+ * Payme
+ * Click
+ * Amazon S3 Signature
+ * AWS Signature V4
+
+HASH - Bu ma'lumot o'zgarganmi. HMAC - Bu ma'lumot o'zgarmagan va uni secretni biladigan tomon yuborilganmi
+SHA-256 -> ma'lumotni butunligini (integrity) tekshiradi.
+HMAC-SHA256 -> ma'lumotning butunligi + yuboruvchining haqiqiyligini (authenticity) tekshiradi
+
+MAC (Message Authentication Code) - bu umumiy tushuncha. Vazifasi : Xabarlarni o'zgarmaganligini tekshirish (Integrity). Xabarni secret kalitni biladigan tomon
+yuborganini tasdiqlash (Authentication). MAC turli algoritmlar yordamida hosil qilinishi mumkin.
+
+ * CBC-MAC (AES asosida)
+ * CMAC (AES asosida)
+ * GMAC (AES-GCM asosida)
+ * HMAC (Hash asosida)
