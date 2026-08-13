@@ -116,3 +116,10 @@ PFX fayl
     ↓
 
     11110000
+
+9. Parol KDF:
+  KDF ikki ishni qiladi -> 
+    1 - Uzunlikni moslashtirish -> ixtiyoriy uzunlikdagi matnni aniq 32 byte
+    2 - Key stretching -> har bir tahminni qimmat qilish. O'lchovda: bitta chaqiruv.
+  KDF entopiya qo'shmaydi. parol123 KDF dan keyin ham zaif parol bo'lib qoladi.
+   Eng ko'p ishlatiladigan kutubxona bu KDF uchun Argon2id hisoblanadi 
