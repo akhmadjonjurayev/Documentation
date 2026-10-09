@@ -1,0 +1,46 @@
+1. Pythonda o'zgaruvchilar e'lon qilinmaydi rountime da aniqlanadi. Pythonda satr tugaganidan keyin ';' qo'yish kerak emas.
+2. string o'zgaruvchisini ham '', "" lik qo'shtirnoqlar bilan ham ishlatsa bo'ladi: "UCHQO\'RG\'ON" -> UCHQO'RG'ON
+3. stringda lstrip(), rstrip(), strip() methodlari bor oldindan, orqadan va ikkala tarafdan probellarni olib tashlash uchun
+4. ismmm = input("Meni ismim nima: ?\n>>>") bu oqimdan o'zgaruvchilarni o'qish, print(ismmm) esa oqimga o'zgaruvchilarni chiqarish
+5. str() int va float o'zgaruvchilarini stringga o'tkazadi. str(number) kabi. int() va float esa stringdan konver tqiladi son va butun songa
+6. type() o'zgaruvchini turini aniqlaydi
+
+cars = [] # arrayni e'lon qilish
+sonlar = ['bir', 'ikki', 3, 4, 5] # python da arrayda bir nechta turdagi type lar bo'lishi mumkin
+array methodlari:
+append() -> arrayga element qo'shmaydi
+insert(0, ) -> ko'rsatilgan indexga qo'shadi
+del cars[1] -> index bo'yicha elementni o'chiqaradi
+reverse() ->  ro'yxatni aylantiradi
+len(cars) -> array ni uzunligini qaytaradi
+range() -> array ga qiymat berish uhcun ishlatiladi: list(range(1,20,2)) # 1 dan 20 gacha 2 qadam bilan
+min(cars), max(cars), sum(cars) -> arraydagi matematik amallar
+ro'yhatni kesish -> 
+my_cars = cars[0:3] # 0-indexdan boshlab 3 ta element ajratib olish
+cars[2:5] # 2-3-4 element ajratib olish 5 kirmaydi
+cars[:4] -> # ro'yhat boshidan 0,1,2,3 elementlarini qaytaradi
+cars[2:] -> # 2-elementdan boshlab ro'yhatni oxirigacha kesadi
+
+sonlar2=sonlar # ro'yhatdan nusxa olish faqat reference bir hil bo'ladi yani bittasiga element qo'shilsa ikkinchisida ham paydo bo'ladi
+sonlar2=sonlar[:] # ro'yhatdan to'liq nusxa olish clone qilish amali
+
+Toples o'zgarmas ro'yhat: toys = ('bus','car','bear','dino','snake') bunday e'lon qilingan ro'yxatlarga append va del qilsa xatolik bo'ladi bular faqat readonly hisoblanadi
+toys = list(toys) # o'zgarmas ro'yhatni oddiy listga o'tkazish
+
+for mehmon in mehmonlar:
+    print(mehmon)
+for operatorini ko'rinihsi shuday bo'ladi. For bloki for dan pastda 2 ta probel for ni bloki hisoblanadi.
+for n in range(5):  -> for operatorini siklada aylantirishga misol
+
+if - elif - else ko'rinishida bo'ladi shart operatorlari. and va or bilan ikkita shart bog'lanadi
+buhaqiqat = TRUE|FALSE bu boolen qiymatlar
+ro'yhat tarkibini tekshirish in operatori bilan bo'ladi
+if ovqat in menu: kabi ishlatiladi | not in
+if buyurtmalar: bu yerda buyurtmalar to'plamini bo'sh emasligiga tekshirilyabdi
+
+
+car_0 = { 'model' : 'ferrari', 'rang' : 'qizil'} -> bu python dagi dictionary larni ro'yhati tuzilishi
+car_0['narx'] = 120_000
+car_0['rang'] = 'qora'
+del car_0['rang']
+car_0.get('narx', 566000) -> by default qiymat bilan qiymat olish
