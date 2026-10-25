@@ -226,3 +226,63 @@ AES-GCM natijasida uchta narsa hosil bo'ldi. Nonce, CipherText, Tag. Server decr
 Agar ma'lumotni yaxlitligiga tekshirilmasa unda hacker shifrni buzib qo'yishi mumkin. Natijada server ma'lumotni nato'g'ri decrypt qilishi mumkin.
 
 
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Modes;
+using Org.BouncyCastle.Crypto.Parameters;
+
+byte[] key   = RandomNumberGenerator.GetBytes(32);  // AES-256
+byte[] nonce = RandomNumberGenerator.GetBytes(12);  // 96-bit IV
+byte[] aad   = "users/1001/passport"u8.ToArray();
+byte[] plain = "AA1234567"u8.ToArray();
+
+// ---------- SHIFRLASH ----------
+var enc = new GcmBlockCipher(new AesEngine());
+enc.Init(true, new AeadParameters(new KeyParameter(key), 128, nonce, aad));
+
+byte[] output = new byte[enc.GetOutputSize(plain.Length)];   // ciphertext + tag
+int len = enc.ProcessBytes(plain, 0, plain.Length, output, 0);
+len += enc.DoFinal(output, len);
+// output = ciphertext ‖ tag(16)
+
+// ---------- DESHIFRLASH ----------
+var dec = new GcmBlockCipher(new AesEngine());
+dec.Init(false, new AeadParameters(new KeyParameter(key), 128, nonce, aad));
+
+byte[] result = new byte[dec.GetOutputSize(output.Length)];
+int rlen = dec.ProcessBytes(output, 0, output.Length, result, 0);
+rlen += dec.DoFinal(result, rlen);   // ← teg AYNAN shu yerda tekshiriladi
+
+cipher.Init(
+    forEncryption: true,          // true = shifrlash, false = deshifrlash
+    new AeadParameters(
+        new KeyParameter(key),    // AES kaliti (16/24/32 bayt)
+        128,                      // teg uzunligi BITLARDA (bayt emas!)
+        nonce,                    // IV, 12 bayt tavsiya etiladi
+        aad));                    // ixtiyoriy, null bo'lishi mumkin
+
+1. AesEngine kalit bilan sozlanadi   → kalit jadvali (key expansion)
+2. H  = E_K(0^128)                   ← GHASH/GMAC kaliti
+3. J0 = nonce ‖ 00000001             ← 96-bit nonce uchun
+   (nonce boshqa uzunlikda bo'lsa: J0 = GHASH(nonce ‖ pad ‖ len))
+4. GHASH holati nolga tushadi
+5. AAD darhol GHASH'ga yutiladi
+6. Ichki bufer tozalanadi
+
+Oqim (streaming) — katta fayl uchun
+var cipher = new GcmBlockCipher(new AesEngine());
+cipher.Init(true, new AeadParameters(new KeyParameter(key), 128, nonce, aad));
+
+var inBuf  = new byte[64 * 1024];
+var outBuf = new byte[cipher.GetUpdateOutputSize(inBuf.Length)];
+
+int read;
+while ((read = source.Read(inBuf, 0, inBuf.Length)) > 0)
+{
+    int n = cipher.ProcessBytes(inBuf, 0, read, outBuf, 0);
+    if (n > 0) destination.Write(outBuf, 0, n);
+}
+
+var tail = new byte[cipher.GetOutputSize(0)];
+int f = cipher.DoFinal(tail, 0);
+destination.Write(tail, 0, f);      // qoldiq + teg
+
