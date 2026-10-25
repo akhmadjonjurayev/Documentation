@@ -225,6 +225,21 @@ Authentication Tag
 AES-GCM natijasida uchta narsa hosil bo'ldi. Nonce, CipherText, Tag. Server decrypt da avval tagni haqiqiylikka tekshiradi. Agar mos kelsa jarayonni davom ettiradi.
 Agar ma'lumotni yaxlitligiga tekshirilmasa unda hacker shifrni buzib qo'yishi mumkin. Natijada server ma'lumotni nato'g'ri decrypt qilishi mumkin.
 
+AES da oqimni yoki katta fayllarni bloklarga bo'lib shifrlash
+
+var enc = new GcmBlockCipher(new AesEngine());
+enc.Init(true, new AeadParameters(new KeyParameter(key), 128, nonce, aad));
+
+Span<byte> output = stackalloc byte[enc.GetOutputSize(plain.Length)];
+int len = enc.ProcessBytes(plain, output);      // implicit byte[] → ReadOnlySpan
+len += enc.DoFinal(output[len..]);              // offset o'rniga slice
+
+var dec = new GcmBlockCipher(new AesEngine());
+dec.Init(false, new AeadParameters(new KeyParameter(key), 128, nonce, aad));
+
+Span<byte> result = stackalloc byte[dec.GetOutputSize(len)];
+int rlen = dec.ProcessBytes(output[..len], result);
+rlen += dec.DoFinal(result[rlen..]);
 
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Modes;
@@ -285,4 +300,3 @@ while ((read = source.Read(inBuf, 0, inBuf.Length)) > 0)
 var tail = new byte[cipher.GetOutputSize(0)];
 int f = cipher.DoFinal(tail, 0);
 destination.Write(tail, 0, f);      // qoldiq + teg
-

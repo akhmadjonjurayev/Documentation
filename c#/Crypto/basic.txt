@@ -116,3 +116,52 @@ PFX fayl
     ↓
 
     11110000
+
+9. Parol KDF:
+  KDF ikki ishni qiladi -> 
+    1 - Uzunlikni moslashtirish -> ixtiyoriy uzunlikdagi matnni aniq 32 byte
+    2 - Key stretching -> har bir tahminni qimmat qilish. O'lchovda: bitta chaqiruv.
+  KDF entopiya qo'shmaydi. parol123 KDF dan keyin ham zaif parol bo'lib qoladi.
+   Eng ko'p ishlatiladigan kutubxona bu KDF uchun Argon2id hisoblanadi 
+
+10. TLS 1.2 - Bu versiya juda ko'p tanlov beradi: RSA key exchange, CBC rejimi... Har bir tanlov patensional hujum yo'lib
+TLS 1.3 - Faqat AEAD - CBC va MAC-then-encrypt olib tashlandi, Faqat ECDHE RSA olib tashlandi. 5 ta cipher suite qoldi. 1-RTT handshake bir marta borib kelishda tayyor.
+Renegotiation va compression yo'q.
+TLS 1.2:  ClientHello → ServerHello,Cert → KeyExchange → Finished  (2-RTT)
+TLS 1.3:  ClientHello+KeyShare → ServerHello+KeyShare+Cert+Fin     (1-RTT)
+
+HTTP versiyalari:
+HTTP/1.0 -> TCP -> har so'rovga yangi ulanish -> Juda sertifikatni
+HTTP/1.1 -> TCP -> keep-alive, pipelining -> Head-of-line blocking - birinchi so'rov qotsa qolgani kutadi
+HTTP/2   -> TCP + TLS -> Binary framing, multiplexing -> HOL blocking TCP darajasida qoladi (1 paket yo'qolsa - hamma stream to'xtaydi)
+HTTP/3   -> QUIC(UDP) + TLS 1.3 -> Har stream mustaqil -> HOL blocking to'liq yo'q
+
+Forward Secrecy (FS/PFS) - Serverning uzoq muddatli maxfiy kaliti o'g'irlansa ham, o'tmishdagi yozib olingan trafikni ochib bo'lmaydi. Harvest now, decrypt later.
+✅ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384      ← FS bor
+✅ TLS_AES_256_GCM_SHA384 (TLS 1.3)           ← FS majburiy
+❌ TLS_RSA_WITH_AES_256_CBC_SHA               ← FS YO'Q
+
+ECDH        →  ephemeral kalit almashish  →  Forward Secrecy
+RSA/ECDSA   →  raqamli imzo               →  Sertifikat / PKI (autentifikatsiya)
+HKDF        →  umumiy sirdan sessiya kalitlari
+AES-GCM     →  ma'lumot shifrlash + yaxlitlik
+
+Sign( SHA256( ClientHello ‖ ServerHello ‖ Certificate ) )
+                   ↑             ↑
+            client key_share  server key_share   ← IKKALASI imzo ostida
+
+
+--- O'ZGARMAYDIGAN (yillab bir xil) ---
+Sertifikat                 48798b46856e93..   48798b46856e93..   yo'q
+Server public key          35e895bcc54084..   35e895bcc54084..   yo'q
+Server private key         4ec468c534d5c5..   4ec468c534d5c5..   yo'q
+
+--- HAR SAFAR YANGIDAN ---
+client_random              5b7d604d640a1f..   87816bf74a592d..   HA
+client key_share           ad0052c5b6b41d..   d2ee77f66d056d..   HA
+server key_share           219cd67e6dfc11..   f3c1c12d507e15..   HA
+ECDHE umumiy sir           f4e24fd65ae7dc..   43021db5c9c38e..   HA
+Transcript hash            538975833db761..   072ce4b744ac8b..   HA
+CertificateVerify imzo     30440220069821..   30460221008b88..   HA
+AES-GCM kaliti             0df586dee263ab..   27804f07026082..   HA
+

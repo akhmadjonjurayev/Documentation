@@ -1,0 +1,142 @@
+1. Pythonda o'zgaruvchilar e'lon qilinmaydi rountime da aniqlanadi. Pythonda satr tugaganidan keyin ';' qo'yish kerak emas.
+2. string o'zgaruvchisini ham '', "" lik qo'shtirnoqlar bilan ham ishlatsa bo'ladi: "UCHQO\'RG\'ON" -> UCHQO'RG'ON
+3. stringda lstrip(), rstrip(), strip() methodlari bor oldindan, orqadan va ikkala tarafdan probellarni olib tashlash uchun
+4. ismmm = input("Meni ismim nima: ?\n>>>") bu oqimdan o'zgaruvchilarni o'qish, print(ismmm) esa oqimga o'zgaruvchilarni chiqarish
+5. str() int va float o'zgaruvchilarini stringga o'tkazadi. str(number) kabi. int() va float esa stringdan konver tqiladi son va butun songa
+6. type() o'zgaruvchini turini aniqlaydi
+
+cars = [] # arrayni e'lon qilish
+sonlar = ['bir', 'ikki', 3, 4, 5] # python da arrayda bir nechta turdagi type lar bo'lishi mumkin
+array methodlari:
+append() -> arrayga element qo'shmaydi
+insert(0, ) -> ko'rsatilgan indexga qo'shadi
+del cars[1] -> index bo'yicha elementni o'chiqaradi
+reverse() ->  ro'yxatni aylantiradi
+len(cars) -> array ni uzunligini qaytaradi
+range() -> array ga qiymat berish uhcun ishlatiladi: list(range(1,20,2)) # 1 dan 20 gacha 2 qadam bilan
+min(cars), max(cars), sum(cars) -> arraydagi matematik amallar
+ro'yhatni kesish -> 
+my_cars = cars[0:3] # 0-indexdan boshlab 3 ta element ajratib olish
+cars[2:5] # 2-3-4 element ajratib olish 5 kirmaydi
+cars[:4] -> # ro'yhat boshidan 0,1,2,3 elementlarini qaytaradi
+cars[2:] -> # 2-elementdan boshlab ro'yhatni oxirigacha kesadi
+
+sonlar2=sonlar # ro'yhatdan nusxa olish faqat reference bir hil bo'ladi yani bittasiga element qo'shilsa ikkinchisida ham paydo bo'ladi
+sonlar2=sonlar[:] # ro'yhatdan to'liq nusxa olish clone qilish amali
+
+Toples o'zgarmas ro'yhat: toys = ('bus','car','bear','dino','snake') bunday e'lon qilingan ro'yxatlarga append va del qilsa xatolik bo'ladi bular faqat readonly hisoblanadi
+toys = list(toys) # o'zgarmas ro'yhatni oddiy listga o'tkazish
+
+for mehmon in mehmonlar:
+    print(mehmon)
+for operatorini ko'rinihsi shuday bo'ladi. For bloki for dan pastda 2 ta probel for ni bloki hisoblanadi.
+for n in range(5):  -> for operatorini siklada aylantirishga misol
+
+if - elif - else ko'rinishida bo'ladi shart operatorlari. and va or bilan ikkita shart bog'lanadi
+buhaqiqat = TRUE|FALSE bu boolen qiymatlar
+ro'yhat tarkibini tekshirish in operatori bilan bo'ladi
+if ovqat in menu: kabi ishlatiladi | not in
+if buyurtmalar: bu yerda buyurtmalar to'plamini bo'sh emasligiga tekshirilyabdi
+
+
+car_0 = { 'model' : 'ferrari', 'rang' : 'qizil'} -> bu python dagi dictionary larni ro'yhati tuzilishi
+car_0['narx'] = 120_000
+car_0['rang'] = 'qora'
+del car_0['rang']
+car_0.get('narx', 566000) -> by default qiymat bilan qiymat olish
+
+for k, q in car_0.items() -> for siklida dictionary ni kalit value larini ishlatish
+.keys() -> dictionary ni barcha kalitlarini olish array sifatida olish
+.values() -> dictionary ni bvarcha qiymatlarini olish
+lug'at ichida lug'at ishlatish ham mumkin array ham
+
+hamkasblar = {
+    'ali':{'familiya':'valiyev',
+           'tyil':1995,
+           'malumot':'oliy',
+           'tillar':['python','c++']
+           },
+    'vali':{'familiya':'aliyev',
+            'tyil':2001,
+            'malumot':"o'rta-maxsus",
+            'tillar':['html', 'css', 'js']},
+    'hasan':{'familiya':'husanov',
+             'tyil':1999,
+             'malumot':'maxsus',
+             'tillar':['python','php']}
+    }
+
+ulomalar = {
+    'Abu Abdulloh Muhammad': ["Al-jome ' as-sahih", "Al-adab al-mufrad"],
+    'Abdulla Qodiriy': ["O'tkan kunlar", "Mehrobdan chayon"],
+    'Erkin Vohidov': ["Tong nafasi", "Qo'shilarim sizga"],
+    'Alisher Navoiy': ["Xamsa", "Lison at-Tayor"]
+}
+
+for ism, asarlar in ulomalar.items():
+    print(f"{ism} ning asarlari:")
+    for asar in asarlar:
+        print(asar)
+    print()
+
+while True:
+    text = input()
+    if text != 'stop':
+        continue
+    break
+
+def yosh_hisobla(ism, tugilgan_yil):
+    """Foydalanuvchi yoshini hisoblaydigan dastur"""
+    print(f"{ism.title()} {2020-tugilgan_yil} yoshda")
+pythonda def kalit so'zi funksiya ekanligi anglatadi. """ 3 ta qo'shtirnoq bilan funksiya description berish mumkin yani docstring
+print(salom_ber.__doc__) -> docstringni qiymaitni olish
+
+void fuunksiyalar ham o'zi aslida None qiiymat qaytarid agar None qiymat qaytarsa shartda u doim False bo'ladi
+qiymat qaytaradigan funksiyalar esa doim return bilan qaytaradi. Pythonda qiymat qaytarishda va kiruvchi parametrlarda type ko'rsatish shart emas
+
+def get_user():
+    return "Ali", 25
+
+name, age = get_user()
+funskiyada bir nechta qiymat qaytarish
+def get_user():
+    return ("Ali", 25) # retunni bir nechta qiymatni tuple qilib qaytarish mumkin
+
+def add(a: int, b: int) -> int:
+    return a + b
+
+result = add(10, 20)
+print(result)  # 30
+pythonda funskiyalarda kiruvchi va chiquvchi qiymatlarni ko'rsatish mumkin lekin aslida 
+-> int:, -> str:, -> bool:, -> list[int]:, -> list, 
+
+def summa(*sonlar): -> python da funsiyasida parametrlarni kiritib yuborishi mumkin
+
+python da modullar tushunchasi bor yani boshqa fayldagi funsiyalarni ishaltish imkoniyati uchun 
+
+import avto_info_mod
+avto1 = avto_info_mod.avto_info()
+
+import avto_info_mod as aim # avto_info_mod ni qisqa nom aim bilan chaqiramiz
+
+avto1 = aim.avto_info("GM", "Malibu", "Qora", "avtomat", 2020,40000)
+
+from avto_info_mod import avto_info, info_print # model ichidagi ma'lum bir methodlarni tortib olish
+
+from avto_info_mod import avto_info as ainfo, info_print as iprint -> modul ichidagi funsiyalarga ham qisqa nom berish mumkin
+
+from avto_info_mod import * -> modul ichidagi barcha funksiyalarni 
+
+
+lambda - bu bir qatorli funskiya yaratish usuli
+square = lambda x: x * x
+print(square(5))
+
+map - bu lambda bilan ishlatiladi hamda ro'yhatdagi har bir element uchun bir xil amal qiladi
+
+numbers = [1, 2, 3, 4, 5]
+squares = list(map(lambda x: x * x, numbers))
+print(squares)
+
+map odatda list qaytarmaydi object qaytaradi shuning uchun list() ishlatiladi doim.
+filter ro'yxatdagi shartga mos elementlarni tanlab oladi
