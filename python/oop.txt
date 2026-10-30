@@ -1,0 +1,199 @@
+class Employee:
+    def __init__(self, name, position, salary):
+        self.name = name
+        self.position = position
+        self.salary = salary
+
+
+employee = Employee(
+    "Ali",
+    "Backend Developer",
+    15000000
+)
+
+print(employee.name)
+
+Python da class ni e'lon qilish hamda uni ishlatish. self bu this ga o'xshab ketadi. Aynan yaratilayotgan va ishlatilayotgan objectga aytiladi
+
+class Employee:
+    pass
+
+
+employee = Employee()
+
+print(type(employee))
+
+constructir siz ham class yaratish mumkin
+
+class Employee:
+    def __init__(self, name="Unknown"):
+        self.name = name
+
+
+employee1 = Employee("Ali")
+employee2 = Employee()
+
+print(employee1.name) # Ali
+print(employee2.name) # Unknown
+
+class Employee:
+    def __init__(self, salary):
+        self.salary = salary
+
+    @property
+    def salary(self):
+        return self.__salary
+
+    @salary.setter
+    def salary(self, value):
+        if value < 0:
+            raise ValueError("Salary cannot be negative")
+
+        self.__salary = value
+
+
+employee = Employee(15000000)
+
+print(employee.salary)
+
+employee.salary = 18000000
+
+print(employee.salary)
+
+Python da ham property qilib ishlatish mumkin: C# bilan taqqoslasak, @property va @salary.setter property getter/setter’lariga o‘xshaydi.
+
+class Employee:
+    company_name = "Tech Company"
+
+    def __init__(self, name):
+        self.name = name
+
+
+ali = Employee("Ali")
+vali = Employee("Vali")
+
+print(ali.company_name)
+print(vali.company_name)
+print(Employee.company_name)
+
+python dagi static o'zgaruvchini ko'rinishi
+
+@classmethod esa klassning o'zi bilan ishlaganda ishlatiladi:
+
+class Employee:
+    employee_count = 0
+
+    def __init__(self, name):
+        self.name = name
+        Employee.employee_count += 1
+
+    @classmethod
+    def get_employee_count(cls):
+        return cls.employee_count
+
+
+ali = Employee("Ali")
+vali = Employee("Vali")
+hasan = Employee("Hasan")
+
+print(Employee.get_employee_count())
+Bu yerda cls - method chaqirilgan klass ga ishora qiladi. @classmethod ni yana bir muhim qo'llanishi alternativ konstructir yaratish:
+
+class Employee:
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+
+    @classmethod
+    def from_string(cls, text):
+        name, salary = text.split(",")
+        return cls(name, int(salary))
+
+
+employee = Employee.from_string("Ali,15000000")
+
+print(employee.name)
+print(employee.salary)
+
+__init__  -> obyektni boshlang'ich holatga keltirish. Constructor class
+self - > obyektni o'ziga tegishli this operatoriga o'xshab
+@property - qiymatni atribut kabi o'qish
+@salary.setter - qiymatni tekshirib o'rnatish
+@staticmethod - obyekt yoki klass holatini aniqlab bo'lmaydigan method
+@classmethod - kalss holati bilan ishlaydigan method 
+super -> voris olinganda base kabi ishlatiladi
+
+ @abstractmethod
+    def calculate_bonus(self):
+        pass
+
+abstrakt methodni ko'rinishi
+
+
+class Employee:
+    company_name = "Tech Company"
+    employee_count = 0
+
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+        Employee.employee_count += 1
+
+    @property
+    def salary(self):
+        return self.__salary
+
+    @salary.setter
+    def salary(self, value):
+        if value < 0:
+            raise ValueError("Salary cannot be negative")
+
+        self.__salary = value
+
+    def describe(self):
+        return (
+            f"{self.name} works at {self.company_name}. "
+            f"Salary: {self.salary}"
+        )
+
+    @staticmethod
+    def is_valid_salary(value):
+        return value >= 0
+
+    @classmethod
+    def get_employee_count(cls):
+        return cls.employee_count
+
+
+ali = Employee("Ali", 15000000)
+vali = Employee("Vali", 12000000)
+
+print(ali.describe())
+print(vali.describe())
+
+print(Employee.get_employee_count())
+print(Employee.is_valid_salary(5000000))
+
+
+class AvtoSalon:
+    """Avtosalon klassi"""
+    def __init__(self,name):
+        self.name = name
+        self.avtolar = []
+
+    def __repr__(self):
+        return f"{self.name} avtosaloni"
+    
+    def __len__(self):
+        return len(self.avtolar)
+    
+    def __getitem__(self,index):
+        return self.avtolar[index]
+
+    def __setitem__(self,index,value):
+      if isinstance(value,Avto):
+        self.avtolar[index]=value
+
+     def __add__(self,qiymat)
+
+obyektlarga arrayda index kabi murojat qilish uchun alohida dunder methodlarini implementatsiya qilish kerak. Hatto ki objetcga qiymat berish uchun ham dunder methodlar kerak

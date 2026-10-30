@@ -140,3 +140,25 @@ print(squares)
 
 map odatda list qaytarmaydi object qaytaradi shuning uchun list() ishlatiladi doim.
 filter ro'yxatdagi shartga mos elementlarni tanlab oladi
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+even_numbers = list(
+    filter(lambda x: x % 2 == 0, numbers)
+)
+print(even_numbers)
+
+import json
+
+x_json = json.dumps(x) -> object ni jsonga konvertatsiya qilish
+bemor_json = json.dumps(bemor, indent=4) -> indent bilan json ni pretty inline emas ko'rinihsida chiqaradi va yozadi
+
+with open('bemor.json','w') as f:
+    json.dump(bemor,f) -> faylga json yozish
+
+sonlar = json.loads(sonlar_json) -> jsondan objectga o'tkazish
+
+filename = 'bemor.json'
+with open(filename) as f:
+    bemor = json.load(f)  -> fayldan json o'qish
+
+kenglik = data['geometry']['location']['lat'] -> jsondan ichma-ich holda call qilish
