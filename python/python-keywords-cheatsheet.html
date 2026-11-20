@@ -1,0 +1,1342 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python kalit so'zlari</title>
+<style>
+:root{
+  --bg:#f7f6f2; --paper:#fff; --ink:#1c2230; --muted:#5d6676; --faint:#8a93a3; --line:#e4e1d8;
+  --code-bg:#f6f5f0; --code-line:#e9e6dc;
+  --t-kw:#9b2fae; --t-str:#2e7d32; --t-com:#8a8f98; --t-num:#b45309; --t-bi:#1565c0;
+  --t-dec:#c2185b; --t-self:#d84315; --t-out:#00796b;
+  --c1:#b45309; --c2:#7c3aed; --c3:#2563eb; --c4:#15803d; --c5:#0e7490; --c6:#be185d;
+  --c7:#dc2626; --c8:#4b5563; --c9:#c2410c; --c10:#4338ca; --c11:#6b7280; --c12:#0f766e;
+  --mono:"Cascadia Mono","Cascadia Code",Consolas,"Courier New",monospace;
+  --sans:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  color-scheme:light;
+}
+@media screen and (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14161b; --paper:#1c1f26; --ink:#e6e8ec; --muted:#a3abb9; --faint:#7d8594; --line:#2d323c;
+    --code-bg:#161a20; --code-line:#272c35;
+    --t-kw:#d38cf0; --t-str:#8bd17c; --t-com:#7f8794; --t-num:#f0a35e; --t-bi:#7cb7ff;
+    --t-dec:#f48fb1; --t-self:#ff9e6e; --t-out:#5fd3bf;
+    --c1:#f59e0b; --c2:#a78bfa; --c3:#60a5fa; --c4:#4ade80; --c5:#22d3ee; --c6:#f472b6;
+    --c7:#f87171; --c8:#9ca3af; --c9:#fb923c; --c10:#818cf8; --c11:#9ca3af; --c12:#2dd4bf;
+    color-scheme:dark;
+  }
+}
+@page{size:A4;margin:10mm 9mm 12mm}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans)}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 16px 64px}
+a{color:inherit}
+code,pre{font-family:var(--mono)}
+
+/* sarlavha */
+.top h1{font-size:30px;line-height:1.15;margin:0 0 6px;letter-spacing:-.01em}
+.top h1 small{font-weight:400;color:var(--muted);font-size:.6em}
+.lead{margin:0 0 6px;color:var(--ink);max-width:880px}
+.meta{margin:0;color:var(--muted);font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 0 0;padding:0;list-style:none;font-size:13px;color:var(--muted)}
+.legend code{font-size:12.5px}
+.legend .t-out{font-weight:600}
+
+/* qidiruv */
+.search{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;margin:14px 0 4px;display:flex;gap:10px;align-items:center}
+.search input{flex:1;min-width:0;font:15px var(--sans);padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+.search input:focus{outline:2px solid var(--c3);outline-offset:1px}
+#cnt{font-size:13px;color:var(--muted);white-space:nowrap}
+
+/* oltin qoidalar */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:12px 0 18px;padding:0;list-style:none;counter-reset:r}
+.rules li{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;line-height:1.4;counter-increment:r}
+.rules li::before{content:counter(r);display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--ink);color:var(--paper);font-size:11px;font-weight:700;margin-right:6px;vertical-align:1px}
+.rules code{font-size:12.5px;background:var(--code-bg);padding:0 3px;border-radius:3px}
+
+/* bir qarashda */
+h2{font-size:21px;margin:26px 0 10px;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+h2 .n{display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 6px;border-radius:7px;background:var(--cat,var(--ink));color:#fff;font-size:14px;align-self:center}
+h2 small{font:400 13px var(--mono);color:var(--muted)}
+.ov{display:grid;grid-template-columns:132px 1fr;border:1px solid var(--line);border-radius:10px;background:var(--paper);overflow:hidden}
+.ov > div{padding:6px 10px;border-top:1px solid var(--line)}
+.ov > div:nth-child(-n+2){border-top:0}
+.ov .lab{font-weight:600;font-size:13.5px;color:var(--cat);display:flex;align-items:center;gap:7px}
+.ov .lab::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--cat);flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:4px 6px}
+a.chip{display:inline-flex;align-items:baseline;gap:5px;text-decoration:none;border:1px solid var(--line);border-left:3px solid var(--cat);border-radius:5px;padding:1px 7px 2px;background:var(--paper)}
+a.chip:hover{background:var(--code-bg)}
+a.chip code{font-weight:700;font-size:13.5px;color:var(--cat)}
+a.chip span{font-size:12.5px;color:var(--muted)}
+a.chip.soft{border-style:dashed;border-left-style:solid}
+.ov-note{font-size:12.5px;color:var(--muted);margin:6px 2px 0}
+
+/* kartalar */
+section.cat{margin-top:4px}
+.card{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--cat);border-radius:8px;padding:11px 14px;display:grid;grid-template-columns:minmax(0,35%) minmax(0,1fr);gap:14px;margin:0 0 9px;break-inside:avoid;scroll-margin-top:70px}
+.card.wide{grid-template-columns:minmax(0,1fr)}
+.card-h{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin:0 0 6px}
+code.kw{font-weight:700;font-size:15px;color:var(--cat);background:color-mix(in srgb,var(--cat) 11%,transparent);padding:0 7px;border-radius:5px;line-height:1.5}
+code.nk{font-weight:600;font-size:13.5px;color:var(--muted);border:1px solid var(--line);padding:0 6px;border-radius:5px}
+.badge{font-size:11px;font-weight:600;color:var(--muted);border:1px dashed var(--faint);border-radius:4px;padding:0 5px}
+.cs{display:block;font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.cs b{font-weight:700;color:var(--ink);background:var(--code-bg);border:1px solid var(--line);border-radius:3px;padding:0 4px;margin-right:5px;font-size:11px}
+.cs code{font-size:12px}
+.info p{margin:0 0 6px;font-size:14px}
+.info p code,.tip code,td code{font-size:.92em;background:var(--code-bg);padding:0 3px;border-radius:3px}
+.info p code,.tip code,.cs code{white-space:nowrap}
+.code-tbl{margin-top:8px}
+.tip{font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px;margin:6px 0 0}
+pre{margin:0;background:var(--code-bg);border:1px solid var(--code-line);border-radius:6px;padding:8px 11px;overflow-x:auto;font-size:13px;line-height:1.45;color:var(--ink);tab-size:4}
+pre + pre{margin-top:6px}
+.code-cap{font-size:11.5px;color:var(--muted);margin:6px 0 2px}
+
+/* sintaksis ranglari */
+.t-kw{color:var(--t-kw);font-weight:600}
+.t-str{color:var(--t-str)}
+.t-com{color:var(--t-com);font-style:italic}
+.t-num{color:var(--t-num)}
+.t-bi{color:var(--t-bi)}
+.t-dec{color:var(--t-dec)}
+.t-self{color:var(--t-self)}
+.t-out{color:var(--t-out);font-style:normal;font-weight:600}
+
+/* jadvallar */
+.tbl{overflow-x:auto}
+table.ref{width:100%;border-collapse:collapse;font-size:13.5px}
+.ref th,.ref td{border-bottom:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.ref th{font-size:12px;color:var(--muted);font-weight:600;border-bottom:1.5px solid var(--line)}
+.ref tr:last-child td{border-bottom:0}
+.ref td:first-child{white-space:nowrap}
+.ref td code{background:none;padding:0}
+.ref code.res{color:var(--t-out);font-weight:600}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+@media (max-width:760px){
+  .card{grid-template-columns:minmax(0,1fr);gap:8px}
+  .ov{grid-template-columns:minmax(0,1fr)}
+  .ov > div{border-top:0}
+  .ov .lab{padding-bottom:0}
+  .cols2{grid-template-columns:minmax(0,1fr)}
+  .top h1{font-size:25px}
+  .info p code,.tip code,.cs code{white-space:normal}
+  pre{font-size:12px}
+}
+footer{margin-top:28px;font-size:12.5px;color:var(--muted)}
+
+@media print{
+  body{background:#fff;font-size:8.3pt;line-height:1.33}
+  .wrap{max-width:none;padding:0}
+  .noprint{display:none!important}
+  .top h1{font-size:19pt;margin-bottom:1.5mm}
+  .lead{font-size:9pt;max-width:none}
+  .meta,.legend{font-size:7.6pt}
+  .legend{margin-top:1.5mm}
+  .legend code{font-size:7.4pt}
+  .rules{grid-template-columns:repeat(5,1fr);gap:1.6mm;margin:3mm 0 3.5mm}
+  .rules li{font-size:7.6pt;padding:1.6mm 2mm;border-radius:1.6mm;line-height:1.32}
+  .rules li::before{width:3.4mm;height:3.4mm;font-size:6.4pt}
+  .rules code{font-size:7.2pt}
+  h2{font-size:12.5pt;margin:4.5mm 0 2mm;break-after:avoid}
+  h2 .n{min-width:5.6mm;height:5.6mm;font-size:8.6pt;border-radius:1.4mm}
+  h2 small{font-size:7.6pt}
+  .ov{grid-template-columns:27mm 1fr;border-radius:2mm}
+  .ov > div{padding:1.1mm 2mm}
+  .ov .lab{font-size:8pt}
+  a.chip{padding:0 1.5mm 0.2mm;border-radius:1.2mm}
+  a.chip code{font-size:8.2pt}
+  a.chip span{font-size:7.4pt}
+  .chips{gap:1mm 1.3mm}
+  .ov-note{font-size:7.4pt}
+  .card{padding:2.1mm 2.8mm;gap:3mm;margin-bottom:2mm;border-radius:1.8mm;border-left-width:1.1mm}
+  .card-h{margin-bottom:1.2mm;gap:1.2mm}
+  code.kw{font-size:9.6pt;padding:0 1.5mm}
+  code.nk{font-size:8pt}
+  .badge{font-size:6.6pt}
+  .cs{font-size:7.5pt;margin-bottom:1.2mm}
+  .cs b{font-size:6.6pt}
+  .cs code{font-size:7.2pt}
+  .info p{font-size:8.2pt;margin-bottom:1.2mm}
+  .tip{font-size:7.5pt;padding-top:1.2mm;margin-top:1.2mm}
+  pre{font-size:7.45pt;line-height:1.36;padding:1.5mm 2.2mm;border-radius:1.4mm;overflow:visible;white-space:pre-wrap}
+  pre + pre{margin-top:1.4mm}
+  .code-cap{font-size:6.9pt;margin:1.2mm 0 .4mm}
+  table.ref{font-size:7.7pt}
+  .ref th{font-size:7pt}
+  .ref th,.ref td{padding:.7mm 1.6mm}
+  .ref td code{font-size:7.4pt}
+  .cols2{gap:0 4mm}
+  footer{font-size:7.4pt;margin-top:4mm}
+  a{text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Python kalit so'zlari <small>· cheat sheet</small></h1>
+  <p class="lead">35 ta kalit so'z va yumshoq (soft) kalit so'zlar: nima qiladi, qanday yoziladi, C# dagi o'xshashi. Yodlash shart emas — kerak bo'lganda shu yerdan qarang.</p>
+  <p class="meta">Python 3.14 bo'yicha · har bir misol ishga tushirilib, natijasi tekshirilgan · Manbalar: python.sariq.dev darslari, docs.python.org, shaxsiy konspekt (basic.txt, oop.txt) · 30.10.2026</p>
+  <ul class="legend">
+    <li><code><span class="t-com"># </span><span class="t-out">→ 5</span></code> — shu qator ekranga chiqaradigan natija</li>
+    <li><code><span class="t-com"># </span><span class="t-out">→ 1, 3, 5</span></code> — sikl ichida: har biri alohida qatorda</li>
+    <li><span class="cs" style="display:inline"><b>C#</b></span>— C# dagi o'xshashi</li>
+    <li><span class="badge">soft</span> — yumshoq kalit so'z: boshqa joyda oddiy nom bo'la oladi</li>
+  </ul>
+</header>
+
+<div class="search noprint">
+  <input id="q" type="search" placeholder="Qidirish: for, lambda, try, dict, C#…" aria-label="Qidirish">
+  <span id="cnt"></span>
+</div>
+
+<ol class="rules ov-sec">
+  <li>Blok = <code>:</code> + 4 probel. <code>{ }</code> yo'q, qator oxirida <code>;</code> kerak emas.</li>
+  <li>Tur e'lon qilinmaydi: <code>x = 5</code>. Tur ishga tushganda aniqlanadi.</li>
+  <li><code>True</code> <code>False</code> <code>None</code> — bosh harf bilan yoziladi.</li>
+  <li><code>and</code> <code>or</code> <code>not</code> — so'z bilan. <code>i++</code> yo'q → <code>i += 1</code>.</li>
+  <li>Metodning 1-parametri doim <code>self</code> (C#: <code>this</code>). <code>new</code> yozilmaydi.</li>
+</ol>
+
+<section class="ov-sec" id="overview">
+  <h2><span class="n" style="--cat:var(--ink)">0</span> Bir qarashda <small>guruh bo'yicha — bossangiz kartaga o'tadi</small></h2>
+  <div class="ov">
+    <div class="lab" style="--cat:var(--c1)">Qiymatlar</div>
+    <div class="chips" style="--cat:var(--c1)">
+      <a class="chip" href="#kw-values"><code>True</code><span>rost</span></a>
+      <a class="chip" href="#kw-values"><code>False</code><span>yolg'on</span></a>
+      <a class="chip" href="#kw-values"><code>None</code><span>qiymat yo'q (null)</span></a>
+    </div>
+    <div class="lab" style="--cat:var(--c2)">Mantiq</div>
+    <div class="chips" style="--cat:var(--c2)">
+      <a class="chip" href="#kw-logic"><code>and</code><span>va</span></a>
+      <a class="chip" href="#kw-logic"><code>or</code><span>yoki</span></a>
+      <a class="chip" href="#kw-logic"><code>not</code><span>emas</span></a>
+      <a class="chip" href="#kw-is"><code>is</code><span>aynan shu obyektmi</span></a>
+      <a class="chip" href="#kw-in"><code>in</code><span>ichida bormi</span></a>
+    </div>
+    <div class="lab" style="--cat:var(--c3)">Shartlar</div>
+    <div class="chips" style="--cat:var(--c3)">
+      <a class="chip" href="#kw-if"><code>if</code><span>agar</span></a>
+      <a class="chip" href="#kw-if"><code>elif</code><span>aks holda agar</span></a>
+      <a class="chip" href="#kw-if"><code>else</code><span>aks holda</span></a>
+      <a class="chip soft" href="#kw-match"><code>match</code><span>switch</span></a>
+      <a class="chip soft" href="#kw-match"><code>case</code><span>holat</span></a>
+      <a class="chip soft" href="#kw-under"><code>_</code><span>qolgani / keraksiz</span></a>
+    </div>
+    <div class="lab" style="--cat:var(--c4)">Sikllar</div>
+    <div class="chips" style="--cat:var(--c4)">
+      <a class="chip" href="#kw-for"><code>for</code><span>har biri uchun</span></a>
+      <a class="chip" href="#kw-while"><code>while</code><span>shart rost ekan</span></a>
+      <a class="chip" href="#kw-break"><code>break</code><span>siklni to'xtat</span></a>
+      <a class="chip" href="#kw-break"><code>continue</code><span>keyingisiga o't</span></a>
+      <a class="chip" href="#kw-pass"><code>pass</code><span>hech narsa qilma</span></a>
+    </div>
+    <div class="lab" style="--cat:var(--c5)">Funksiyalar</div>
+    <div class="chips" style="--cat:var(--c5)">
+      <a class="chip" href="#kw-def"><code>def</code><span>funksiya e'lon</span></a>
+      <a class="chip" href="#kw-def"><code>return</code><span>qiymat qaytar</span></a>
+      <a class="chip" href="#kw-lambda"><code>lambda</code><span>bir qatorli funksiya</span></a>
+      <a class="chip" href="#kw-yield"><code>yield</code><span>bittalab ber</span></a>
+      <a class="chip" href="#kw-global"><code>global</code><span>modul o'zgaruvchisi</span></a>
+      <a class="chip" href="#kw-global"><code>nonlocal</code><span>tashqi funksiyaniki</span></a>
+    </div>
+    <div class="lab" style="--cat:var(--c6)">Klasslar</div>
+    <div class="chips" style="--cat:var(--c6)">
+      <a class="chip" href="#kw-class"><code>class</code><span>klass e'lon</span></a>
+      <a class="chip" href="#kw-del"><code>del</code><span>o'chir</span></a>
+    </div>
+    <div class="lab" style="--cat:var(--c7)">Xatolar</div>
+    <div class="chips" style="--cat:var(--c7)">
+      <a class="chip" href="#kw-try"><code>try</code><span>urinib ko'r</span></a>
+      <a class="chip" href="#kw-try"><code>except</code><span>xatoni ushla</span></a>
+      <a class="chip" href="#kw-try"><code>finally</code><span>har doim bajar</span></a>
+      <a class="chip" href="#kw-raise"><code>raise</code><span>xato ot</span></a>
+      <a class="chip" href="#kw-assert"><code>assert</code><span>ishonch tekshiruvi</span></a>
+    </div>
+    <div class="lab" style="--cat:var(--c8)">Modullar</div>
+    <div class="chips" style="--cat:var(--c8)">
+      <a class="chip" href="#kw-import"><code>import</code><span>modul ulash</span></a>
+      <a class="chip" href="#kw-import"><code>from</code><span>…dan olish</span></a>
+      <a class="chip" href="#kw-import"><code>as</code><span>taxallus (alias)</span></a>
+      <a class="chip soft" href="#kw-lazy"><code>lazy</code><span>kech yuklash · 3.15</span></a>
+    </div>
+    <div class="lab" style="--cat:var(--c9)">Resurslar</div>
+    <div class="chips" style="--cat:var(--c9)">
+      <a class="chip" href="#kw-with"><code>with</code><span>ochadi, o'zi yopadi (using)</span></a>
+    </div>
+    <div class="lab" style="--cat:var(--c10)">Asinxron</div>
+    <div class="chips" style="--cat:var(--c10)">
+      <a class="chip" href="#kw-async"><code>async</code><span>asinxron funksiya</span></a>
+      <a class="chip" href="#kw-async"><code>await</code><span>natijani kut</span></a>
+    </div>
+    <div class="lab" style="--cat:var(--c11)">Turlar</div>
+    <div class="chips" style="--cat:var(--c11)">
+      <a class="chip soft" href="#kw-type"><code>type</code><span>tur taxallusi · 3.12</span></a>
+    </div>
+  </div>
+  <p class="ov-note">Uzluksiz chiziqli — 35 ta qat'iy kalit so'z (o'zgaruvchiga nom qilib bo'lmaydi). Uzuq chiziqli — yumshoq kalit so'zlar. Ro'yxatni o'zingiz ko'rish: <code>import keyword; print(keyword.kwlist)</code></p>
+</section>
+
+<!-- 1. QIYMATLAR -->
+<section class="cat" style="--cat:var(--c1)">
+<h2><span class="n">1</span> Qiymatlar <small>True · False · None</small></h2>
+
+<article class="card" id="kw-values">
+  <div class="info">
+    <div class="card-h"><code class="kw">True</code><code class="kw">False</code><code class="kw">None</code></div>
+    <span class="cs"><b>C#</b><code>true</code> / <code>false</code> / <code>null</code></span>
+    <p>Mantiqiy qiymatlar va «qiymat yo'q». <code>return</code> yozilmagan funksiya ham <code>None</code> qaytaradi.</p>
+    <p class="tip"><b>False hisoblanadi:</b> <code>False</code> <code>None</code> <code>0</code> <code>0.0</code> <code>""</code> <code>[]</code> <code>{}</code> <code>()</code> <code>set()</code>. Shuning uchun <code>if royxat:</code> = «bo'sh emasmi?».</p>
+  </div>
+  <div>
+<pre><code class="py">faol = True                    # bosh harf bilan!
+natija = None                  # "hali qiymat yo'q"
+if natija is None:             # None — doim "is" bilan
+    print("bo'sh")             # → bo'sh
+print(bool(0), bool(""), bool([]))    # → False False False
+print(bool(5), bool("a"), bool([0]))  # → True True True</code></pre>
+  </div>
+</article>
+</section>
+
+<!-- 2. MANTIQ -->
+<section class="cat" style="--cat:var(--c2)">
+<h2><span class="n">2</span> Mantiqiy operatorlar <small>and · or · not · is · in</small></h2>
+
+<article class="card" id="kw-logic">
+  <div class="info">
+    <div class="card-h"><code class="kw">and</code><code class="kw">or</code><code class="kw">not</code></div>
+    <span class="cs"><b>C#</b><code>&amp;&amp;</code> / <code>||</code> / <code>!</code></span>
+    <p><code>and</code> — ikkalasi ham rost, <code>or</code> — kamida bittasi, <code>not</code> — teskarisi.</p>
+    <p class="tip"><code>or</code> birinchi «rost» qiymatni qaytaradi — standart qiymat berishning qisqa usuli: <code>ism = kiritilgan or "Mehmon"</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">yosh, talaba = 20, True
+if yosh >= 18 and talaba:
+    print("chegirma bor")          # → chegirma bor
+if not talaba or yosh &lt; 7:
+    print("bu chiqmaydi")
+ism = "" or "Mehmon"               # birinchi rost qiymat
+print(ism)                         # → Mehmon
+print(None and 5)                  # → None</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-is">
+  <div class="info">
+    <div class="card-h"><code class="kw">is</code><code class="nk">is not</code></div>
+    <span class="cs"><b>C#</b><code>ReferenceEquals(a, b)</code>, <code>x is null</code></span>
+    <p><code>==</code> qiymatlarni solishtiradi, <code>is</code> — <b>aynan bitta obyektmi</b> (xotiradagi joyi).</p>
+    <p class="tip"><code>is</code> ni faqat <code>None</code>, <code>True</code>, <code>False</code> bilan ishlating. Sonlar va satrlarni doim <code>==</code> bilan solishtiring.</p>
+  </div>
+  <div>
+<pre><code class="py">a = [1, 2]
+b = [1, 2]
+c = a
+print(a == b)      # → True    (qiymatlari teng)
+print(a is b)      # → False   (ikki xil obyekt)
+print(a is c)      # → True    (aynan bitta obyekt)
+print(a is not b)  # → True</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-in">
+  <div class="info">
+    <div class="card-h"><code class="kw">in</code><code class="nk">not in</code></div>
+    <span class="cs"><b>C#</b><code>list.Contains(x)</code>, <code>foreach (x in …)</code></span>
+    <p>«Ichida bormi?» — ro'yxat, satr, lug'at (kalit bo'yicha), to'plamda ishlaydi. <code>for</code> siklining bir qismi ham.</p>
+  </div>
+  <div>
+<pre><code class="py">menu = ["osh", "lag'mon", "manti"]
+print("osh" in menu)              # → True
+print("somsa" not in menu)        # → True
+print("lom" in "salom")           # → True    (satr ichida)
+print("ism" in {"ism": "Ali"})    # → True    (lug'at: kalit)
+for taom in menu[:2]:             # for ... in — sikl
+    print(taom)                   # → osh, lag'mon</code></pre>
+  </div>
+</article>
+</section>
+
+<!-- 3. SHARTLAR -->
+<section class="cat" style="--cat:var(--c3)">
+<h2><span class="n">3</span> Shartlar <small>if · elif · else · match · case</small></h2>
+
+<article class="card" id="kw-if">
+  <div class="info">
+    <div class="card-h"><code class="kw">if</code><code class="kw">elif</code><code class="kw">else</code></div>
+    <span class="cs"><b>C#</b><code>if</code> / <code>else if</code> / <code>else</code>, <code>c ? a : b</code></span>
+    <p>Shart tekshirish. Qavs shart emas, oxirida <code>:</code>, blok 4 probel bilan surilgan. <code>else if</code> emas — <code>elif</code>.</p>
+    <p class="tip">Bir qatorli shart: <code>A if shart else B</code>. Shartlarni <code>and</code> / <code>or</code> bilan bog'lang.</p>
+  </div>
+  <div>
+<pre><code class="py">ball = 78
+if ball >= 86:
+    baho = 5
+elif ball >= 71:               # C#: else if
+    baho = 4
+else:
+    baho = 3
+print(baho)                    # → 4
+holat = "o'tdi" if ball >= 56 else "yiqildi"   # C#: ?:
+print(holat)                   # → o'tdi
+royxat = []
+if not royxat:                 # bo'sh ro'yxat = False
+    print("bo'sh")             # → bo'sh</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-match">
+  <div class="info">
+    <div class="card-h"><code class="kw">match</code><code class="kw">case</code><span class="badge">soft · 3.10+</span></div>
+    <span class="cs"><b>C#</b><code>switch</code> (pattern matching)</span>
+    <p>Qiymatni namunalar bilan solishtiradi. <code>break</code> kerak emas — birinchi mos <code>case</code> ishlaydi. <code>case _:</code> — qolgan hammasi (default).</p>
+    <p class="tip"><code>|</code> — «yoki», <code>if</code> — qo'shimcha shart (guard). Tuple/ro'yxat/lug'atni «yechib» ham oladi.</p>
+  </div>
+  <div>
+<pre><code class="py">def javob(kod):
+    match kod:
+        case 200:
+            return "OK"
+        case 401 | 403:              # yoki
+            return "Ruxsat yo'q"
+        case int() if kod >= 500:    # tur + shart
+            return "Server xatosi"
+        case _:                      # default
+            return "Noma'lum"
+print(javob(403))                    # → Ruxsat yo'q
+print(javob(502))                    # → Server xatosi
+nuqta = (0, 7)
+match nuqta:
+    case (0, y):                     # tuzilmani yechib olish
+        print(f"Y o'qida, y={y}")    # → Y o'qida, y=7</code></pre>
+  </div>
+</article>
+</section>
+
+<!-- 4. SIKLLAR -->
+<section class="cat" style="--cat:var(--c4)">
+<h2><span class="n">4</span> Sikllar <small>for · while · break · continue · pass · else</small></h2>
+
+<article class="card" id="kw-for">
+  <div class="info">
+    <div class="card-h"><code class="kw">for</code><code class="kw">in</code></div>
+    <span class="cs"><b>C#</b><code>foreach</code>; <code>for (i = 0; i &lt; n; i++)</code> → <code>range(n)</code></span>
+    <p>Har bir element uchun takrorlash. Indeks kerak bo'lsa — <code>enumerate</code>, ikki ro'yxat birga — <code>zip</code>.</p>
+    <p class="tip"><code>range(n)</code> → 0…n-1 · <code>range(a, b)</code> → a…b-1 · <code>range(a, b, qadam)</code>. Lug'at: <code>for k, v in d.items():</code></p>
+  </div>
+  <div>
+<pre><code class="py">mevalar = ["olma", "anor"]
+for meva in mevalar:
+    print(meva)                    # → olma, anor
+for i in range(1, 6, 2):           # 1 dan 6 gacha, qadam 2
+    print(i)                       # → 1, 3, 5
+for i, meva in enumerate(mevalar): # indeks + qiymat
+    print(i, meva)                 # → 0 olma, 1 anor
+for ism, ball in zip(["Ali", "Vali"], [5, 4]):
+    print(ism, ball)               # → Ali 5, Vali 4</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-while">
+  <div class="info">
+    <div class="card-h"><code class="kw">while</code></div>
+    <span class="cs"><b>C#</b><code>while</code> (<code>do…while</code> yo'q)</span>
+    <p>Shart rost ekan takrorlaydi. Necha marta aylanishi oldindan noma'lum bo'lsa ishlatiladi.</p>
+    <p class="tip">«Kamida bir marta» kerak bo'lsa: <code>while True:</code> + ichida <code>break</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">n = 3
+while n > 0:                 # shart rost ekan takrorla
+    print(n)                 # → 3, 2, 1
+    n -= 1                   # n-- yo'q, faqat n -= 1</code></pre>
+<pre><code class="py frag">while True:                  # cheksiz sikl + break
+    buyruq = input(">>> ")
+    if buyruq == "stop":
+        break</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-break">
+  <div class="info">
+    <div class="card-h"><code class="kw">break</code><code class="kw">continue</code></div>
+    <span class="cs"><b>C#</b><code>break</code> / <code>continue</code> (xuddi shunday)</span>
+    <p><code>break</code> — siklni butunlay to'xtatadi. <code>continue</code> — qolgan qismini tashlab, keyingi aylanishga o'tadi.</p>
+    <p class="tip">Ichma-ich sikllarda faqat <b>ichki</b> siklni to'xtatadi.</p>
+  </div>
+  <div>
+<pre><code class="py">for n in range(10):
+    if n % 2 == 0:
+        continue             # juftlarni o'tkazib yubor
+    if n > 5:
+        break                # siklni butunlay to'xtat
+    print(n)                 # → 1, 3, 5</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-pass">
+  <div class="info">
+    <div class="card-h"><code class="kw">pass</code></div>
+    <span class="cs"><b>C#</b>bo'sh blok <code>{ }</code></span>
+    <p>«Hech narsa qilma». Python'da blok bo'sh bo'lolmaydi — keyin yoziladigan funksiya/klass yoki jim o'tkaziladigan xato uchun joy egallaydi.</p>
+    <p class="tip"><code>...</code> (uch nuqta) ham xuddi shunday ishlatiladi.</p>
+  </div>
+  <div>
+<pre><code class="py">def keyin_yozaman():
+    pass                     # bo'sh blok
+class Xodim:
+    pass
+try:
+    int("abc")
+except ValueError:
+    pass                     # xatoni jim o'tkazish
+print("davom etdi")          # → davom etdi</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-loopelse">
+  <div class="info">
+    <div class="card-h"><code class="kw">else</code><span class="badge">sikl bilan</span></div>
+    <span class="cs"><b>C#</b>o'xshashi yo'q (odatda <code>bool found</code> bayrog'i)</span>
+    <p><code>for</code>/<code>while</code> dan keyingi <code>else</code> — sikl <b><code>break</code>siz</b> tugasa ishlaydi. «Topilmadi» holati uchun qulay.</p>
+  </div>
+  <div>
+<pre><code class="py">for x in [3, 7, 9]:
+    if x % 2 == 0:
+        print("juft topildi")
+        break
+else:                        # break bo'lmasa ishlaydi
+    print("juft yo'q")       # → juft yo'q</code></pre>
+  </div>
+</article>
+</section>
+
+<!-- 5. FUNKSIYALAR -->
+<section class="cat" style="--cat:var(--c5)">
+<h2><span class="n">5</span> Funksiyalar <small>def · return · lambda · yield · global · nonlocal</small></h2>
+
+<article class="card" id="kw-def">
+  <div class="info">
+    <div class="card-h"><code class="kw">def</code><code class="kw">return</code></div>
+    <span class="cs"><b>C#</b>metod; <code>return</code></span>
+    <p><code>def</code> — funksiya e'lon qiladi, <code>return</code> — natijani qaytaradi. <code>return</code> bo'lmasa → <code>None</code>.</p>
+    <p class="tip">Bir nechta qiymat qaytarsa — tuple bo'lib keladi va <code>a, b = f()</code> bilan yechiladi. <code>"""…"""</code> — docstring (tavsif).</p>
+  </div>
+  <div>
+<pre><code class="py">def salom(ism, til="uz"):            # til — standart qiymat
+    """Salom matnini qaytaradi."""   # docstring (tavsif)
+    if til == "uz":
+        return f"Salom, {ism}!"
+    return f"Hello, {ism}!"
+
+print(salom("Ali"))                  # → Salom, Ali!
+print(salom(til="en", ism="Vali"))   # → Hello, Vali!
+
+def min_max(sonlar):
+    return min(sonlar), max(sonlar)  # bir nechta → tuple
+kichik, katta = min_max([4, 9, 1])
+print(kichik, katta)                 # → 1 9
+print(salom.__doc__)                 # → Salom matnini qaytaradi.</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-args">
+  <div class="info">
+    <div class="card-h"><code class="kw">def</code><code class="nk">*args</code><code class="nk">**kwargs</code><code class="nk">-&gt; tur</code></div>
+    <span class="cs"><b>C#</b><code>params int[]</code>, nomli argumentlar</span>
+    <p><code>*args</code> — istalgancha argument (tuple). <code>**kwargs</code> — istalgancha <code>nom=qiymat</code> (lug'at).</p>
+    <p class="tip">Tur ko'rsatish (<code>a: int</code>, <code>-&gt; int</code>) — faqat izoh: Python tekshirmaydi, lekin IDE va mypy yordam beradi.</p>
+  </div>
+  <div>
+<pre><code class="py">def summa(*sonlar):             # tuple bo'lib keladi
+    return sum(sonlar)
+def avto(model, **info):        # lug'at bo'lib keladi
+    return model, info
+def qosh(a: int, b: int = 0) -> int:   # tur — faqat izoh
+    return a + b
+print(summa(1, 2, 3))           # → 6
+print(avto("K5", rang="oq"))    # → ('K5', {'rang': 'oq'})
+print(qosh(2, 3))               # → 5
+royxat = [4, 5]
+print(summa(*royxat))           # → 9    (* — yoyib berish)</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-lambda">
+  <div class="info">
+    <div class="card-h"><code class="kw">lambda</code></div>
+    <span class="cs"><b>C#</b><code>x =&gt; x * x</code></span>
+    <p>Nomsiz, bir qatorli funksiya. Ko'pincha <code>sorted(key=…)</code>, <code>map</code>, <code>filter</code> ichida.</p>
+    <p class="tip"><code>map</code>/<code>filter</code> ro'yxat emas, iterator qaytaradi — shuning uchun <code>list(…)</code>. Ko'pincha comprehension qisqaroq: <code>[x * 10 for x in sonlar]</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">kvadrat = lambda x: x * x            # C#: x => x * x
+print(kvadrat(5))                    # → 25
+sonlar = [1, 2, 3, 4]
+print(list(map(lambda x: x * 10, sonlar)))   # → [10, 20, 30, 40]
+print(list(filter(lambda x: x % 2 == 0, sonlar)))  # → [2, 4]
+xodimlar = [("Ali", 30), ("Vali", 25)]
+print(sorted(xodimlar, key=lambda x: x[1]))
+# → [('Vali', 25), ('Ali', 30)]</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-yield">
+  <div class="info">
+    <div class="card-h"><code class="kw">yield</code></div>
+    <span class="cs"><b>C#</b><code>yield return</code> / <code>IEnumerable</code></span>
+    <p>Funksiyani <b>generator</b>ga aylantiradi: qiymatlar so'ralganda bittadan hisoblanadi — katta ma'lumotda xotira tejaladi.</p>
+    <p class="tip"><code>next(gen)</code> — keyingi qiymat. Generator bir marta aylanadi.</p>
+  </div>
+  <div>
+<pre><code class="py">def kvadratlar(n):
+    for i in range(n):
+        yield i * i          # qiymatni birma-bir beradi
+print(list(kvadratlar(4)))   # → [0, 1, 4, 9]
+gen = kvadratlar(3)
+print(next(gen), next(gen))  # → 0 1</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-global">
+  <div class="info">
+    <div class="card-h"><code class="kw">global</code><code class="kw">nonlocal</code></div>
+    <span class="cs"><b>C#</b><code>static</code> maydon / closure (C# da avtomatik)</span>
+    <p>Funksiya ichida tashqaridagi o'zgaruvchiga <b>yangi qiymat berish</b> uchun. Faqat o'qish uchun kerak emas.</p>
+    <p class="tip"><code>global</code> — modul (fayl) darajasidagi; <code>nonlocal</code> — o'rab turgan funksiyadagi. <code>global</code> dan kam foydalaning.</p>
+  </div>
+  <div>
+<pre><code class="py">hisob = 0
+def oshir():
+    global hisob             # modul darajasidagi o'zgaruvchi
+    hisob += 1
+oshir()
+print(hisob)                 # → 1
+
+def hisoblagich():
+    n = 0
+    def keyingi():
+        nonlocal n           # tashqi funksiyadagi n
+        n += 1
+        return n
+    return keyingi
+k = hisoblagich()
+print(k(), k(), k())         # → 1 2 3</code></pre>
+  </div>
+</article>
+</section>
+
+<!-- 6. KLASSLAR -->
+<section class="cat" style="--cat:var(--c6)">
+<h2><span class="n">6</span> Klasslar (OOP) <small>class · del · self · super() · @property</small></h2>
+
+<article class="card" id="kw-class">
+  <div class="info">
+    <div class="card-h"><code class="kw">class</code><code class="nk">__init__</code><code class="nk">self</code></div>
+    <span class="cs"><b>C#</b><code>class</code>, konstruktor, <code>this</code>, <code>static</code> maydon</span>
+    <p><code>__init__</code> — konstruktor. <code>self</code> — obyektning o'zi (kalit so'z emas, lekin doim 1-parametr). Klass ichida to'g'ridan-to'g'ri yozilgan o'zgaruvchi — hamma obyektlar uchun umumiy.</p>
+    <p class="tip">Obyekt yaratish: <code>Xodim("Ali")</code> — <code>new</code> yo'q. Konstruktorsiz bo'sh klass: <code>class A: pass</code>.</p>
+  </div>
+  <div>
+<pre><code class="py" data-id="xodim">class Xodim:
+    kompaniya = "Tech"                 # klass (static) maydon
+    def __init__(self, ism, maosh=0):  # konstruktor
+        self.ism = ism                 # self = this
+        self.maosh = maosh
+    def tanishtir(self):               # self — doim 1-parametr
+        return f"{self.ism}, {self.kompaniya}"
+
+ali = Xodim("Ali", 15_000_000)         # new yozilmaydi
+print(ali.tanishtir())                 # → Ali, Tech
+print(ali.maosh, Xodim.kompaniya)      # → 15000000 Tech</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-inherit">
+  <div class="info">
+    <div class="card-h"><code class="kw">class</code><code class="nk">super()</code><code class="nk">isinstance</code><span class="badge">vorislik</span></div>
+    <span class="cs"><b>C#</b><code>class B : A</code>, <code>base(…)</code>, <code>override</code>, <code>is</code></span>
+    <p>Ota klass qavs ichida yoziladi. <code>super()</code> — ota klass metodini chaqirish. <code>virtual/override</code> so'zlari yo'q — bir xil nom bilan qayta yozilsa yetarli.</p>
+    <p class="tip">Bir nechta ota klass ham mumkin: <code>class C(A, B):</code>. Tekshirish: <code>isinstance(obj, Klass)</code>.</p>
+  </div>
+  <div>
+<pre><code class="py" data-with="xodim">class Menejer(Xodim):                  # C#: : Xodim
+    def __init__(self, ism, jamoa):
+        super().__init__(ism)          # C#: base(ism)
+        self.jamoa = jamoa
+    def tanishtir(self):               # override
+        return super().tanishtir() + f", {len(self.jamoa)} kishi"
+
+m = Menejer("Vali", ["Ali", "Hasan"])
+print(m.tanishtir())                   # → Vali, Tech, 2 kishi
+print(isinstance(m, Xodim))            # → True</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-deco">
+  <div class="info">
+    <div class="card-h"><code class="nk">@property</code><code class="nk">@x.setter</code><code class="nk">@classmethod</code><code class="nk">@staticmethod</code></div>
+    <span class="cs"><b>C#</b><code>get</code> / <code>set</code>, <code>static</code> metod</span>
+    <p><code>@property</code> — metodni maydon kabi o'qish (getter), <code>@x.setter</code> — qiymatni tekshirib yozish. <code>@classmethod</code> — <code>cls</code> (klassning o'zi) bilan ishlaydi, <code>@staticmethod</code> — na <code>self</code>, na <code>cls</code>.</p>
+    <p class="tip"><code>_nom</code> — «ichki, tegmang» kelishuvi; <code>__nom</code> — nomi yashiriladi (private'ga yaqin). <code>@classmethod</code> ko'pincha muqobil konstruktor: <code>Xodim.from_string("Ali,1500")</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">class Hisob:
+    soni = 0
+    def __init__(self, balans):
+        self.balans = balans           # setter ishlaydi
+        Hisob.soni += 1
+    @property                          # C#: get
+    def balans(self):
+        return self._balans
+    @balans.setter                     # C#: set
+    def balans(self, qiymat):
+        if qiymat &lt; 0:
+            raise ValueError("Manfiy bo'lmaydi")
+        self._balans = qiymat
+    @classmethod                       # cls = klassning o'zi
+    def nechta(cls):
+        return cls.soni
+    @staticmethod                      # self ham, cls ham yo'q
+    def valyuta():
+        return "UZS"
+
+h = Hisob(100)
+h.balans += 50
+print(h.balans, Hisob.nechta(), Hisob.valyuta())  # → 150 1 UZS</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-abc">
+  <div class="info">
+    <div class="card-h"><code class="nk">ABC</code><code class="nk">@abstractmethod</code></div>
+    <span class="cs"><b>C#</b><code>abstract class</code> / <code>interface</code></span>
+    <p>Abstrakt klass: voris albatta yozishi shart bo'lgan metodlar. Undan to'g'ridan-to'g'ri obyekt yaratib bo'lmaydi.</p>
+  </div>
+  <div>
+<pre><code class="py">from abc import ABC, abstractmethod
+class Shakl(ABC):                # C#: abstract class
+    @abstractmethod
+    def yuza(self): ...          # ... = pass
+class Kvadrat(Shakl):
+    def __init__(self, a):
+        self.a = a
+    def yuza(self):
+        return self.a ** 2
+print(Kvadrat(3).yuza())         # → 9
+try:
+    Shakl()
+except TypeError:
+    print("yaratib bo'lmaydi")   # → yaratib bo'lmaydi</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-dunder">
+  <div class="info">
+    <div class="card-h"><code class="nk">__dunder__</code><span class="badge">maxsus metodlar</span></div>
+    <span class="cs"><b>C#</b><code>ToString()</code>, indexer, <code>operator +</code></span>
+    <p>Ikki pastki chiziqli metodlar obyektni <code>len()</code>, <code>[]</code>, <code>+</code>, <code>print</code> bilan ishlaydigan qiladi.</p>
+    <p class="tip">Ularni o'zingiz chaqirmaysiz — Python o'zi chaqiradi: <code>len(s)</code> → <code>s.__len__()</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">class Savat:
+    def __init__(self, *narsalar):
+        self.narsalar = list(narsalar)
+    def __repr__(self):                  # print(s)
+        return f"Savat{self.narsalar}"
+    def __len__(self):                   # len(s)
+        return len(self.narsalar)
+    def __getitem__(self, i):            # s[i]
+        return self.narsalar[i]
+    def __add__(self, boshqa):           # s1 + s2
+        return Savat(*self.narsalar, *boshqa.narsalar)
+
+s = Savat("olma") + Savat("non", "sut")
+print(s)                    # → Savat['olma', 'non', 'sut']
+print(len(s), s[1])         # → 3 non</code></pre>
+    <div class="tbl code-tbl"><table class="ref">
+      <tr><th>Metod</th><th>Qachon ishlaydi</th></tr>
+      <tr><td><code>__str__</code> / <code>__repr__</code></td><td><code>print(obj)</code> — C#: ToString</td></tr>
+      <tr><td><code>__len__</code></td><td><code>len(obj)</code></td></tr>
+      <tr><td><code>__getitem__</code> / <code>__setitem__</code></td><td><code>obj[i]</code>, <code>obj[i] = v</code></td></tr>
+      <tr><td><code>__contains__</code> / <code>__iter__</code></td><td><code>x in obj</code>, <code>for x in obj</code></td></tr>
+      <tr><td><code>__eq__</code> / <code>__lt__</code></td><td><code>==</code>, <code>&lt;</code> (saralash uchun)</td></tr>
+      <tr><td><code>__add__</code> / <code>__sub__</code></td><td><code>+</code>, <code>-</code></td></tr>
+      <tr><td><code>__call__</code></td><td><code>obj()</code> — funksiya kabi</td></tr>
+      <tr><td><code>__enter__</code> / <code>__exit__</code></td><td><code>with obj:</code> — C#: IDisposable</td></tr>
+    </table></div>
+  </div>
+</article>
+
+<article class="card" id="kw-del">
+  <div class="info">
+    <div class="card-h"><code class="kw">del</code></div>
+    <span class="cs"><b>C#</b><code>list.RemoveAt(i)</code>, <code>dict.Remove(k)</code></span>
+    <p>Indeks, kesim yoki kalit bo'yicha o'chiradi; o'zgaruvchi nomini ham o'chiradi.</p>
+    <p class="tip">Qiymat bo'yicha o'chirish — <code>royxat.remove(x)</code>; o'chirib qiymatini olish — <code>pop()</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">royxat = [10, 20, 30, 40]
+del royxat[0]            # indeks bo'yicha
+del royxat[-2:]          # kesim bo'yicha
+print(royxat)            # → [20]
+d = {"a": 1, "b": 2}
+del d["a"]               # kalit bo'yicha
+print(d)                 # → {'b': 2}
+x = 5
+del x                    # nom o'chadi: endi x yo'q</code></pre>
+  </div>
+</article>
+</section>
+
+<!-- 7. XATOLAR -->
+<section class="cat" style="--cat:var(--c7)">
+<h2><span class="n">7</span> Xatolar bilan ishlash <small>try · except · else · finally · raise · assert</small></h2>
+
+<article class="card" id="kw-try">
+  <div class="info">
+    <div class="card-h"><code class="kw">try</code><code class="kw">except</code><code class="kw">else</code><code class="kw">finally</code></div>
+    <span class="cs"><b>C#</b><code>try</code> / <code>catch</code> / — / <code>finally</code></span>
+    <p><code>try</code> — xato chiqishi mumkin bo'lgan kod. <code>except Tur as e</code> — xatoni ushlash. <code>else</code> — xato <b>bo'lmasa</b>. <code>finally</code> — <b>har doim</b>.</p>
+    <p class="tip">Aniq xato turini ushlang. Hammasini: <code>except Exception as e:</code> (yalang'och <code>except:</code> tavsiya etilmaydi).</p>
+  </div>
+  <div>
+<pre><code class="py">def bol(a, b):
+    try:
+        natija = a / b
+    except ZeroDivisionError:          # C#: catch (...)
+        print("0 ga bo'lib bo'lmaydi")
+    except (TypeError, ValueError) as e:
+        print("Xato:", e)              # e — xato obyekti
+    else:                              # xato BO'LMASA
+        print("Natija:", natija)
+    finally:                           # HAR DOIM
+        print("tugadi")
+
+bol(10, 4)     # → Natija: 2.5, tugadi
+bol(1, 0)      # → 0 ga bo'lib bo'lmaydi, tugadi</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-raise">
+  <div class="info">
+    <div class="card-h"><code class="kw">raise</code></div>
+    <span class="cs"><b>C#</b><code>throw</code>, <code>throw;</code>, <code>class X : Exception</code></span>
+    <p>Xato «otish». O'z xato turingiz — <code>Exception</code> dan meros olgan klass.</p>
+    <p class="tip"><code>except</code> ichida yolg'iz <code>raise</code> — xatoni qayta otish (C#: <code>throw;</code>). <code>raise YangiXato() from e</code> — sababini saqlab.</p>
+  </div>
+  <div>
+<pre><code class="py">def yosh_tekshir(yosh):
+    if yosh &lt; 0:
+        raise ValueError("Yosh manfiy bo'lmaydi")  # C#: throw
+    return yosh
+
+try:
+    yosh_tekshir(-5)
+except ValueError as e:
+    print(e)                     # → Yosh manfiy bo'lmaydi
+
+class BalansXato(Exception):     # o'z xato turingiz
+    pass
+try:
+    raise BalansXato("Mablag' yetmaydi")
+except BalansXato as e:
+    print(type(e).__name__, e)   # → BalansXato Mablag' yetmaydi</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-assert">
+  <div class="info">
+    <div class="card-h"><code class="kw">assert</code></div>
+    <span class="cs"><b>C#</b><code>Debug.Assert(shart, "xabar")</code></span>
+    <p>«Bu shart albatta rost bo'lishi kerak». Yolg'on bo'lsa — <code>AssertionError</code>.</p>
+    <p class="tip"><code>python -O</code> bilan ishga tushirilsa assert'lar o'chadi → foydalanuvchi kiritgan ma'lumotni tekshirish uchun emas (unga <code>raise</code>). Testlar va ichki tekshiruvlar uchun.</p>
+  </div>
+  <div>
+<pre><code class="py">def ortacha(sonlar):
+    assert len(sonlar) > 0, "Ro'yxat bo'sh!"
+    return sum(sonlar) / len(sonlar)
+
+print(ortacha([4, 5]))           # → 4.5
+try:
+    ortacha([])
+except AssertionError as e:
+    print("Xato:", e)            # → Xato: Ro'yxat bo'sh!</code></pre>
+  </div>
+</article>
+
+<article class="card wide" id="kw-errtypes">
+  <div class="info">
+    <div class="card-h"><code class="nk">Exception</code><span class="badge">ko'p uchraydigan xato turlari</span></div>
+    <div class="tbl"><table class="ref">
+      <tr><th>Xato turi</th><th>Qachon chiqadi</th><th>Misol</th><th>Xato turi</th><th>Qachon chiqadi</th><th>Misol</th></tr>
+      <tr><td><code>ValueError</code></td><td>qiymat noto'g'ri</td><td><code class="raises" data-exc="ValueError">int("abc")</code></td>
+          <td><code>FileNotFoundError</code></td><td>fayl yo'q</td><td><code class="raises" data-exc="FileNotFoundError">open("yoq.txt")</code></td></tr>
+      <tr><td><code>TypeError</code></td><td>tur mos emas</td><td><code class="raises" data-exc="TypeError">1 + "a"</code></td>
+          <td><code>AttributeError</code></td><td>obyektda bunday a'zo yo'q</td><td><code class="raises" data-exc="AttributeError">None.upper()</code></td></tr>
+      <tr><td><code>KeyError</code></td><td>lug'atda kalit yo'q</td><td><code class="raises" data-exc="KeyError">{}["x"]</code></td>
+          <td><code>NameError</code></td><td>nom e'lon qilinmagan</td><td><code class="raises" data-exc="NameError">print(xyz)</code></td></tr>
+      <tr><td><code>IndexError</code></td><td>indeks chegaradan tashqari</td><td><code class="raises" data-exc="IndexError">[1, 2][5]</code></td>
+          <td><code>ModuleNotFoundError</code></td><td>modul o'rnatilmagan</td><td><code class="raises" data-exc="ModuleNotFoundError">import yoqmodul</code></td></tr>
+      <tr><td><code>ZeroDivisionError</code></td><td>0 ga bo'lish</td><td><code class="raises" data-exc="ZeroDivisionError">1 / 0</code></td>
+          <td><code>StopIteration</code></td><td>generator tugadi</td><td><code class="raises" data-exc="StopIteration">next(iter([]))</code></td></tr>
+    </table></div>
+  </div>
+</article>
+</section>
+
+<!-- 8. MODULLAR -->
+<section class="cat" style="--cat:var(--c8)">
+<h2><span class="n">8</span> Modullar <small>import · from · as</small></h2>
+
+<article class="card" id="kw-import">
+  <div class="info">
+    <div class="card-h"><code class="kw">import</code><code class="kw">from</code><code class="kw">as</code></div>
+    <span class="cs"><b>C#</b><code>using System;</code>, <code>using static</code>, <code>using X = …;</code></span>
+    <p><code>import</code> — modulni ulash, <code>from … import</code> — moduldan faqat kerakli nomlarni olish, <code>as</code> — qisqa nom (taxallus). Modul = oddiy <code>.py</code> fayl.</p>
+    <p class="tip">Tashqi kutubxona: <code>pip install requests</code>. Loyiha muhiti: <code>python -m venv .venv</code>. <code>from x import *</code> — nomlar aralashib ketadi, tavsiya etilmaydi.</p>
+  </div>
+  <div>
+<pre><code class="py">import math                      # C#: using System;
+import datetime as dt            # as — qisqa nom
+from json import dumps, loads    # faqat kerakli nomlar
+print(math.sqrt(16), math.pi > 3)                  # → 4.0 True
+print(dt.date(2026, 10, 30).strftime("%d.%m.%Y"))  # → 30.10.2026
+print(dumps({"a": 1}))                             # → {"a": 1}</code></pre>
+<div class="code-cap">O'z faylingiz va dastur kirish nuqtasi:</div>
+<pre><code class="py frag">import avto_info_mod as aim     # avto_info_mod.py fayli
+from avto_info_mod import avto_info as ainfo
+
+def main():
+    print(aim.avto_info("GM", "Malibu"))
+
+if __name__ == "__main__":      # fayl to'g'ridan-to'g'ri
+    main()                      # ishga tushirilganda (C#: Main)</code></pre>
+  </div>
+</article>
+</section>
+
+<!-- 9. WITH -->
+<section class="cat" style="--cat:var(--c9)">
+<h2><span class="n">9</span> Resurslar: with <small>with · as · fayl · JSON</small></h2>
+
+<article class="card" id="kw-with">
+  <div class="info">
+    <div class="card-h"><code class="kw">with</code><code class="kw">as</code></div>
+    <span class="cs"><b>C#</b><code>using (var f = …) { }</code></span>
+    <p>Resursni (fayl, ulanish, lock) ochadi va blokdan chiqqanda — xato bo'lsa ham — <b>o'zi yopadi</b>.</p>
+    <p class="tip">Rejimlar: <code>"r"</code> o'qish (standart) · <code>"w"</code> yozish (eskisi o'chadi!) · <code>"a"</code> oxiriga qo'shish · <code>"x"</code> faqat yangi fayl · <code>"rb"</code> binar. Doim <code>encoding="utf-8"</code> (Windows'da muhim). <code>f.read()</code> — hammasi, <code>f.readlines()</code> — qatorlar ro'yxati.</p>
+  </div>
+  <div>
+<pre><code class="py">with open("eslatma.txt", "w", encoding="utf-8") as f:
+    f.write("Salom\nDunyo\n")    # blokdan chiqqach yopiladi
+with open("eslatma.txt", encoding="utf-8") as f:
+    for qator in f:              # qatorma-qator o'qish
+        print(qator.strip())     # → Salom, Dunyo
+with open("eslatma.txt", "a", encoding="utf-8") as f:
+    f.write("Yana\n")            # "a" — oxiriga qo'shish</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-json">
+  <div class="info">
+    <div class="card-h"><code class="kw">with</code><code class="nk">json</code></div>
+    <span class="cs"><b>C#</b><code>JsonSerializer.Serialize / Deserialize</code></span>
+    <p>Eslab qolish: <b>s</b> bilan (<code>dumps</code>/<code>loads</code>) — <b>s</b>atr (string); <b>s</b>siz (<code>dump</code>/<code>load</code>) — fayl.</p>
+    <p class="tip"><code>indent=2</code> — chiroyli formatlab yozish. <code>ensure_ascii=False</code> — kirill/o'zbek harflari <code>\u…</code> bo'lib ketmasin. Ichma-ich: <code>data["geometry"]["location"]["lat"]</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">import json
+bemor = {"ism": "Ali", "yosh": 30}
+matn = json.dumps(bemor, indent=2)       # obyekt → JSON matn
+obyekt = json.loads('{"a": [1, 2]}')     # JSON matn → obyekt
+print(obyekt["a"][1])                    # → 2
+with open("bemor.json", "w", encoding="utf-8") as f:
+    json.dump(bemor, f, ensure_ascii=False)   # faylga
+with open("bemor.json", encoding="utf-8") as f:
+    print(json.load(f)["ism"])           # → Ali</code></pre>
+  </div>
+</article>
+</section>
+
+<!-- 10. ASYNC -->
+<section class="cat" style="--cat:var(--c10)">
+<h2><span class="n">10</span> Asinxron <small>async · await</small></h2>
+
+<article class="card" id="kw-async">
+  <div class="info">
+    <div class="card-h"><code class="kw">async</code><code class="kw">await</code></div>
+    <span class="cs"><b>C#</b><code>async Task</code>, <code>await</code>, <code>Task.WhenAll</code></span>
+    <p><code>async def</code> — asinxron funksiya (korutina). <code>await</code> — natijani kutadi, shu vaqtda boshqa vazifalar ishlaydi.</p>
+    <p class="tip"><code>await</code> faqat <code>async def</code> ichida. Oddiy kodga kerak emas — tarmoq/IO ko'p bo'lganda (FastAPI, aiohttp, aiogram bot). Ishga tushirish: <code>asyncio.run(main())</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">import asyncio
+
+async def yukla(nom, soniya):          # C#: async Task&lt;string&gt;
+    await asyncio.sleep(soniya)        # C#: await Task.Delay
+    return f"{nom} tayyor"
+
+async def main():
+    natijalar = await asyncio.gather(  # C#: Task.WhenAll
+        yukla("A", 0.1), yukla("B", 0.1))
+    print(natijalar)         # → ['A tayyor', 'B tayyor']
+
+asyncio.run(main())                    # kirish nuqtasi</code></pre>
+  </div>
+</article>
+</section>
+
+<!-- 11. YUMSHOQ -->
+<section class="cat" style="--cat:var(--c11)">
+<h2><span class="n">11</span> Yumshoq kalit so'zlar <small>type · _ · lazy (match · case — 3-bo'limda)</small></h2>
+
+<article class="card" id="kw-type">
+  <div class="info">
+    <div class="card-h"><code class="kw">type</code><span class="badge">soft · 3.12+</span></div>
+    <span class="cs"><b>C#</b><code>using Vektor = List&lt;double&gt;;</code></span>
+    <p>Qator boshida <code>type Nom = …</code> — turga taxallus beradi. Boshqa joyda <code>type(x)</code> — oddiy funksiya: obyekt turini qaytaradi.</p>
+  </div>
+  <div>
+<pre><code class="py">type Vektor = list[float]         # tur taxallusi
+def uzunlik(v: Vektor) -> float:
+    return sum(x * x for x in v) ** 0.5
+print(uzunlik([3, 4]))            # → 5.0
+print(type(5).__name__)           # → int    (oddiy funksiya)</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-under">
+  <div class="info">
+    <div class="card-h"><code class="kw">_</code><span class="badge">soft</span></div>
+    <span class="cs"><b>C#</b><code>_</code> (discard)</span>
+    <p>«Bu qiymat menga kerak emas». <code>match</code> ichida <code>case _:</code> — qolgan hammasi.</p>
+    <p class="tip">Sonlarda ajratuvchi: <code>15_000_000</code> = <code>15000000</code>. Interaktiv rejimda <code>_</code> — oxirgi natija.</p>
+  </div>
+  <div>
+<pre><code class="py">for _ in range(2):               # qiymat kerak emas
+    print("salom")               # → salom, salom
+ism, _, yosh = ("Ali", "Valiyev", 30)   # keraksizini tashlash
+print(ism, yosh)                 # → Ali 30</code></pre>
+  </div>
+</article>
+
+<article class="card" id="kw-lazy">
+  <div class="info">
+    <div class="card-h"><code class="kw">lazy</code><span class="badge">soft · 3.15+</span></div>
+    <span class="cs"><b>C#</b>g'oyasi <code>Lazy&lt;T&gt;</code> ga o'xshaydi</span>
+    <p>Modul import qatorida emas, nom <b>birinchi ishlatilganda</b> yuklanadi — dastur tezroq ishga tushadi (PEP 810).</p>
+    <p class="tip">Faqat Python 3.15 va undan yangida. Bu misol 3.14 da ishga tushirib tekshirilmagan.</p>
+  </div>
+  <div>
+<pre><code class="py nocheck">lazy import json                 # json hali yuklanmadi
+lazy from pathlib import Path    # Path ham
+print(json.dumps([1]))           # shu yerda yuklanadi</code></pre>
+  </div>
+</article>
+</section>
+
+<!-- 12. QO'SHIMCHA -->
+<section class="cat" style="--cat:var(--c12)">
+<h2><span class="n">12</span> Qo'shimcha: kalit so'z emas, lekin har kuni kerak <small>built-in · str · list · dict · set</small></h2>
+
+<article class="card wide" id="x-builtins">
+  <div class="info">
+    <div class="card-h"><code class="nk">built-in</code><span class="badge">import qilmasdan ishlaydigan funksiyalar</span></div>
+    <div class="tbl"><table class="ref">
+      <tr><th>Funksiya</th><th>Nima qiladi</th><th>Misol → natija</th></tr>
+      <tr><td><code>print(a, b, sep=" ", end="\n")</code></td><td>ekranga chiqarish</td><td><code class="chk">print(1, 2, sep="-")</code> → <code class="res">1-2</code></td></tr>
+      <tr><td><code>input("savol")</code></td><td>klaviaturadan o'qish — doim <b>str</b> qaytaradi</td><td><code>yosh = int(input("Yosh: "))</code></td></tr>
+      <tr><td><code>len(x)</code></td><td>uzunlik (satr, ro'yxat, lug'at…)</td><td><code class="chk">len("salom")</code> → <code class="res">5</code></td></tr>
+      <tr><td><code>type(x)</code> · <code>isinstance(x, T)</code></td><td>turini bilish / tekshirish</td><td><code class="chk">isinstance(5, int)</code> → <code class="res">True</code></td></tr>
+      <tr><td><code>int float str bool</code></td><td>tur o'zgartirish</td><td><code class="chk">int("42") + 1</code> → <code class="res">43</code></td></tr>
+      <tr><td><code>list tuple set dict</code></td><td>kolleksiya yaratish / o'zgartirish</td><td><code class="chk">list("abc")</code> → <code class="res">['a', 'b', 'c']</code></td></tr>
+      <tr><td><code>range(bosh, oxir, qadam)</code></td><td>sonlar ketma-ketligi (oxir kirmaydi)</td><td><code class="chk">list(range(1, 10, 3))</code> → <code class="res">[1, 4, 7]</code></td></tr>
+      <tr><td><code>sum min max</code></td><td>yig'indi, eng kichik, eng katta</td><td><code class="chk">max([3, 9, 2])</code> → <code class="res">9</code></td></tr>
+      <tr><td><code>round(x, n)</code> · <code>abs(x)</code></td><td>yaxlitlash · modul</td><td><code class="chk">round(3.14159, 2)</code> → <code class="res">3.14</code></td></tr>
+      <tr><td><code>sorted(x, key=, reverse=)</code></td><td>yangi saralangan ro'yxat</td><td><code class="chk">sorted("bca")</code> → <code class="res">['a', 'b', 'c']</code></td></tr>
+      <tr><td><code>reversed(x)</code></td><td>teskari tartib</td><td><code class="chk">list(reversed([1, 2]))</code> → <code class="res">[2, 1]</code></td></tr>
+      <tr><td><code>enumerate(x)</code></td><td>indeks + qiymat juftligi</td><td><code class="chk">list(enumerate("ab"))</code> → <code class="res">[(0, 'a'), (1, 'b')]</code></td></tr>
+      <tr><td><code>zip(a, b)</code></td><td>ikki ro'yxatni juftlab birlashtirish</td><td><code class="chk">dict(zip("ab", [1, 2]))</code> → <code class="res">{'a': 1, 'b': 2}</code></td></tr>
+      <tr><td><code>map(f, x)</code> · <code>filter(f, x)</code></td><td>har biriga f · shartga mosini tanlash</td><td><code class="chk">list(filter(str.isdigit, ["1", "a"]))</code> → <code class="res">['1']</code></td></tr>
+      <tr><td><code>any(x)</code> · <code>all(x)</code></td><td>kamida bittasi / hammasi rostmi</td><td><code class="chk">all([1, 0])</code> → <code class="res">False</code></td></tr>
+      <tr><td><code>open(fayl, rejim)</code></td><td>faylni ochish (9-bo'lim)</td><td><code>with open("a.txt", encoding="utf-8") as f:</code></td></tr>
+      <tr><td><code>help(x)</code> · <code>dir(x)</code></td><td>yordam · obyekt a'zolari ro'yxati</td><td><code>help(str.split)</code> · <code>dir(str)</code></td></tr>
+    </table></div>
+  </div>
+</article>
+
+<article class="card wide" id="x-str">
+  <div class="info">
+    <div class="card-h"><code class="nk">str</code><code class="nk">f"…"</code><span class="badge">satr metodlari — asl satr o'zgarmaydi, yangisi qaytadi</span></div>
+    <div class="tbl"><table class="ref">
+      <tr><th>Metod / format</th><th>Nima qiladi</th><th>Misol → natija</th></tr>
+      <tr><td><code>strip()</code> · <code>lstrip()</code> · <code>rstrip()</code></td><td>chetdagi probellarni olib tashlash (ikki/chap/o'ng)</td><td><code class="chk">"  hi ".strip()</code> → <code class="res">'hi'</code></td></tr>
+      <tr><td><code>split(ajratuvchi)</code></td><td>bo'laklab ro'yxat qilish</td><td><code class="chk">"a,b".split(",")</code> → <code class="res">['a', 'b']</code></td></tr>
+      <tr><td><code>"ajratuvchi".join(royxat)</code></td><td>ro'yxatni bitta satrga birlashtirish</td><td><code class="chk">"-".join(["a", "b"])</code> → <code class="res">'a-b'</code></td></tr>
+      <tr><td><code>replace(eski, yangi)</code></td><td>almashtirish</td><td><code class="chk">"kod".replace("k", "b")</code> → <code class="res">'bod'</code></td></tr>
+      <tr><td><code>upper()</code> · <code>lower()</code> · <code>title()</code></td><td>KATTA · kichik · Har So'z Bosh Harf</td><td><code class="chk">"ali valiyev".title()</code> → <code class="res">'Ali Valiyev'</code></td></tr>
+      <tr><td><code>startswith()</code> · <code>endswith()</code></td><td>shu bilan boshlanadi / tugaydimi</td><td><code class="chk">"a.py".endswith(".py")</code> → <code class="res">True</code></td></tr>
+      <tr><td><code>find(x)</code> · <code>count(x)</code></td><td>o'rni (yo'q bo'lsa -1) · necha marta</td><td><code class="chk">"salom".find("l")</code> → <code class="res">2</code></td></tr>
+      <tr><td><code>isdigit()</code> · <code>isalpha()</code></td><td>faqat raqammi · faqat harfmi</td><td><code class="chk">"2026".isdigit()</code> → <code class="res">True</code></td></tr>
+      <tr><td><code>s[0]</code> · <code>s[-1]</code> · <code>s[::-1]</code></td><td>birinchi · oxirgi · teskari</td><td><code class="chk">"abc"[::-1]</code> → <code class="res">'cba'</code></td></tr>
+      <tr><td><code>f"{x:.2f}"</code></td><td>2 xona kasr bilan</td><td><code class="chk">f"{3.14159:.2f}"</code> → <code class="res">'3.14'</code></td></tr>
+      <tr><td><code>f"{n:,}"</code></td><td>minglik ajratish</td><td><code class="chk">f"{1500000:,}"</code> → <code class="res">'1,500,000'</code></td></tr>
+      <tr><td><code>f"{x=}"</code></td><td>debug: ifoda va qiymati</td><td><code class="chk">f"{2 + 3=}"</code> → <code class="res">'2 + 3=5'</code></td></tr>
+    </table></div>
+  </div>
+</article>
+
+<article class="card" id="x-list">
+  <div class="info">
+    <div class="card-h"><code class="nk">list</code><code class="nk">[ ]</code><span class="badge">ro'yxat</span></div>
+    <span class="cs"><b>C#</b><code>List&lt;T&gt;</code> (turlar aralash bo'lishi mumkin)</span>
+    <p>O'zgaruvchan, tartibli. Kesish: <code>a[bosh:oxir:qadam]</code> — <code>oxir</code> kirmaydi.</p>
+    <p class="tip"><b>Diqqat:</b> <code>b = a</code> — nusxa EMAS, bitta obyekt. Nusxa: <code>a[:]</code> yoki <code>a.copy()</code>. <code>sort()</code> joyida saralaydi va <code>None</code> qaytaradi; <code>sorted(a)</code> — yangi ro'yxat.</p>
+  </div>
+  <div>
+<pre><code class="py">a = [3, 1, 2]
+a.append(4)                    # oxiriga qo'shish
+a.insert(0, 9)                 # 0-o'ringa qo'shish
+print(a)                       # → [9, 3, 1, 2, 4]
+a.extend([5, 6])               # boshqa ro'yxatni qo'shish
+x = a.pop()                    # oxirgisini olib, qaytarish
+a.remove(9)                    # qiymat bo'yicha (birinchisi)
+del a[0]                       # indeks bo'yicha
+print(a, x)                    # → [1, 2, 4, 5] 6
+print(a.index(4), a.count(1))  # → 2 1
+print(sorted(a, reverse=True)) # → [5, 4, 2, 1]
+print(a[1:3], a[:2], a[-1])    # → [2, 4] [1, 2] 5
+b = a[:]                       # haqiqiy nusxa
+b.append(0)
+print(len(a), len(b))          # → 4 5</code></pre>
+  </div>
+</article>
+
+<article class="card" id="x-dict">
+  <div class="info">
+    <div class="card-h"><code class="nk">dict</code><code class="nk">{k: v}</code><span class="badge">lug'at</span></div>
+    <span class="cs"><b>C#</b><code>Dictionary&lt;K, V&gt;</code></span>
+    <p>Kalit → qiymat. Kalit yo'q bo'lsa <code>d[k]</code> → <code>KeyError</code>, <code>d.get(k, standart)</code> esa xatosiz.</p>
+    <p class="tip">Ichma-ich lug'at va ro'yxat mumkin: <code>hamkasblar["ali"]["tillar"][0]</code>. Birlashtirish: <code>d1 | d2</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">car = {"model": "Malibu", "rang": "oq"}
+car["narx"] = 30_000             # qo'shish / o'zgartirish
+print(car.get("yil", 2020))      # → 2020   (yo'q → standart)
+print(car.pop("rang"))           # → oq
+for k, v in car.items():         # .keys()  .values()
+    print(k, v)                  # → model Malibu, narx 30000
+print("model" in car)            # → True   (kalit bo'yicha)
+car.update({"yil": 2022})        # yoki: car |= {...}
+print(len(car), list(car.keys()))  # → 3 ['model', 'narx', 'yil']</code></pre>
+  </div>
+</article>
+
+<article class="card" id="x-set">
+  <div class="info">
+    <div class="card-h"><code class="nk">set</code><code class="nk">tuple</code><span class="badge">to'plam · o'zgarmas ro'yxat</span></div>
+    <span class="cs"><b>C#</b><code>HashSet&lt;T&gt;</code>, <code>(a, b)</code> tuple</span>
+    <p><b>set</b> — takrorlanmas elementlar, tartibsiz, indeks yo'q. <b>tuple</b> — o'zgarmas ro'yxat (append/del xato beradi).</p>
+    <p class="tip">Bo'sh to'plam: <code>set()</code> (<code>{}</code> — bo'sh lug'at!). Bitta elementli tuple: <code>(5,)</code>. tuple → list: <code>list(t)</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">s = {1, 2, 3}
+s.add(4)
+s.discard(10)                    # yo'q bo'lsa ham xato yo'q
+print(s &amp; {2, 9}, s - {1})       # → {2} {2, 3, 4}
+print(s | {5})                   # → {1, 2, 3, 4, 5}
+print(set([1, 1, 2]))            # → {1, 2}   (takrorsiz)
+t = ("Ali", 25)                  # tuple — o'zgarmas
+ism, yosh = t                    # yechib olish (unpacking)
+a, b = 1, 2
+a, b = b, a                      # joy almashtirish
+print(ism, yosh, a, b)           # → Ali 25 2 1</code></pre>
+  </div>
+</article>
+
+<article class="card" id="x-comp">
+  <div class="info">
+    <div class="card-h"><code class="nk">[x for x in …]</code><span class="badge">comprehension</span></div>
+    <span class="cs"><b>C#</b>LINQ: <code>.Select()</code> / <code>.Where()</code></span>
+    <p>Bir qatorda yangi ro'yxat/lug'at/to'plam yasash: <code>[ifoda for x in manba if shart]</code>.</p>
+    <p class="tip">Kvadrat qavs — list, jingalak — set yoki dict, oddiy qavs — generator (xotira tejaydi).</p>
+  </div>
+  <div>
+<pre><code class="py">sonlar = [1, 2, 3, 4, 5]
+print([x * x for x in sonlar])              # → [1, 4, 9, 16, 25]
+print([x for x in sonlar if x % 2 == 1])    # → [1, 3, 5]
+print({x: x * x for x in sonlar[:3]})       # → {1: 1, 2: 4, 3: 9}
+print({len(s) for s in ["ab", "cd", "e"]})  # → {1, 2}
+print(sum(x * x for x in sonlar))           # → 55   (generator)</code></pre>
+  </div>
+</article>
+
+<article class="card" id="x-ops">
+  <div class="info">
+    <div class="card-h"><code class="nk">/ // % **</code><code class="nk">:=</code><span class="badge">operatorlar</span></div>
+    <span class="cs"><b>C#</b><code>/</code> butun sonlarda ham kasr beradi!</span>
+    <p><code>/</code> — doim kasr, <code>//</code> — butun bo'linma, <code>%</code> — qoldiq, <code>**</code> — daraja. <code>a &lt; x &lt; b</code> — zanjirli taqqoslash.</p>
+    <p class="tip"><code>:=</code> («morj») — ifoda ichida tayinlash. <code>i++</code> yo'q → <code>i += 1</code>.</p>
+  </div>
+  <div>
+<pre><code class="py">print(7 / 2, 7 // 2, 7 % 2, 2 ** 10)   # → 3.5 3 1 1024
+x = 5
+x += 1                                  # x++ yo'q
+print(1 &lt; x &lt; 10)                       # → True
+print(10_000_000)                       # → 10000000
+if (n := len("salom")) > 3:             # tayinlab, tekshirish
+    print(n)                            # → 5</code></pre>
+  </div>
+</article>
+
+<article class="card wide" id="x-stdlib">
+  <div class="info">
+    <div class="card-h"><code class="nk">import</code><span class="badge">standart kutubxona — o'rnatish shart emas</span></div>
+    <div class="tbl"><table class="ref">
+      <tr><th>Modul</th><th>Nima uchun</th><th>Misol → natija</th></tr>
+      <tr><td><code>math</code></td><td>matematika</td><td><code class="chk">math.ceil(2.1), math.floor(2.9), math.sqrt(9)</code> → <code class="res">(3, 2, 3.0)</code></td></tr>
+      <tr><td><code>datetime as dt</code></td><td>sana va vaqt</td><td><code class="chk">(dt.date(2026, 12, 31) - dt.date(2026, 10, 30)).days</code> → <code class="res">62</code> · <code>dt.datetime.now()</code></td></tr>
+      <tr><td><code>random</code></td><td>tasodifiy son/tanlov</td><td><code>random.randint(1, 6)</code> · <code>random.choice(royxat)</code> · <code>random.shuffle(royxat)</code></td></tr>
+      <tr><td><code>re</code></td><td>muntazam ifodalar (RegEx)</td><td><code class="chk">re.findall(r"\d+", "a1b22c333")</code> → <code class="res">['1', '22', '333']</code></td></tr>
+      <tr><td><code>collections</code></td><td>Counter, defaultdict, deque</td><td><code class="chk">collections.Counter("ananas").most_common(1)</code> → <code class="res">[('a', 3)]</code></td></tr>
+      <tr><td><code>pathlib</code></td><td>fayl yo'llari</td><td><code class="chk">Path("hisobot.pdf").suffix</code> → <code class="res">'.pdf'</code> · <code>Path("a.txt").exists()</code></td></tr>
+      <tr><td><code>json</code> · <code>pprint</code> · <code>os</code></td><td>JSON · chiroyli chiqarish · OS</td><td><code>pprint(lugat)</code> · <code>os.getcwd()</code> · <code>os.listdir(".")</code></td></tr>
+    </table></div>
+  </div>
+</article>
+
+<article class="card" id="x-test">
+  <div class="info">
+    <div class="card-h"><code class="nk">unittest</code><span class="badge">test yozish</span></div>
+    <span class="cs"><b>C#</b>xUnit / NUnit: <code>[Fact]</code>, <code>Assert.Equal</code></span>
+    <p>Test klassi <code>unittest.TestCase</code> dan meros oladi, test metodlari nomi <code>test_</code> bilan boshlanadi.</p>
+    <p class="tip">Ko'p ishlatiladigan: <code>assertEqual</code>, <code>assertTrue</code>/<code>assertFalse</code>, <code>assertIn</code>, <code>assertIsNone</code>, <code>assertRaises</code>, <code>assertAlmostEqual</code>. Natija: <code>OK</code> yoki <code>FAILED</code>.</p>
+  </div>
+  <div>
+<pre><code class="py frag">import unittest
+
+def toliq_ism(ism, familiya):
+    return f"{ism} {familiya}".title()
+
+class IsmTest(unittest.TestCase):     # test klassi
+    def test_toliq_ism(self):         # test_ bilan boshlansin
+        self.assertEqual(toliq_ism("ali", "vali"), "Ali Vali")
+
+if __name__ == "__main__":
+    unittest.main()                   # testlarni ishga tushirish</code></pre>
+  </div>
+</article>
+
+<article class="card wide" id="x-csharp">
+  <div class="info">
+    <div class="card-h"><code class="nk">C# → Python</code><span class="badge">tez tarjima</span></div>
+    <div class="cols2">
+    <div class="tbl"><table class="ref">
+      <tr><th>C#</th><th>Python</th></tr>
+      <tr><td><code>null</code> · <code>x is null</code></td><td><code>None</code> · <code>x is None</code></td></tr>
+      <tr><td><code>true</code> / <code>false</code></td><td><code>True</code> / <code>False</code></td></tr>
+      <tr><td><code>&amp;&amp;</code> <code>||</code> <code>!</code></td><td><code>and</code> <code>or</code> <code>not</code></td></tr>
+      <tr><td><code>else if</code> · <code>c ? a : b</code></td><td><code>elif</code> · <code>a if c else b</code></td></tr>
+      <tr><td><code>switch</code></td><td><code>match</code> / <code>case</code></td></tr>
+      <tr><td><code>foreach (var x in xs)</code></td><td><code>for x in xs:</code></td></tr>
+      <tr><td><code>for (int i = 0; i &lt; n; i++)</code></td><td><code>for i in range(n):</code></td></tr>
+      <tr><td><code>i++</code></td><td><code>i += 1</code></td></tr>
+      <tr><td><code>$"{x}"</code></td><td><code>f"{x}"</code></td></tr>
+      <tr><td><code>string.Join(",", xs)</code> · <code>xs.Count</code></td><td><code>",".join(xs)</code> · <code>len(xs)</code></td></tr>
+      <tr><td><code>List&lt;T&gt;</code> · <code>Dictionary</code> · <code>HashSet</code></td><td><code>list</code> · <code>dict</code> · <code>set</code></td></tr>
+      <tr><td><code>x =&gt; x * x</code> · LINQ</td><td><code>lambda x: x * x</code> · comprehension</td></tr>
+    </table></div>
+    <div class="tbl"><table class="ref">
+      <tr><th>C#</th><th>Python</th></tr>
+      <tr><td><code>this</code> · <code>base(…)</code></td><td><code>self</code> · <code>super().__init__(…)</code></td></tr>
+      <tr><td><code>new Xodim("Ali")</code></td><td><code>Xodim("Ali")</code></td></tr>
+      <tr><td><code>class B : A</code></td><td><code>class B(A):</code></td></tr>
+      <tr><td><code>abstract class</code> / <code>interface</code></td><td><code>ABC</code> + <code>@abstractmethod</code></td></tr>
+      <tr><td><code>{ get; set; }</code></td><td><code>@property</code> / <code>@x.setter</code></td></tr>
+      <tr><td><code>static</code> metod</td><td><code>@staticmethod</code> / <code>@classmethod</code></td></tr>
+      <tr><td><code>ToString()</code></td><td><code>__str__</code> / <code>__repr__</code></td></tr>
+      <tr><td><code>throw</code> · <code>catch (Ex e)</code></td><td><code>raise</code> · <code>except Ex as e:</code></td></tr>
+      <tr><td><code>using (var f = …)</code></td><td><code>with … as f:</code></td></tr>
+      <tr><td><code>using System;</code></td><td><code>import …</code></td></tr>
+      <tr><td><code>params int[] a</code> · <code>yield return</code></td><td><code>*a</code> · <code>yield</code></td></tr>
+      <tr><td><code>static void Main()</code></td><td><code>if __name__ == "__main__":</code></td></tr>
+    </table></div>
+    </div>
+  </div>
+</article>
+</section>
+
+<footer>
+  Python 3.14.5 da tekshirildi: kod bloklari ishga tushirilib, <code># →</code> izohlari haqiqiy natija bilan solishtirildi (<code>lazy</code> — 3.15+, tekshirilmagan). Manbalar: python.sariq.dev, docs.python.org/3/reference/lexical_analysis.html#keywords, basic.txt va oop.txt konspektlari.
+</footer>
+</div>
+
+<script>
+(function () {
+  var KW = new Set("False None True and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield".split(" "));
+  var SOFT = new Set(["match", "case", "type", "lazy"]);
+  var BI = new Set("print input len range type isinstance int float str bool list tuple set dict sum min max sorted reversed enumerate zip map filter any all round abs open super next iter repr help dir object Exception ValueError TypeError KeyError IndexError ZeroDivisionError FileNotFoundError AssertionError".split(" "));
+  var RX = /(#[^\n]*)|((?:\b[rRbBfFtTuU]{1,2})?(?:"""[\s\S]*?"""|'''[\s\S]*?'''|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'))|(@[A-Za-z_][\w.]*)|(\b\d[\d_]*(?:\.\d+)?\b)|(\b[A-Za-z_]\w*\b)/g;
+  function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function span(c, t) { return '<span class="' + c + '">' + esc(t) + "</span>"; }
+  function comment(t) {
+    var i = t.indexOf("→");
+    if (i < 0) return span("t-com", t);
+    var rest = t.slice(i), m = rest.match(/\s{2,}\(.*\)\s*$/);
+    var out = m ? rest.slice(0, m.index) : rest, note = m ? m[0] : "";
+    return span("t-com", t.slice(0, i)) + span("t-out", out) + (note ? span("t-com", note) : "");
+  }
+  function hl(src) {
+    var out = "", last = 0, m;
+    RX.lastIndex = 0;
+    while ((m = RX.exec(src))) {
+      out += esc(src.slice(last, m.index));
+      last = RX.lastIndex;
+      var t = m[0];
+      if (m[1]) out += comment(t);
+      else if (m[2]) out += span("t-str", t);
+      else if (m[3]) out += span("t-dec", t);
+      else if (m[4]) out += span("t-num", t);
+      else {
+        var before = src.slice(src.lastIndexOf("\n", m.index - 1) + 1, m.index);
+        var stmt = /^\s*$/.test(before) && /^ +[\w(\[{"'-]/.test(src.slice(last));
+        if (KW.has(t)) out += span("t-kw", t);
+        else if (SOFT.has(t) && stmt) out += span("t-kw", t);
+        else if (t === "_" && /case\s+$/.test(before)) out += span("t-kw", t);
+        else if (t === "self" || t === "cls") out += span("t-self", t);
+        else if (BI.has(t)) out += span("t-bi", t);
+        else out += esc(t);
+      }
+    }
+    return out + esc(src.slice(last));
+  }
+  document.querySelectorAll("code.py").forEach(function (el) { el.innerHTML = hl(el.textContent); });
+
+  var q = document.getElementById("q"), cnt = document.getElementById("cnt");
+  if (!q) return;
+  q.addEventListener("input", function () {
+    var v = q.value.trim().toLowerCase(), n = 0;
+    document.querySelectorAll("article.card").forEach(function (c) {
+      var hit = !v || c.textContent.toLowerCase().indexOf(v) >= 0;
+      c.hidden = !hit;
+      if (hit) n++;
+    });
+    document.querySelectorAll("section.cat").forEach(function (s) {
+      s.hidden = !!v && !s.querySelector("article.card:not([hidden])");
+    });
+    document.querySelectorAll(".ov-sec").forEach(function (s) { s.hidden = !!v; });
+    cnt.textContent = v ? (n ? n + " ta karta" : "topilmadi") : "";
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+    if (e.key === "Escape" && document.activeElement === q) { q.value = ""; q.dispatchEvent(new Event("input")); }
+  });
+})();
+</script>
+</body>
+</html>

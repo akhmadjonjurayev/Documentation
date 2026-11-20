@@ -1,0 +1,181 @@
+pip install numpy -> numpy kutubxonaisni yuklab olish
+
+import numpy as np # numpy kutubxonasini chaqirish
+
+numbers = np.array([1, 2, 3]) # numpy array ga o'tkazish
+b = np.array([[1, 2, 3], [4, 5, 6], [9, 8, 74]])
+
+np.ones((6, 6))
+
+ndarray massivning foydali methodlari:
+
+a = np.array([3, 1, 2, 1])
+
+a.sum()       # yig‘indi
+a.mean()      # o‘rtacha
+a.min()       # eng kichik
+a.max()       # eng katta
+a.std()       # standart og‘ish
+a.var()       # dispersiya
+a.argmax()    # eng katta qiymatning indeksi
+a.argmin()    # eng kichik qiymatning indeksi
+a.sort()      # massivni o‘z joyida tartiblaydi
+a.reshape(2, 2)  # shaklini o‘zgartiradi
+a.flatten()   # nusxa qilib 1D ko‘rinishga keltiradi
+a.copy()      # nusxa oladi
+
+Massiv yaratish methodlari:
+
+np.array([1, 2, 3])
+np.zeros((2, 3))
+np.ones((2, 3))
+np.full((2, 2), 7)
+np.arange(0, 10, 2)
+np.linspace(0, 1, 5)
+np.eye(3)  # birlik matritsa
+
+Matematik funsiyalar:
+np.sqrt(a)   # kvadrat ildiz
+np.abs(a)    # modul
+np.exp(a)    # e darajaga oshirish
+np.log(a)    # natural logarifm
+np.sin(a)
+np.cos(a)
+np.round(a)
+
+Shakl va o'lcham bilan ishlash:
+
+a.shape       # shakli
+a.ndim        # o‘lchamlar soni
+a.size        # elementlar soni
+a.dtype       # elementlar turi
+a.T           # transpozitsiya
+
+numpyda qo'shish amallarida har bir array yoki matritsani o'lchami bir xil bo'lishi kerak
+
+a = np.array([2,6,8,10,7,9,6,3,-5])
+print(a[3:5]) -> 3 va 5 index lar orasidan ikkita element oladi
+
+b = np.array([[2,4,6,7], [7,-6,-5,2], [5,14,-7,0]])
+print(b[1,2])
+print(b[:, 3])
+print(b[2, :]) -> qator va ustun bo'yicha indexlab olish ':' qo'yilsa unda massiv qaytaradi
+
+passed = b >= 0
+print(passed)
+print(b[passed]) -> shartlar bilan array qaytaradi
+
+print(b.sum(axis=0))
+print(b.mean(axis=1)) -> qator bo'yicha yoki ustun bo'yicha sum yoki eam bajaradi. axis=0 ustun bo'yicha, axis=1 qator bo'yicha yuradi
+
+1. Indekslash va slicing: 
+Indekslash - ma'lum bir elementni olish. Slicing - massivning bir qismini olish: a[start:stop] yozuvida stop indexsining o'zi olinmaydi
+a[0] — birinchi element.
+a[-1] — oxirgi element.
+a[1:4] — 1-indeksdan 4-indeksgacha, 4 kirmaydi.
+a[::2] — har ikkinchi element.
+
+2D massiv
+m = np.array([
+    [10, 20, 30],
+    [40, 50, 60],
+    [70, 80, 90]
+])
+
+print(m[0, 1])  # 1-qator, 2-ustun
+print(m[1, :])  # ikkinchi qatorning hammasi
+print(m[:, 0])  # birinchi ustunning hammasi
+print(m[:2, 1:])  # dastlabki 2 qator, 2-ustundan boshlab
+
+a = np.arange(1, 7)
+m = a.reshape(2, 3)
+
+print(m) # reshape arraydan matritsa hosil qilish
+
+2. Broadcasting - shakllari mos keladigan massivlar ustida NumPyning avtomatik ravishda elementa-element amal bajarishi. Masalan
+bitta son massivdagi har bir elementga qo'llanishi mumkin
+
+a = np.array([1, 2, 3])
+
+print(a + 10) # [11, 12, 13]
+print(a * 2) # [2, 4, 6]
+2D massivga 1D massiv qo'shish
+
+prices = np.array([
+    [100, 200, 300],
+    [400, 500, 600]
+])
+
+tax = np.array([10, 20, 30])
+
+print(prices + tax) 
+
+[[110 220 330]
+ [410 520 630]]
+
+3. Massivlarni birlashirish: concatenate
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+
+print(np.concatenate((a, b)))  # [1 2 3 4 5 6]
+
+2D massivlarda birlashtirish yo'nalishi axis belgilaydi:
+
+left = np.array([
+    [1, 2],
+    [3, 4]
+])
+
+right = np.array([
+    [5, 6],
+    [7, 8]
+])
+
+print(np.concatenate((left, right), axis=0))
+print(np.concatenate((left, right), axis=1))
+
+split bilan arrayni teng qismlarga bo'lish mumkin
+parts = np.split(a, 3)
+
+4. Chiziqli algebra: matritsalar bilan hisoblash
+
+a = np.array([[1, 2], [3, 4]])
+b = np.array([[5, 6], [7, 8]])
+
+print(a * b)
+[[ 5 12]
+ [21 32]]
+
+print(a @ b) # matritsa ko'paytirish
+[[19 22]
+ [43 50]]
+
+transpozitsiya va determinant tenglamalar:
+m = np.array([
+    [1, 2],
+    [3, 4]
+])
+
+print(m.T)
+print(np.linalg.det(m))
+
+Chiziqli tenglamani yechish usuli:
+# 2x + y = 8
+# x + 3y = 13
+
+A = np.array([
+    [2, 1],
+    [1, 3]
+])
+
+b = np.array([8, 13])
+
+solution = np.linalg.solve(A, b)
+
+print(solution) # [2.2, 3.6] demak x=2.2 y=3.6
+
+Matritsaga random qiymat berish
+rng = np.random.default_rng()
+
+matritsa = rng.integers(1, 10, size=(3, 4))
+print(matritsa)

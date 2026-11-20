@@ -1,0 +1,95 @@
+Pandas - jadval ko'rinishidagi ma'lumotlarni yaratish, ko'rish, tahlil qilish va tozalash uchun Python kutubxonasi. Pandas'ning asosiy jadval turi DataFrame deb ataladi.
+python -m pip install pandas # terminalda pandasni yuklab olish
+
+import pandas as pd # pandas kutubxonani chaqirish
+print(pd.__version__)
+
+1. Pandas dagi asosy tushunchalar:
+  * Series - bitta ustunga o'xshash, bir o'lchamli ma'lumotlarni
+  * DataFrame - qator va ustunlardan tashkil topgan jadval.
+DataFrame - butun jadval, Series esa shu jadvaldagi bitta ustun
+
+baholar = pd.Series([85, 92, 78, 64]) # Series yasash
+
+baholar = pd.Series(
+    [84, 81, 92],
+    index=["Ali", "Vali", "Sami"]
+)
+print(baholar) # index larni ham berib Series yasash mumkin
+
+2. DataFrame yasash. Eng qulay usullaridan biri esa lig'at (dic) berish hisoblanadi
+
+data = {
+    "Ism": ["Ali", "Vali", "Sami"],
+    "Yosh": [20, 22, 19],
+    "Shahar": ["Toshkent", "Samarqand", "Buxoro"]
+}
+df = pd.DataFrame(data)
+print(df)
+
+    Ism  Yosh     Shahar
+0   Ali    20   Toshkent
+1  Vali    22  Samarqand
+2  Sami    19     Buxoro
+
+3. Jadvalni ko'zdan kechirish:
+
+print(df.head(2))      -> jadvalni dastlabgi qatorlarini qaytaradi
+print(df.shape)        -> (qatorlar soni, ustunlar soni) qaytaradi
+print(df.columns)      -> ustun nomlarini qaytaradi
+print(df.info())       -> ustunlar, ma'lumot turlari va bo'sh bo'lmagan qiymatlar soni
+print(df.describe())   -> sonli ustunlarning umumiy statistikasini qaytaradi
+
+4. Ustunlar va qatorlarni tanlash:
+df["Ism"] -> bitta ustunni olish
+df[["Ism", "Yosh"]] -> bir nechta ustunlarni olish
+df.loc[0] -> index nomi bilan qatorni olish
+
+Shart bo'yicha qatorlarni filterlash
+katta_yoshdagilar = df[df["Yosh"] > 20]
+
+natija = df[(df["Yosh"] >=20) & (df["Shahar"] == "Toshkent")]
+& -> ikkita shart ham bajarilishi kerak
+| -> shartlardan kamida bittasi bajarilishi kerak
+
+4. Ustun qo'shish, o'zgartirish va o'chaqirish
+df["Talaba"] = [True, True, False] -> DataFrame ga yangi ustun qo'shish
+df["Yosh] = df["Yosh"] + 1 # ustun bo'yicha barcha qiymatlariga ta'sir qilgan holatda qo'shish
+df = df.drop(column=["Talaba"]) -> ustunni o'chirish
+
+5. Bo'sh qiymatlar: odatda DataFrame da bo'sh qiymatlar None deb yoziladi panda esa NaN deb ko'rsatadi
+df.dropna() -> bo'sh qiymati bo'lgan qatorlarni olib tashlaydi
+df["Yosh"] = df["Yosh"].fillna(df["Yosh"].mean())
+df["Ball"] = df["Ball"].fillna(0) # fillna() methodi esa ustundagi bo'sh qiymatlarga umumiy qiymat beradi
+
+6. Tartiblash, Guruhlash:
+
+df = pd.DataFrame({
+    "Ism": ["Ali", "Vali", "Sami"],
+    "Ball": [85, 92, 78]
+})
+
+print(df.sort_values(by="Ball", ascending=False)) # tartiblash
+
+sales = pd.DataFrame({
+    "Shahar": ["Toshkent", "Samarqand", "Toshkent", "Samarqand"],
+    "Sotuv": [100, 80, 150, 120]
+})
+
+sales.groupby("Shahar")["Sotuv"].mean()  # o'rtacha
+sales.groupby("Shahar")["Sotuv"].count() # qatorlar soni
+sales.groupby("Shahar")["Sotuv"].max()   # eng katta qiymat
+
+7. CSV - fayl formati. comma-Separated Values. ya'ni qiymatlari vergul bilan ajratiladigan matnli fayl. Unda ma'lumotlar jadval shaklida yoziladi
+df = pd.read_csv("talabalar.csv") # .csv dan o'qish
+
+for bolak in pd.read_csv("katta_fayl.csv", chunksize=10_000):
+    print(bolak.shape)
+    # Skatta csv fayllarini bo'lak qilib o'qish
+
+df.to_csv("natija.csv", index=False) # DataFrame ni csv ga yozish, Index=False jadval indexlarini alohida faylga yozmaslik uchun
+
+python -m pip install openpyxl
+
+df = pd.read_excel("talabalar.xlsx")
+df.to_excel("natija.xlsx", index=False) #excelga yozish va o'qish uchun
